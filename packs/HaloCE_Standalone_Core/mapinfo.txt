@@ -1,4 +1,4 @@
 GameInfo
 {
-	AddEventHandlers = "HCE_ReplaceHandler", "HCES_LootHandler"
+	AddEventHandlers = "HCE_ReplaceHandler", "HCES_LootHandler", "HCE_MissileTracker"
 }
