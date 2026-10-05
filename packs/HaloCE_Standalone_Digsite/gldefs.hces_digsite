@@ -1,0 +1,20 @@
+// standalone: projectile lights (digsite)
+object HCE_CarbineRound
+{
+	frame HCEM { light HCES_GreenLight }
+}
+
+object HCE_PulseCarbineBolt
+{
+	frame HCEM { light HCES_BlueLight }
+}
+
+object HCE_SpikerSpike
+{
+	frame HCEM { light HCES_OrangeLight }
+}
+
+object HCE_PulseCarbineHoming
+{
+	frame HCEM { light HCES_BlueLight }
+}

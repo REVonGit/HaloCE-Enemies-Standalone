@@ -1,0 +1,8 @@
+{
+  "title": "Halo CE enemies (standalone version)",
+  "bundle": {"output": "HaloCE_Standalone_Bundle.pk3",
+             "packs": ["HaloCE_Standalone_Core", "HaloCE_Standalone_Covenant", "HaloCE_Standalone_Digsite", "HaloCE_Enemies_Voices"]},
+  "merged": {"output": "HaloCE_Standalone_Merged.pk3",
+             "packs": ["HaloCE_Standalone_Core", "HaloCE_Standalone_Covenant", "HaloCE_Standalone_Flood", "HaloCE_Standalone_Sentinels", "HaloCE_Standalone_Marines", "HaloCE_Standalone_Digsite"]},
+  "load": "HaloCE_Standalone_Core.pk3 -> faction packs / Digsite -> HaloCE_Enemies_Voices.pk3, with any other mods   (or: HaloCE_Standalone_Bundle.pk3 alone)"
+}

@@ -1,0 +1,7 @@
+Halo CE enemy packs, standalone build
+=====================================
+These packs run without HaloDoom Evolved. The projectile, grenade, explosion and shield code in
+ZScript/HaloCE/hces_lib.zsc is ported from HaloDoom Evolved (Local_DEV branch), and the sounds (sounds/hces),
+sprites (sprites/hces, renamed HZ**) and projectile models (models/hces) are copied from it. All credit for
+those assets and the original code goes to the HaloDoom Evolved team. HDE was made under Microsoft's Game
+Content Usage Rules; Halo is a trademark of Microsoft. Not for sale.

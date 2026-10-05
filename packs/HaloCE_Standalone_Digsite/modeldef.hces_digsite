@@ -1,0 +1,45 @@
+// standalone: projectile models (digsite)
+Model HCE_CarbineRound
+{
+	Path "models/hces"
+	Model 0 "tracer.md3"
+	Skin 0 "tracer1.tga"
+	Scale 3.0 3.0 1.5
+	PITCHFROMMOMENTUM
+	FrameIndex HCEM A 0 0
+}
+
+Model HCE_PulseCarbineBolt
+{
+	Path "models/hces"
+	Model 0 "plasma.md3"
+	Skin 0 "laser.png"
+	Scale 5.0 10.0 10.0
+	USEACTORPITCH
+	USEACTORROLL
+	CORRECTPIXELSTRETCH
+	FrameIndex HCEM A 0 0
+}
+
+Model HCE_SpikerSpike
+{
+	Path "models/hces"
+	Model 0 "spike_shard.MD3"
+	Skin 0 "spike_shard.png"
+	Scale 4.0 4.0 2.5
+	AngleOffset 90
+	USEACTORPITCH
+	FrameIndex HCEM A 0 0
+}
+
+Model HCE_PulseCarbineHoming
+{
+	Path "models/hces"
+	Model 0 "plasma.md3"
+	Skin 0 "laser.png"
+	Scale 5.0 10.0 10.0
+	USEACTORPITCH
+	USEACTORROLL
+	CORRECTPIXELSTRETCH
+	FrameIndex HCEM A 0 0
+}

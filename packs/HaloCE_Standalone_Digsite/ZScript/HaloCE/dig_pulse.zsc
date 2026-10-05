@@ -1,0 +1,17 @@
+
+// Pulse Carbine bolts for the Elites: HDE's Pulse Carbine projectile (slow launch, accelerating, homing),
+// locked onto the shooter's target. HDE's own homing grabs the nearest visible thing, which for a monster
+// would include its allies, so this one never picks a new target once its victim is gone.
+class HCE_PulseCarbineHoming : HCES_PulseCarbineProj
+{
+	override void PostBeginPlay()
+	{
+		super.PostBeginPlay();
+		if(target && !target.player && target.target) tracer = target.target;
+	}
+	override void Handle_Homing(double turnMax, bool ignoreCorpses)
+	{
+		if(!tracer) return;
+		super.Handle_Homing(turnMax, ignoreCorpses);
+	}
+}
