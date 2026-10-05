@@ -5,6 +5,7 @@ version "4.15.1"
 // the enemy dialogue, and the Core code it uses (enemy API, projectile library, loot drops, replacement handler).
 // Needs no other pk3; load it with any other mods. Don't load HaloCE_Standalone_Core with it.
 
+#include "ZScript/HaloCE/hce_core.zsc"
 #include "ZScript/HaloCE/hces_api.zsc"
 #include "ZScript/HaloCE/hces_lib.zsc"
 #include "ZScript/HaloCE/hces_loot.zsc"

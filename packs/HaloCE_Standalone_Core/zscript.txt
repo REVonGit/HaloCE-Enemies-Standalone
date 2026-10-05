@@ -2,6 +2,7 @@ version "4.15.1"
 
 // Halo CE enemies, core: shared projectiles and the Doom-monster replacement handler.
 // Standalone: carries the enemy API and the HDE-derived projectiles/effects; needs no other pk3.
+#include "ZScript/HaloCE/hce_core.zsc"
 #include "ZScript/HaloCE/hces_api.zsc"
 #include "ZScript/HaloCE/hces_lib.zsc"
 #include "ZScript/HaloCE/hces_loot.zsc"
