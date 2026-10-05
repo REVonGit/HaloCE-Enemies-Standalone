@@ -16,6 +16,8 @@ HCES/Halo/Weapons/BeamRifle/Laser/Begin "sounds/hces/beamrifle/beamrifle_charge.
 HCES/BEAMRIFLE_FIRE1 "sounds/hces/beamrifle/beamrifle_fire1.ogg"
 HCES/BEAMRIFLE_FIRE2 "sounds/hces/beamrifle/beamrifle_fire2.ogg"
 $random HCES/Halo/Weapons/BeamRifle/Laser/Fire { HCES/BEAMRIFLE_FIRE1 HCES/BEAMRIFLE_FIRE2 }
+HCES/Halo/Weapons/BeamRifle/Laser/Loop "sounds/hces/beamrifle/beamrifle_loop.ogg"
+HCES/Halo/Weapons/BeamRifle/Laser/LoopEnd "sounds/hces/beamrifle/beamrifle_loopend.ogg"
 HCES/CARBINE_FIRE1 "sounds/hces/carbine/carbinefire1.ogg"
 HCES/CARBINE_FIRE2 "sounds/hces/carbine/carbinefire2.ogg"
 HCES/CARBINE_FIRE3 "sounds/hces/carbine/carbinefire3.ogg"
