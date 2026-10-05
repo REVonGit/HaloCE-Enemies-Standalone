@@ -25,18 +25,24 @@ docs/PACK_README.md        the full player-facing manual
 
 ## Compiling
 
-You need Python 3 and nothing else.
+You need Python 3 and nothing else. On Windows, double-click `Build_PK3s.bat`.
 
 ```
-python build.py            # every pack -> dist/<Pack>.pk3
-python build.py Bundle     # just the matching packs
-python build.py --merged   # + dist/HaloCE_Standalone_Merged.pk3 (the bundle + Core + Flood + Sentinels + Marines)
-python build.py --all      # everything
+python build.py              # every pack -> dist/<Pack>.pk3, plus the merged pack
+python build.py Bundle       # just the packs whose folder name contains "Bundle"
+python build.py --no-merged  # skip the merged pack
+python build.py --force      # rebuild everything, changed or not
 ```
 
-On Windows, double-click `Build_PK3s.bat`.
+* **Incremental:** only what changed is rebuilt. A pack whose files are the same as at its last build is skipped (`dist/.buildcache.json` remembers), so a full build takes about 4 s and a rebuild after one edit about a second.
+* **Compression:** sounds and images, which are compressed already, are stored as they are, and text and models are deflated. That took a full build from about 18 s to about 4 s, for about 1 MB more per pk3.
+* **Byte-stable:** the same files always give the same pk3.
 
-**GitHub Actions** compiles everything on every push to `main` (the pk3s are under the run's *Artifacts*). A `v*` tag also attaches them to a Release.
+**GitHub Actions** (`.github/workflows/build.yml`) compiles everything (`--force`) on every push to `main`. The pk3s are under the run's *Artifacts*. Pushing a tag such as `v1.2` also attaches them to a GitHub Release:
+
+```
+git tag v1.2 && git push origin v1.2
+```
 
 ## Load order
 
@@ -52,7 +58,7 @@ HaloCE_Standalone_Bundle.pk3 -> other mods -> nashgore.pk3 (optional, last)
 ## Editing notes
 
 * **Core sources:** the core's own sources are `ZScript/HaloCE/hces_api.zsc` (enemy AI), `hces_lib.zsc` (projectiles, effects, shields), `hces_loot.zsc` (loot director) and `hce_handler.zsc` (Doom monster replacement).
-* **Two copies of Core:** these files, and the core sounds / sprites / models the bundle uses, exist both in `HaloCE_Standalone_Bundle/` and `HaloCE_Standalone_Core/`. **Edit both copies** (they must stay identical, or building the merged pack stops and names the file). The bundle's `sndinfo.hces_hde`, `modeldef.hces_core` and `gldefs.hces_core` are trimmed copies of Core's.
+* **Two copies of Core:** Core's files that the bundle also carries (its ZScript, and the core sounds, sprites and models the bundle uses) exist in both `HaloCE_Standalone_Bundle/` and `HaloCE_Standalone_Core/`. Edit either one: at the start of every build, `build.py` copies the newer version over the older and names each file it synced. The bundle's `sndinfo.hces_hde`, `modeldef.hces_core` and `gldefs.hces_core` are trimmed copies of Core's and are not synced.
 * **Folding new packs in:** put fresh Covenant / Digsite / voice packs in `packs/`, delete the bundle folder, and run `python tools/make_bundle_folder.py`.
 * **Defaults:** `cvarinfo.txt` in the bundle and in the core holds the defaults: `hces_loot`, `hces_loot_weapons`, `hce_nerf_projectiles` (0.3 here), `hce_nerf_health` and `hce_nerf_shields`.
 * **Regenerating:** a regeneration from the HDE repo's `generator/` overwrites hand edits here, so carry them over.
