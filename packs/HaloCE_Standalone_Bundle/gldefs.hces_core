@@ -1,0 +1,127 @@
+// standalone: projectile lights (core)
+object HCE_ARBullet
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
+object HCE_Flame
+{
+	frame HZT1 { light HCES_OrangeLight }
+	frame HZT2 { light HCES_OrangeLight }
+}
+
+object HCE_FuelRodBolt
+{
+	frame HZFP { light HCES_GreenLightBig }
+}
+
+object HCE_Needle
+{
+	frame HCEM { light HCES_PinkLight }
+}
+
+object HCE_PlasmaCasterGrenade
+{
+	frame HZPG { light HCES_BlueLight }
+}
+
+object HCE_PlasmaPistolBolt
+{
+	frame HCEM { light HCES_GreenLight }
+}
+
+object HCE_PlasmaRifleBolt
+{
+	frame HCEM { light HCES_BlueLight }
+}
+
+object HCE_ShotgunPellet
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
+object HCE_ChargedPlasma
+{
+	frame HCEM { light HCES_GreenLightBig }
+}
+
+object HCES_Bullet
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
+object HCES_ARBullet
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
+object HCES_ShotgunPellet
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
+object HCES_CarbineBullet
+{
+	frame HCEM { light HCES_GreenLight }
+}
+
+object HCES_PlasmaPistolBolt
+{
+	frame HCEM { light HCES_GreenLight }
+}
+
+object HCES_PlasmaRifleBolt
+{
+	frame HCEM { light HCES_BlueLight }
+}
+
+object HCES_ChargedPlasma
+{
+	frame HCEM { light HCES_GreenLightBig }
+}
+
+object HCES_PulseCarbineProj
+{
+	frame HCEM { light HCES_BlueLight }
+}
+
+object HCES_Needle
+{
+	frame HCEM { light HCES_PinkLight }
+}
+
+object HCES_SpikerSpike
+{
+	frame HCEM { light HCES_OrangeLight }
+}
+
+object HCES_FuelRod
+{
+	frame HZFP { light HCES_GreenLightBig }
+}
+
+object HCES_Flame
+{
+	frame HZT1 { light HCES_OrangeLight }
+	frame HZT2 { light HCES_OrangeLight }
+}
+
+object HCES_PlasmaGrenade
+{
+	frame HZPG { light HCES_BlueLight }
+}
+
+object HCES_PlasmaCasterProj
+{
+	frame HZPG { light HCES_BlueLight }
+}
+
+object HCES_PlasmaCasterMini
+{
+	frame HZPG { light HCES_BlueLight }
+}
+
+object HCES_PlasmaCasterCluster
+{
+	frame HZPG { light HCES_BlueLight }
+}

@@ -13,12 +13,13 @@ The HDE version is in **HaloCE-Enemies-HDE**, and that repo's `generator/build_s
 
 ```
 packs/<Pack>/        each folder is exactly the root of one pk3: edit files here
-  HaloCE_Standalone_Core/        enemy AI, HDE-derived projectiles / effects, loot director, handler, CVars
-  HaloCE_Standalone_Covenant/  _Flood/  _Sentinels/  _Marines/
-  HaloCE_Standalone_Digsite/     Digsite / SPV3 / Halo 2 add-on
-  HaloCE_Enemies_Voices/         dialogue (optional; identical to the HDE version's)
+  HaloCE_Standalone_Bundle/      Covenant + Digsite / SPV3 / Halo 2 add-on + dialogue, with the enemy API and the
+                                 parts of Core they use: the one pack most people load
+  HaloCE_Standalone_Core/        enemy AI, HDE-derived projectiles / effects, loot director, handler, CVars,
+                                 for the faction packs
+  HaloCE_Standalone_Flood/  _Sentinels/  _Marines/
 build.py, Build_PK3s.bat   compile packs/ into dist/*.pk3
-tools/                     merge_hce_packs.py (used by build.py), update_merged_pack.py
+tools/                     merge_hce_packs.py (used by build.py), make_bundle_folder.py (made the bundle folder)
 docs/PACK_README.md        the full player-facing manual
 ```
 
@@ -28,9 +29,8 @@ You need Python 3 and nothing else.
 
 ```
 python build.py            # every pack -> dist/<Pack>.pk3
-python build.py Digsite    # just the matching packs
-python build.py --bundle   # + dist/HaloCE_Standalone_Bundle.pk3 (Core + Covenant + Digsite + voices)
-python build.py --merged   # + dist/HaloCE_Standalone_Merged.pk3 (Core + every faction + Digsite)
+python build.py Bundle     # just the matching packs
+python build.py --merged   # + dist/HaloCE_Standalone_Merged.pk3 (the bundle + Core + Flood + Sentinels + Marines)
 python build.py --all      # everything
 ```
 
@@ -41,16 +41,20 @@ On Windows, double-click `Build_PK3s.bat`.
 ## Load order
 
 ```
-HaloCE_Standalone_Core.pk3 -> any faction packs / HaloCE_Standalone_Digsite.pk3 -> HaloCE_Enemies_Voices.pk3 (optional)
--> other mods -> nashgore.pk3 (optional, last)
+HaloCE_Standalone_Bundle.pk3 -> other mods -> nashgore.pk3 (optional, last)
 ```
 
-Or `HaloCE_Standalone_Bundle.pk3` on its own.
+* **Everything:** for Flood, Sentinels and Marines too, load `HaloCE_Standalone_Merged.pk3` instead.
+* **Without the bundle:** `HaloCE_Standalone_Core.pk3 -> _Flood / _Sentinels / _Marines`.
+* **Don't mix:** never load the bundle together with `HaloCE_Standalone_Core`, because it already contains its code.
+* **Faction packs need Core:** the bundle leaves out Core's Flood / Sentinel / Marine-only sounds and models (rocket, flamethrower end, sentinel beam, sniper, magnum), so the faction packs need Core or the merged pack.
 
 ## Editing notes
 
 * **Core sources:** the core's own sources are `ZScript/HaloCE/hces_api.zsc` (enemy AI), `hces_lib.zsc` (projectiles, effects, shields), `hces_loot.zsc` (loot director) and `hce_handler.zsc` (Doom monster replacement).
-* **Defaults:** `cvarinfo.txt` in the core holds the defaults: `hces_loot`, `hces_loot_weapons`, `hce_nerf_projectiles` (0.3 here), `hce_nerf_health` and `hce_nerf_shields`.
+* **Two copies of Core:** these files, and the core sounds / sprites / models the bundle uses, exist both in `HaloCE_Standalone_Bundle/` and `HaloCE_Standalone_Core/`. **Edit both copies** (they must stay identical, or building the merged pack stops and names the file). The bundle's `sndinfo.hces_hde`, `modeldef.hces_core` and `gldefs.hces_core` are trimmed copies of Core's.
+* **Folding new packs in:** put fresh Covenant / Digsite / voice packs in `packs/`, delete the bundle folder, and run `python tools/make_bundle_folder.py`.
+* **Defaults:** `cvarinfo.txt` in the bundle and in the core holds the defaults: `hces_loot`, `hces_loot_weapons`, `hce_nerf_projectiles` (0.3 here), `hce_nerf_health` and `hce_nerf_shields`.
 * **Regenerating:** a regeneration from the HDE repo's `generator/` overwrites hand edits here, so carry them over.
 
 ## Credits and rights
