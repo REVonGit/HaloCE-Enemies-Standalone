@@ -1,6 +1,6 @@
 # Halo CE Enemy Pack for UZDoom / HaloDoom Evolved
 
-> **In this repository** the Covenant pack includes the Digsite add-on (`HaloCE_Standalone_Covenant.pk3`), and the one pk3 most people load is `HDE_CE_Covenant_Standalone.pk3`: Core, the Covenant and the voices in one file, built by `build_bundle.py`. Load it on its own. For Flood, Sentinels and Marines use the separate packs or the merged pack. The repository README has the exact load orders. Where this manual mentions the Digsite pack, that content is in the Covenant pack (and the bundle); the enemies and settings are the same.
+> **In this repository** there are four packs. `HaloCE_Standalone_Covenant.pk3` is the main one: it carries the Core, the Covenant (the Digsite add-on included) and the enemy dialogue, and needs nothing else. `HaloCE_Standalone_Flood.pk3`, `_Sentinels.pk3` and `_Marines.pk3` (with the Marine dialogue) go after it, or load `HaloCE_Standalone_Merged.pk3` for everything. Where this manual mentions `HaloCE_Standalone_Core.pk3`, `HaloCE_Enemies_Voices.pk3` or the Digsite pack, that content is in the Covenant pack (the Marine voices in the Marines pack); the enemies and settings are the same.
 
 Halo: Combat Evolved's campaign enemies (plus Marines) are extracted from the ten Xbox campaign `.map` files. Each one is an **IQM model with its full Halo animation set**, and its AI is translated from the Halo CE decomp into **ZScript** on top of an extended `enemies_base.zsc`.
 
