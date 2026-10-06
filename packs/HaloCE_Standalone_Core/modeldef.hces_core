@@ -97,6 +97,16 @@ Model HCE_ChargedPlasma
 	FrameIndex HCEM A 0 0
 }
 
+Model HCE_EnemyLaser
+{
+	Path "models/hces"
+	Model 0 "beam_simple.md3"
+	Skin 0 "BEAM_detailed.png"
+	Scale 1.0 1.0 1.0
+	USEACTORPITCH
+	FrameIndex HCEM A 0 0
+}
+
 Model HCES_Shockwave
 {
 	Path "models/hces"
