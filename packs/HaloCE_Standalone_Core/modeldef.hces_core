@@ -9,6 +9,87 @@ Model HCE_ARBullet
 	FrameIndex HCEM A 0 0
 }
 
+Model HCE_BattleRifleARBullet
+{
+	Path "models/hces"
+	Model 0 "tracer.md3"
+	Skin 0 "tracer1.tga"
+	Scale 3.0 3.0 1.5
+	PITCHFROMMOMENTUM
+	FrameIndex HCEM A 0 0
+}
+
+Model HCE_BulldogBuckshot
+{
+	Path "models/hces"
+	Model 0 "tracer.md3"
+	Skin 0 "tracer1.tga"
+	Scale 3.0 1.5 1.5
+	PITCHFROMMOMENTUM
+	FrameIndex HCEM A 0 0
+}
+
+Model HCE_CommandoARBullet
+{
+	Path "models/hces"
+	Model 0 "tracer.md3"
+	Skin 0 "tracer1.tga"
+	Scale 3.0 3.0 1.5
+	PITCHFROMMOMENTUM
+	FrameIndex HCEM A 0 0
+}
+
+Model HCE_DMRSniperBullet
+{
+	Path "models/hces"
+	Model 0 "tracer.md3"
+	Skin 0 "tracer1.tga"
+	Scale 3.0 1.5 1.5
+	PITCHFROMMOMENTUM
+	FrameIndex HCEM A 0 0
+}
+
+Model HCE_DBLShotgunPellet
+{
+	Path "models/hces"
+	Model 0 "tracer.md3"
+	Skin 0 "tracer1.tga"
+	Scale 3.0 1.5 1.5
+	PITCHFROMMOMENTUM
+	FrameIndex HCEM A 0 0
+}
+
+Model HCE_GPMGBullet
+{
+	Path "models/hces"
+	Model 0 "tracer.md3"
+	Skin 0 "tracer1.tga"
+	Scale 3.0 3.0 1.5
+	PITCHFROMMOMENTUM
+	FrameIndex HCEM A 0 0
+}
+
+Model HCE_HydraMissile
+{
+	Path "models/hces"
+	Model 0 "rocket.MD3"
+	Skin 0 "rocket.png"
+	Scale 10.0 10.0 10.0
+	AngleOffset 90
+	USEACTORPITCH
+	FrameIndex HCEM A 0 0
+}
+
+Model HCE_MA37Round
+{
+	Path "models/hces"
+	Model 0 "tracer.md3"
+	Skin 0 "tracer1.tga"
+	Scale 3.0 3.0 1.5
+	PITCHFROMMOMENTUM
+	FrameIndex HCEM A 0 0
+}
+
 Model HCE_Needle
 {
 	Path "models/hces"
@@ -75,7 +156,37 @@ Model HCE_ShotgunPellet
 	FrameIndex HCEM A 0 0
 }
 
+Model HCE_SidekickRound
+{
+	Path "models/hces"
+	Model 0 "tracer.md3"
+	Skin 0 "tracer1.tga"
+	Scale 3.0 3.0 1.5
+	PITCHFROMMOMENTUM
+	FrameIndex HCEM A 0 0
+}
+
+Model HCE_SMGRound
+{
+	Path "models/hces"
+	Model 0 "tracer.md3"
+	Skin 0 "tracer1.tga"
+	Scale 3.0 3.0 1.5
+	PITCHFROMMOMENTUM
+	FrameIndex HCEM A 0 0
+}
+
 Model HCE_SniperBullet
+{
+	Path "models/hces"
+	Model 0 "tracer.md3"
+	Skin 0 "tracer1.tga"
+	Scale 3.0 1.5 1.5
+	PITCHFROMMOMENTUM
+	FrameIndex HCEM A 0 0
+}
+
+Model HCE_StanchionRail
 {
 	Path "models/hces"
 	Model 0 "tracer.md3"

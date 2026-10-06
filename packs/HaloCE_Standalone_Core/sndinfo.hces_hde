@@ -12,12 +12,35 @@ HCES/Halo/Melee/Punch4 "sounds/hces/melee/punchhit4.ogg"
 HCES/Halo/Melee/Punch5 "sounds/hces/melee/punchhit5.ogg"
 HCES/Halo/Melee/Punch6 "sounds/hces/melee/punchhit6.ogg"
 $random HCES/Halo/Melee/Punch { HCES/Halo/Melee/Punch1 HCES/Halo/Melee/Punch2 HCES/Halo/Melee/Punch3 HCES/Halo/Melee/Punch4 HCES/Halo/Melee/Punch5 HCES/Halo/Melee/Punch6 }
+HCES/BARFIRE1 "sounds/hces/battlerifle/barfire1.ogg"
+HCES/BARFIRE2 "sounds/hces/battlerifle/barfire2.ogg"
+HCES/BARFIRE3 "sounds/hces/battlerifle/barfire3.ogg"
+HCES/BARFIRE4 "sounds/hces/battlerifle/barfire4.ogg"
+$random HCES/Halo/Weapons/BattleRifle/Fire { HCES/BARFIRE1 HCES/BARFIRE2 HCES/BARFIRE3 HCES/BARFIRE4 }
+$volume HCES/Halo/Weapons/BattleRifle/Fire 1.0
+HCES/BARLOW1 "sounds/hces/battlerifle/barlow1.ogg"
+HCES/BARLOW2 "sounds/hces/battlerifle/barlow2.ogg"
+HCES/BARLOW3 "sounds/hces/battlerifle/barlow3.ogg"
+$random HCES/Halo/Weapons/BattleRifle/Fire/Bass { HCES/BARLOW1 HCES/BARLOW2 HCES/BARLOW3 }
+$volume HCES/Halo/Weapons/BattleRifle/Fire/Bass 1.0
 HCES/Halo/Weapons/BeamRifle/Laser/Begin "sounds/hces/beamrifle/beamrifle_charge.ogg"
 HCES/BEAMRIFLE_FIRE1 "sounds/hces/beamrifle/beamrifle_fire1.ogg"
 HCES/BEAMRIFLE_FIRE2 "sounds/hces/beamrifle/beamrifle_fire2.ogg"
 $random HCES/Halo/Weapons/BeamRifle/Laser/Fire { HCES/BEAMRIFLE_FIRE1 HCES/BEAMRIFLE_FIRE2 }
 HCES/Halo/Weapons/BeamRifle/Laser/Loop "sounds/hces/beamrifle/beamrifle_loop.ogg"
 HCES/Halo/Weapons/BeamRifle/Laser/LoopEnd "sounds/hces/beamrifle/beamrifle_loopend.ogg"
+HCES/BLDFIRE1 "sounds/hces/bulldog/bulldog_fire1.ogg"
+HCES/BLDFIRE2 "sounds/hces/bulldog/bulldog_fire2.ogg"
+HCES/BLDFIRE3 "sounds/hces/bulldog/bulldog_fire3.ogg"
+$random HCES/Halo/Weapons/Bulldog/Fire { HCES/BLDFIRE1 HCES/BLDFIRE2 HCES/BLDFIRE3 }
+$volume HCES/Halo/Weapons/Bulldog/Fire 1.0
+$limit HCES/Halo/Weapons/Bulldog/Fire 0
+HCES/BLDBASS1 "sounds/hces/bulldog/bulldog_low1.ogg"
+HCES/BLDBASS2 "sounds/hces/bulldog/bulldog_low2.ogg"
+HCES/BLDBASS3 "sounds/hces/bulldog/bulldog_low3.ogg"
+$random HCES/Halo/Weapons/Bulldog/Fire/Bass { HCES/BLDBASS1 HCES/BLDBASS2 HCES/BLDBASS3 }
+$volume HCES/Halo/Weapons/Bulldog/Fire/Bass 1.0
+$limit HCES/Halo/Weapons/Bulldog/Fire/Bass 0
 HCES/CARBINE_FIRE1 "sounds/hces/carbine/carbinefire1.ogg"
 HCES/CARBINE_FIRE2 "sounds/hces/carbine/carbinefire2.ogg"
 HCES/CARBINE_FIRE3 "sounds/hces/carbine/carbinefire3.ogg"
@@ -27,6 +50,23 @@ HCES/CARBINE_LOW2 "sounds/hces/carbine/carbinelow2.ogg"
 HCES/CARBINE_LOW3 "sounds/hces/carbine/carbinelow3.ogg"
 HCES/CARBINE_LOW4 "sounds/hces/carbine/carbinelow4.ogg"
 $random HCES/Halo/Weapons/Carbine/Fire/Bass { HCES/CARBINE_LOW1 HCES/CARBINE_LOW2 HCES/CARBINE_LOW3 HCES/CARBINE_LOW4 }
+HCES/CMDO_FIR1 "sounds/hces/commando/commando_fire1.ogg"
+HCES/CMDO_FIR2 "sounds/hces/commando/commando_fire2.ogg"
+HCES/CMDO_FIR3 "sounds/hces/commando/commando_fire3.ogg"
+$random HCES/Halo/Weapons/Commando/Fire { HCES/CMDO_FIR1 HCES/CMDO_FIR2 HCES/CMDO_FIR3 }
+HCES/CMDO_LOW1 "sounds/hces/commando/commando_low1.ogg"
+HCES/CMDO_LOW2 "sounds/hces/commando/commando_low2.ogg"
+HCES/CMDO_LOW3 "sounds/hces/commando/commando_low3.ogg"
+$random HCES/Halo/Weapons/Commando/Fire/Bass { HCES/CMDO_LOW1 HCES/CMDO_LOW2 HCES/CMDO_LOW3 }
+HCES/DMR_FIRE1 "sounds/hces/dmr/dmr_fire1.ogg"
+HCES/DMR_FIRE2 "sounds/hces/dmr/dmr_fire2.ogg"
+HCES/DMR_FIRE3 "sounds/hces/dmr/dmr_fire3.ogg"
+$random HCES/Halo/Weapons/DMR/Fire { HCES/DMR_FIRE1 HCES/DMR_FIRE2 HCES/DMR_FIRE3 }
+HCES/DMR_LOW1 "sounds/hces/dmr/dmr_low1.ogg"
+HCES/DMR_LOW2 "sounds/hces/dmr/dmr_low2.ogg"
+HCES/DMR_LOW3 "sounds/hces/dmr/dmr_low3.ogg"
+$random HCES/Halo/Weapons/DMR/Fire/Bass { HCES/DMR_LOW1 HCES/DMR_LOW2 HCES/DMR_LOW3 }
+$volume HCES/Halo/Weapons/DMR/Fire/Bass 0.6
 HCES/FT_End1 "sounds/hces/flamethrower/ft_loopend1.ogg"
 HCES/FT_End2 "sounds/hces/flamethrower/ft_loopend2.ogg"
 HCES/FT_End3 "sounds/hces/flamethrower/ft_loopend3.ogg"
@@ -50,6 +90,16 @@ HCES/FUELROD_IMPACT1 "sounds/hces/fuelrod/fr_explosion1.ogg"
 HCES/FUELROD_IMPACT2 "sounds/hces/fuelrod/fr_explosion2.ogg"
 HCES/FUELROD_IMPACT3 "sounds/hces/fuelrod/fr_explosion3.ogg"
 $random HCES/Halo/Weapons/Fuelrod/Explosion { HCES/FUELROD_IMPACT1 HCES/FUELROD_IMPACT2 HCES/FUELROD_IMPACT3 }
+HCES/GPMG_FIRE1 "sounds/hces/gpmg/gpmg_fire1.ogg"
+HCES/GPMG_FIRE2 "sounds/hces/gpmg/gpmg_fire2.ogg"
+HCES/GPMG_FIRE3 "sounds/hces/gpmg/gpmg_fire3.ogg"
+HCES/GPMG_FIRE4 "sounds/hces/gpmg/gpmg_fire4.ogg"
+$random HCES/Halo/Weapons/GPMG/Fire { HCES/GPMG_FIRE1 HCES/GPMG_FIRE2 HCES/GPMG_FIRE3 HCES/GPMG_FIRE4 }
+HCES/GPMG_LOW1 "sounds/hces/gpmg/gpmg_low1.ogg"
+HCES/GPMG_LOW2 "sounds/hces/gpmg/gpmg_low2.ogg"
+HCES/GPMG_LOW3 "sounds/hces/gpmg/gpmg_low3.ogg"
+HCES/GPMG_LOW4 "sounds/hces/gpmg/gpmg_low4.ogg"
+$random HCES/Halo/Weapons/GPMG/Fire/Bass { HCES/GPMG_LOW1 HCES/GPMG_LOW2 HCES/GPMG_LOW3 HCES/GPMG_LOW4 }
 HCES/GRAVFIRE1 "sounds/hces/gravityhammer/gravhammer_hit1.ogg"
 HCES/GRAVFIRE2 "sounds/hces/gravityhammer/gravhammer_hit2.ogg"
 HCES/GRAVFIRE3 "sounds/hces/gravityhammer/gravhammer_hit3.ogg"
@@ -58,6 +108,15 @@ HCES/GRAVLOW1 "sounds/hces/gravityhammer/gravhammer_low1.ogg"
 HCES/GRAVLOW2 "sounds/hces/gravityhammer/gravhammer_low2.ogg"
 HCES/GRAVLOW3 "sounds/hces/gravityhammer/gravhammer_low3.ogg"
 $random HCES/Halo/Weapons/GravityHammer/Fire/Bass { HCES/GRAVLOW1 HCES/GRAVLOW2 HCES/GRAVLOW3 }
+HCES/GLAUNCHER_FIRE1 "sounds/hces/grenadelauncher/gl_fire1.ogg"
+HCES/GLAUNCHER_FIRE2 "sounds/hces/grenadelauncher/gl_fire2.ogg"
+HCES/GLAUNCHER_FIRE3 "sounds/hces/grenadelauncher/gl_fire3.ogg"
+$random HCES/Halo/Weapons/GrenadeLauncher/Fire { HCES/GLAUNCHER_FIRE1 HCES/GLAUNCHER_FIRE2 HCES/GLAUNCHER_FIRE3 }
+HCES/HYDRA_FIRE1 "sounds/hces/hydra/hydra_fire1.ogg"
+HCES/HYDRA_FIRE2 "sounds/hces/hydra/hydra_fire2.ogg"
+HCES/HYDRA_FIRE3 "sounds/hces/hydra/hydra_fire3.ogg"
+$random HCES/Halo/Weapons/Hydra/Fire { HCES/HYDRA_FIRE1 HCES/HYDRA_FIRE2 HCES/HYDRA_FIRE3 }
+$limit HCES/Halo/Weapons/Hydra/Fire 0
 HCES/MA5B_FIRE1 "sounds/hces/ma5b/ma5b_fire1.ogg"
 HCES/MA5B_FIRE2 "sounds/hces/ma5b/ma5b_fire2.ogg"
 HCES/MA5B_FIRE3 "sounds/hces/ma5b/ma5b_fire3.ogg"
@@ -134,6 +193,18 @@ HCES/PUL_FIRELOW3 "sounds/hces/pulsecarbine/pc_low3.ogg"
 HCES/PUL_FIRELOW4 "sounds/hces/pulsecarbine/pc_low4.ogg"
 $random HCES/Halo/Weapons/PulseCarbine/Fire/Bass { HCES/PUL_FIRELOW1 HCES/PUL_FIRELOW2 HCES/PUL_FIRELOW3 HCES/PUL_FIRELOW4 }
 $volume HCES/Halo/Weapons/PulseCarbine/Fire/Bass 0.5
+HCES/ARFIRE1 "sounds/hces/assaultrifle/arfire1.ogg"
+HCES/ARFIRE2 "sounds/hces/assaultrifle/arfire2.ogg"
+HCES/ARFIRE3 "sounds/hces/assaultrifle/arfire3.ogg"
+HCES/ARFIRE4 "sounds/hces/assaultrifle/arfire4.ogg"
+$random HCES/Halo/Weapons/Rifle/Fire { HCES/ARFIRE1 HCES/ARFIRE2 HCES/ARFIRE3 HCES/ARFIRE4 }
+$volume HCES/Halo/Weapons/Rifle/Fire 1.0
+HCES/ARBASS1 "sounds/hces/assaultrifle/arbass1.ogg"
+HCES/ARBASS2 "sounds/hces/assaultrifle/arbass2.ogg"
+HCES/ARBASS3 "sounds/hces/assaultrifle/arbass3.ogg"
+HCES/ARBASS4 "sounds/hces/assaultrifle/arbass4.ogg"
+$random HCES/Halo/Weapons/Rifle/Fire/Bass { HCES/ARBASS1 HCES/ARBASS2 HCES/ARBASS3 HCES/ARBASS4 }
+$volume HCES/Halo/Weapons/Rifle/Fire/Bass 1.0
 HCES/RL_EXPLODE1 "sounds/hces/rocketlauncher/rocket_xpl1.ogg"
 HCES/RL_EXPLODE2 "sounds/hces/rocketlauncher/rocket_xpl2.ogg"
 HCES/RL_EXPLODE3 "sounds/hces/rocketlauncher/rocket_xpl3.ogg"
@@ -144,6 +215,16 @@ HCES/RL_FIRE2 "sounds/hces/rocketlauncher/rl_fire2.ogg"
 HCES/RL_FIRE3 "sounds/hces/rocketlauncher/rl_fire3.ogg"
 $random HCES/Halo/Weapons/RocketLauncher/Fire { HCES/RL_FIRE1 HCES/RL_FIRE2 HCES/RL_FIRE3 }
 HCES/Halo/Weapons/RocketLauncher/Loop "sounds/hces/rocketlauncher/rocket_loop.ogg"
+HCES/SMG_FIRE1 "sounds/hces/smg/smg_fire1.ogg"
+HCES/SMG_FIRE2 "sounds/hces/smg/smg_fire2.ogg"
+HCES/SMG_FIRE3 "sounds/hces/smg/smg_fire3.ogg"
+$random HCES/Halo/Weapons/SMG/Fire { HCES/SMG_FIRE1 HCES/SMG_FIRE2 HCES/SMG_FIRE3 }
+$volume HCES/Halo/Weapons/SMG/Fire 1.0
+HCES/SMG_LOW1 "sounds/hces/smg/smg_low1.ogg"
+HCES/SMG_LOW2 "sounds/hces/smg/smg_low2.ogg"
+HCES/SMG_LOW3 "sounds/hces/smg/smg_low3.ogg"
+$random HCES/Halo/Weapons/SMG/Fire/Bass { HCES/SMG_LOW1 HCES/SMG_LOW2 HCES/SMG_LOW3 }
+$volume HCES/Halo/Weapons/SMG/Fire/Bass 1.0
 HCES/SBEAM_FIRESTART1 "sounds/hces/sentinel_beam/sb_fire_start1.ogg"
 HCES/SBEAM_FIRESTART2 "sounds/hces/sentinel_beam/sb_fire_start2.ogg"
 HCES/SBEAM_FIRESTART3 "sounds/hces/sentinel_beam/sb_fire_start3.ogg"
@@ -165,6 +246,17 @@ HCES/SGBASS2 "sounds/hces/shotgun/sgbass2.ogg"
 HCES/SGBASS3 "sounds/hces/shotgun/sgbass3.ogg"
 $random HCES/Halo/Weapons/Shotgun/Fire/Bass { HCES/SGBASS1 HCES/SGBASS2 HCES/SGBASS3 }
 $volume HCES/Halo/Weapons/Shotgun/Fire/Bass 1.0
+HCES/SIDEKICK_FIRE1 "sounds/hces/sidekick/sidekick_fire1.ogg"
+HCES/SIDEKICK_FIRE2 "sounds/hces/sidekick/sidekick_fire2.ogg"
+HCES/SIDEKICK_FIRE3 "sounds/hces/sidekick/sidekick_fire3.ogg"
+HCES/SIDEKICK_FIRE4 "sounds/hces/sidekick/sidekick_fire4.ogg"
+$random HCES/Halo/Weapons/Sidekick/Fire { HCES/SIDEKICK_FIRE1 HCES/SIDEKICK_FIRE2 HCES/SIDEKICK_FIRE3 HCES/SIDEKICK_FIRE4 }
+$volume HCES/Halo/Weapons/Sidekick/Fire 0.7
+HCES/SIDEKICK_LOW1 "sounds/hces/sidekick/sidekick_low1.ogg"
+HCES/SIDEKICK_LOW2 "sounds/hces/sidekick/sidekick_low2.ogg"
+HCES/SIDEKICK_LOW3 "sounds/hces/sidekick/sidekick_low3.ogg"
+$random HCES/Halo/Weapons/Sidekick/Fire/Bass { HCES/SIDEKICK_LOW1 HCES/SIDEKICK_LOW2 HCES/SIDEKICK_LOW3 }
+$volume HCES/Halo/Weapons/Sidekick/Fire/Bass 1.0
 HCES/SNIPER_FIRE1 "sounds/hces/sniperrifle/snprfir1.ogg"
 HCES/SNIPER_FIRE2 "sounds/hces/sniperrifle/snprfir2.ogg"
 HCES/SNIPER_FIRE3 "sounds/hces/sniperrifle/snprfir3.ogg"
@@ -190,6 +282,28 @@ HCES/SPIKER_IMPACT1 "sounds/hces/spiker/spiker_impact1.wav"
 HCES/SPIKER_IMPACT2 "sounds/hces/spiker/spiker_impact2.wav"
 HCES/SPIKER_IMPACT3 "sounds/hces/spiker/spiker_impact3.wav"
 $random HCES/Halo/Weapons/Spiker/Impact { HCES/SPIKER_IMPACT1 HCES/SPIKER_IMPACT2 HCES/SPIKER_IMPACT3 }
+HCES/Halo/Weapons/Stanchion/Charge/PreFire "sounds/hces/stanchion/stanch_charge_prefire.ogg"
+HCES/Stanchion_Fire1 "sounds/hces/stanchion/stanchionfire1.ogg"
+HCES/Stanchion_Fire2 "sounds/hces/stanchion/stanchionfire2.ogg"
+HCES/Stanchion_Fire3 "sounds/hces/stanchion/stanchionfire3.ogg"
+HCES/Stanchion_Fire4 "sounds/hces/stanchion/stanchionfire4.ogg"
+$random HCES/Halo/Weapons/Stanchion/Fire { HCES/Stanchion_Fire1 HCES/Stanchion_Fire2 HCES/Stanchion_Fire3 HCES/Stanchion_Fire4 }
+HCES/Halo/Weapons/Stanchion/Fire/Bass "sounds/hces/stanchion/stanchionbass.ogg"
+HCES/DET_FIRE1 "sounds/hces/stickydet/stickydet_fire1.ogg"
+HCES/DET_FIRE2 "sounds/hces/stickydet/stickydet_fire2.ogg"
+HCES/DET_FIRE3 "sounds/hces/stickydet/stickydet_fire3.ogg"
+HCES/DET_FIRE4 "sounds/hces/stickydet/stickydet_fire4.ogg"
+$random HCES/Halo/Weapons/StickyDet/Fire { HCES/DET_FIRE1 HCES/DET_FIRE2 HCES/DET_FIRE3 HCES/DET_FIRE4 }
+HCES/DBFIRE1 "sounds/hces/supershotgun/dbfire1.ogg"
+HCES/DBFIRE2 "sounds/hces/supershotgun/dbfire2.ogg"
+HCES/DBFIRE3 "sounds/hces/supershotgun/dbfire3.ogg"
+HCES/DBFIRE4 "sounds/hces/supershotgun/dbfire4.ogg"
+$random HCES/Halo/Weapons/SuperShotgun/Fire { HCES/DBFIRE1 HCES/DBFIRE2 HCES/DBFIRE3 HCES/DBFIRE4 }
+HCES/DBBASS1 "sounds/hces/supershotgun/dbbass1.ogg"
+HCES/DBBASS2 "sounds/hces/supershotgun/dbbass2.ogg"
+HCES/DBBASS3 "sounds/hces/supershotgun/dbbass3.ogg"
+HCES/DBBASS4 "sounds/hces/supershotgun/dbbass4.ogg"
+$random HCES/Halo/Weapons/SuperShotgun/Fire/Bass { HCES/DBBASS1 HCES/DBBASS2 HCES/DBBASS3 HCES/DBBASS4 }
 HCES/NDLRICOCHET1 "sounds/hces/needler/ricochet/needle_ricochet1.ogg"
 HCES/NDLRICOCHET2 "sounds/hces/needler/ricochet/needle_ricochet2.ogg"
 HCES/NDLRICOCHET3 "sounds/hces/needler/ricochet/needle_ricochet3.ogg"

@@ -4,6 +4,31 @@ object HCE_ARBullet
 	frame HCEM { light HCES_YellowLight }
 }
 
+object HCE_BattleRifleARBullet
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
+object HCE_BulldogBuckshot
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
+object HCE_CommandoARBullet
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
+object HCE_DMRSniperBullet
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
+object HCE_DBLShotgunPellet
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
 object HCE_Flame
 {
 	frame HZT1 { light HCES_OrangeLight }
@@ -13,6 +38,21 @@ object HCE_Flame
 object HCE_FuelRodBolt
 {
 	frame HZFP { light HCES_GreenLightBig }
+}
+
+object HCE_GPMGBullet
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
+object HCE_HydraMissile
+{
+	frame HCEM { light HCES_OrangeLight }
+}
+
+object HCE_MA37Round
+{
+	frame HCEM { light HCES_YellowLight }
 }
 
 object HCE_Needle
@@ -50,9 +90,29 @@ object HCE_ShotgunPellet
 	frame HCEM { light HCES_YellowLight }
 }
 
+object HCE_SidekickRound
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
+object HCE_SMGRound
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
 object HCE_SniperBullet
 {
 	frame HCEM { light HCES_YellowLight }
+}
+
+object HCE_StanchionRail
+{
+	frame HCEM { light HCES_YellowLight }
+}
+
+object HCE_StickyDetCharge
+{
+	frame HZPG { light HCES_BlueLight }
 }
 
 object HCE_ChargedPlasma

@@ -7,10 +7,50 @@ class HCE_ARBullet : HCES_ARBullet
 	}
 }
 
+class HCE_BattleRifleARBullet : HCES_ARBullet
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 12;
+	}
+}
+
 class HCE_H2BeamShot : HCE_BeamPuff
 {
 	Default
 	{
+	}
+}
+
+class HCE_BulldogBuckshot : HCES_ShotgunPellet
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 7;
+	}
+}
+
+class HCE_CommandoARBullet : HCES_ARBullet
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 14;
+	}
+}
+
+class HCE_DMRSniperBullet : HCES_SniperBullet
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 24;
+	}
+}
+
+class HCE_DBLShotgunPellet : HCES_ShotgunPellet
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 9;
 	}
 }
 
@@ -25,6 +65,36 @@ class HCE_FuelRodBolt : HCES_FuelRod
 {
 	Default
 	{
+	}
+}
+
+class HCE_GPMGBullet : HCES_ARBullet
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 15;
+	}
+}
+
+class HCE_40mmGrenade : HCES_FragGrenade
+{
+	Default
+	{
+	}
+}
+
+class HCE_HydraMissile : HCES_Rocket
+{
+	Default
+	{
+	}
+}
+
+class HCE_MA37Round : HCES_ARBullet
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 9;
 	}
 }
 
@@ -81,11 +151,42 @@ class HCE_ShotgunPellet : HCES_ShotgunPellet
 	}
 }
 
+class HCE_SidekickRound : HCES_PistolBullet
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 18;
+	}
+}
+
+class HCE_SMGRound : HCES_ARBullet
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 6;
+	}
+}
+
 class HCE_SniperBullet : HCES_SniperBullet
 {
 	Default
 	{
 		HCES_Projectile.BaseDamage 101;
+	}
+}
+
+class HCE_StanchionRail : HCES_SniperBullet
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 150;
+	}
+}
+
+class HCE_StickyDetCharge : HCES_PlasmaGrenade
+{
+	Default
+	{
 	}
 }
 
