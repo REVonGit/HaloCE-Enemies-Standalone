@@ -67,4 +67,8 @@ HaloCE_Standalone_Covenant.pk3 -> HaloCE_Standalone_Flood / _Sentinels / _Marine
 * **Halo assets:** Halo, its characters, models, textures and sounds are property of Microsoft / 343 Industries / Bungie, used under the Game Content Usage Rules (non-commercial).
 * **Digsite and SPV3:** the Digsite add-on uses Digsite source assets (licensed for MCC projects only) and SPV3 content. **Keep this repository private** unless you have cleared that.
 * **HaloDoom Evolved:** the projectile, effect and shield code and its sounds, sprites and models are ported from HaloDoom Evolved (Local_DEV); see `CREDITS_STANDALONE.txt` in the core.
+* **Gore:** the gore stumps and gore textures are by Tropical Thunder 98, from the XAM Campaign Overhaul.
+* **Engineer:** from Halo CE Ruby's Rebalance.
+* **Blind Wolf and Thorn Beast:** created by SOI_7.
+* **Marine kit:** the extra Marine accessories and permutations are Elefant's.
 * **Other credits:** Lewisk3/HaloDoomEnemies (voice files). Nash's Gore Mod is optional and not included.
