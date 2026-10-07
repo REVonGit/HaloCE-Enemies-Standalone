@@ -55,6 +55,16 @@ object HCE_MA37Round
 	frame HCEM { light HCES_YellowLight }
 }
 
+object HCE_MarinePulseBolt
+{
+	frame HCEM { light HCES_BlueLight }
+}
+
+object HCE_BallistaNeedle
+{
+	frame HCEM { light HCES_PinkLight }
+}
+
 object HCE_Needle
 {
 	frame HCEM { light HCES_PinkLight }
@@ -63,6 +73,11 @@ object HCE_Needle
 object HCE_PistolBullet
 {
 	frame HCEM { light HCES_YellowLight }
+}
+
+object HCE_CarbineRound
+{
+	frame HCEM { light HCES_GreenLight }
 }
 
 object HCE_PlasmaCasterGrenade
@@ -103,6 +118,11 @@ object HCE_SMGRound
 object HCE_SniperBullet
 {
 	frame HCEM { light HCES_YellowLight }
+}
+
+object HCE_SpikerSpike
+{
+	frame HCEM { light HCES_OrangeLight }
 }
 
 object HCE_StanchionRail

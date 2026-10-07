@@ -98,6 +98,21 @@ class HCE_MA37Round : HCES_ARBullet
 	}
 }
 
+class HCE_MarinePulseBolt : HCES_PulseCarbineProj
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 8;
+	}
+}
+
+class HCE_BallistaNeedle : HCES_Needle
+{
+	Default
+	{
+	}
+}
+
 class HCE_Needle : HCES_Needle
 {
 	Default
@@ -110,6 +125,14 @@ class HCE_PistolBullet : HCES_PistolBullet
 	Default
 	{
 		HCES_Projectile.BaseDamage 25;
+	}
+}
+
+class HCE_CarbineRound : HCES_CarbineBullet
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 15;
 	}
 }
 
@@ -172,6 +195,14 @@ class HCE_SniperBullet : HCES_SniperBullet
 	Default
 	{
 		HCES_Projectile.BaseDamage 101;
+	}
+}
+
+class HCE_SpikerSpike : HCES_SpikerSpike
+{
+	Default
+	{
+		HCES_SlowProjectile.BaseDamage 10;
 	}
 }
 

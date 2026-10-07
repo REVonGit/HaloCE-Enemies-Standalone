@@ -6,26 +6,10 @@ class HCE_BeamRifleShot : HCE_BeamPuff
 	}
 }
 
-class HCE_CarbineRound : HCES_CarbineBullet
-{
-	Default
-	{
-		HCES_Projectile.BaseDamage 15;
-	}
-}
-
 class HCE_PulseCarbineBolt : HCE_PulseCarbineHoming
 {
 	Default
 	{
 		HCES_Projectile.BaseDamage 8;
-	}
-}
-
-class HCE_SpikerSpike : HCES_SpikerSpike
-{
-	Default
-	{
-		HCES_SlowProjectile.BaseDamage 10;
 	}
 }
