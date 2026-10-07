@@ -71,4 +71,6 @@ HaloCE_Standalone_Covenant.pk3 -> HaloCE_Standalone_Flood / _Sentinels / _Marine
 * **Engineer:** from Halo CE Ruby's Rebalance.
 * **Blind Wolf and Thorn Beast:** created by SOI_7.
 * **Marine kit:** the extra Marine accessories and permutations are Elefant's.
+* **Additional Brute and Elite content:** by Shigure (the Ultra Zealot's armour and arm shield among it).
+* **Elite Vanguard animations:** by Masterz1337 and Ruby of Blue (the shield Elite's animations, which the Ultra Zealot's sword stance uses).
 * **Other credits:** Lewisk3/HaloDoomEnemies (voice files). Nash's Gore Mod is optional and not included.
