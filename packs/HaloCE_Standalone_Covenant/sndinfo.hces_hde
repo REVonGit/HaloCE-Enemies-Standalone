@@ -12,6 +12,11 @@ HCES/Halo/Melee/Punch4 "sounds/hces/melee/punchhit4.ogg"
 HCES/Halo/Melee/Punch5 "sounds/hces/melee/punchhit5.ogg"
 HCES/Halo/Melee/Punch6 "sounds/hces/melee/punchhit6.ogg"
 $random HCES/Halo/Melee/Punch { HCES/Halo/Melee/Punch1 HCES/Halo/Melee/Punch2 HCES/Halo/Melee/Punch3 HCES/Halo/Melee/Punch4 HCES/Halo/Melee/Punch5 HCES/Halo/Melee/Punch6 }
+HCES/JETBURST1 "sounds/hces/items/jetpack/jetpack_burst1.ogg"
+HCES/JETBURST2 "sounds/hces/items/jetpack/jetpack_burst2.ogg"
+HCES/JETBURST3 "sounds/hces/items/jetpack/jetpack_burst3.ogg"
+$random HCES/Halo/Powerup/Jetpack/Burst { HCES/JETBURST1 HCES/JETBURST2 HCES/JETBURST3 }
+HCES/Halo/Powerup/Jetpack/Off "sounds/hces/items/jetpack/jetpack_off.ogg"
 HCES/BARFIRE1 "sounds/hces/battlerifle/barfire1.ogg"
 HCES/BARFIRE2 "sounds/hces/battlerifle/barfire2.ogg"
 HCES/BARFIRE3 "sounds/hces/battlerifle/barfire3.ogg"
