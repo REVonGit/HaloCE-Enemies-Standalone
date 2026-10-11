@@ -2,6 +2,8 @@ AddOptionMenu "OptionsMenu"
 {
 	Submenu "Halo CE Gore", "HCE_GoreOptions"
 	Submenu "Halo CE AI", "HCE_AIOptions"
+	Submenu "Halo CE Performance", "HCE_PerfOptions"
+	Submenu "Halo CE Bestiary", "HCE_Bestiary"
 }
 
 OptionValue "HCE_Difficulty"
@@ -62,4 +64,61 @@ OptionMenu "HCE_GoreOptions"
 	StaticText ""
 	Option "Halo blood with NashGore", "hce_halogore", "OnOff"
 	StaticText "With NashGore loaded: Halo CE / Halo 2 decals and bursts.", 1
+}
+
+OptionMenu "HCE_PerfOptions"
+{
+	Title "Halo CE Performance"
+	Slider "Gore amount", "hce_gorescale", 0, 1, 0.05, 2
+	StaticText "Share of blood spurts, gibs and gore puffs spawned.", 1
+	StaticText ""
+	Option "Simple active camo", "hce_simpleshaders", "OnOff"
+	StaticText "Cloaked enemies drawn as a faint body without", 1
+	StaticText "the camo shimmer shader. Applies to newly spawned enemies.", 1
+	StaticText ""
+	Option "Garbage collector", "hce_cleanup", "OnOff"
+	StaticText "Removes the oldest bodies, limbs and gore splats past", 1
+	StaticText "the limits below. Never anything a player can see.", 1
+	Slider "Bodies kept", "hce_maxcorpses", 0, 256, 4, 0
+	Slider "Severed limbs kept", "hce_maxgibs", 0, 128, 4, 0
+	Slider "Gore splats kept", "hce_maxgore", 0, 256, 8, 0
+}
+
+ListMenu "HCE_Bestiary"
+{
+	Class "HCE_BestiaryMenu"
+}
+
+AddOptionMenu "OptionsMenu"
+{
+	Submenu "Halo CE Skulls", "HCES_Skulls"
+}
+
+OptionMenu "HCES_Skulls"
+{
+	Title "Halo CE Skulls"
+	Option "Grunt Birthday Party", "hces_skull_gruntbirthdayparty", "OnOff"
+	StaticText "Headshot kills burst into confetti.", 1
+	Option "Grunt Funeral", "hces_skull_gruntfuneral", "OnOff"
+	StaticText "Grunts explode when they die.", 1
+	Option "Zombie Funeral", "hces_skull_zombiefuneral", "OnOff"
+	StaticText "The Flood and zombies explode when they die.", 1
+	Option "Mythic", "hces_skull_mythic", "OnOff"
+	StaticText "Enemies have twice the health and shields.", 1
+	Option "Thunderstorm", "hces_skull_thunderstorm", "OnOff"
+	StaticText "Enemies come one rank up.", 1
+	Option "Anger", "hces_skull_anger", "OnOff"
+	StaticText "Enemies fire faster and pause less.", 1
+	Option "Catch", "hces_skull_catch", "OnOff"
+	StaticText "Enemies throw grenades twice as often.", 1
+	Option "Tough Luck", "hces_skull_toughluck", "OnOff"
+	StaticText "Enemies always dodge.", 1
+	Option "Ghost", "hces_skull_ghost", "OnOff"
+	StaticText "Enemies never flinch.", 1
+	Option "Assassins", "hces_skull_assassins", "OnOff"
+	StaticText "Every enemy wears active camo.", 1
+	Option "Famine", "hces_skull_famine", "OnOff"
+	StaticText "Enemies leave half the loot.", 1
+	Option "Bandana", "hces_skull_bandana", "OnOff"
+	StaticText "Infinite ammo.", 1
 }

@@ -12,6 +12,7 @@ HCES/Halo/Melee/Punch4 "sounds/hces/melee/punchhit4.ogg"
 HCES/Halo/Melee/Punch5 "sounds/hces/melee/punchhit5.ogg"
 HCES/Halo/Melee/Punch6 "sounds/hces/melee/punchhit6.ogg"
 $random HCES/Halo/Melee/Punch { HCES/Halo/Melee/Punch1 HCES/Halo/Melee/Punch2 HCES/Halo/Melee/Punch3 HCES/Halo/Melee/Punch4 HCES/Halo/Melee/Punch5 HCES/Halo/Melee/Punch6 }
+HCES/Halo/Skulls/ConfettiPop "sounds/hces/skulls/grunt_birthday_pop.ogg"
 HCES/BARFIRE1 "sounds/hces/battlerifle/barfire1.ogg"
 HCES/BARFIRE2 "sounds/hces/battlerifle/barfire2.ogg"
 HCES/BARFIRE3 "sounds/hces/battlerifle/barfire3.ogg"
