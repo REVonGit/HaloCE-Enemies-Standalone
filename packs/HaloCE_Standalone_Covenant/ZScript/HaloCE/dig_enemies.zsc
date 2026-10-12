@@ -1977,6 +1977,16 @@ class HCE_BruteCaptainPlasmaCaster : HCE_BruteBase
 			hce_prevLeap = hce_leapState;
 		}
 		if(hce_fallTics > 0 && --hce_fallTics == 0) A_StartSound("HCE/Brute/BodyFall", CHAN_BODY, CHANF_OVERLAP, 0.9);
+		// the Stalker's eye: a red glint on its head that its camo doesn't hide, flaring now and then
+		if(bHCE_ActiveCamo && health > 0 && !(hce_severed & 1) && !isFrozen())
+		{
+			vector3 h = HCE_LimbOffset(HCE_LIMB_HEAD);
+			vector2 fw = AngleToVector(angle), lf = AngleToVector(angle + 90);
+			vector3 at = (fw * (h.x + radius * 0.35) + lf * h.y, h.z * 0.98);
+			double fl = (level.maptime % 70 < 6) ? 2.0 : 1.0 + 0.2 * sin(level.maptime * 24.0);
+			A_SpawnParticle("FF2010", SPF_FULLBRIGHT, 2, 3.5 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 0.95);
+			A_SpawnParticle("FF9080", SPF_FULLBRIGHT, 2, 1.4 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 1.0);
+		}
 		if(health > 0 && !isFrozen())
 		{
 			// footfalls: the API's HCE_StepTick (Halo 2's Brute footsteps by surface, extract_footsteps.py)
@@ -2478,6 +2488,16 @@ class HCE_BruteCaptainPlasmaRifle : HCE_BruteBase
 			hce_prevLeap = hce_leapState;
 		}
 		if(hce_fallTics > 0 && --hce_fallTics == 0) A_StartSound("HCE/Brute/BodyFall", CHAN_BODY, CHANF_OVERLAP, 0.9);
+		// the Stalker's eye: a red glint on its head that its camo doesn't hide, flaring now and then
+		if(bHCE_ActiveCamo && health > 0 && !(hce_severed & 1) && !isFrozen())
+		{
+			vector3 h = HCE_LimbOffset(HCE_LIMB_HEAD);
+			vector2 fw = AngleToVector(angle), lf = AngleToVector(angle + 90);
+			vector3 at = (fw * (h.x + radius * 0.35) + lf * h.y, h.z * 0.98);
+			double fl = (level.maptime % 70 < 6) ? 2.0 : 1.0 + 0.2 * sin(level.maptime * 24.0);
+			A_SpawnParticle("FF2010", SPF_FULLBRIGHT, 2, 3.5 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 0.95);
+			A_SpawnParticle("FF9080", SPF_FULLBRIGHT, 2, 1.4 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 1.0);
+		}
 		if(health > 0 && !isFrozen())
 		{
 			// footfalls: the API's HCE_StepTick (Halo 2's Brute footsteps by surface, extract_footsteps.py)
@@ -2969,6 +2989,16 @@ class HCE_BruteCaptainShotgun : HCE_BruteBase
 			hce_prevLeap = hce_leapState;
 		}
 		if(hce_fallTics > 0 && --hce_fallTics == 0) A_StartSound("HCE/Brute/BodyFall", CHAN_BODY, CHANF_OVERLAP, 0.9);
+		// the Stalker's eye: a red glint on its head that its camo doesn't hide, flaring now and then
+		if(bHCE_ActiveCamo && health > 0 && !(hce_severed & 1) && !isFrozen())
+		{
+			vector3 h = HCE_LimbOffset(HCE_LIMB_HEAD);
+			vector2 fw = AngleToVector(angle), lf = AngleToVector(angle + 90);
+			vector3 at = (fw * (h.x + radius * 0.35) + lf * h.y, h.z * 0.98);
+			double fl = (level.maptime % 70 < 6) ? 2.0 : 1.0 + 0.2 * sin(level.maptime * 24.0);
+			A_SpawnParticle("FF2010", SPF_FULLBRIGHT, 2, 3.5 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 0.95);
+			A_SpawnParticle("FF9080", SPF_FULLBRIGHT, 2, 1.4 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 1.0);
+		}
 		if(health > 0 && !isFrozen())
 		{
 			// footfalls: the API's HCE_StepTick (Halo 2's Brute footsteps by surface, extract_footsteps.py)
@@ -3460,6 +3490,16 @@ class HCE_BruteChieftainGravityHammer : HCE_BruteBase
 			hce_prevLeap = hce_leapState;
 		}
 		if(hce_fallTics > 0 && --hce_fallTics == 0) A_StartSound("HCE/Brute/BodyFall", CHAN_BODY, CHANF_OVERLAP, 0.9);
+		// the Stalker's eye: a red glint on its head that its camo doesn't hide, flaring now and then
+		if(bHCE_ActiveCamo && health > 0 && !(hce_severed & 1) && !isFrozen())
+		{
+			vector3 h = HCE_LimbOffset(HCE_LIMB_HEAD);
+			vector2 fw = AngleToVector(angle), lf = AngleToVector(angle + 90);
+			vector3 at = (fw * (h.x + radius * 0.35) + lf * h.y, h.z * 0.98);
+			double fl = (level.maptime % 70 < 6) ? 2.0 : 1.0 + 0.2 * sin(level.maptime * 24.0);
+			A_SpawnParticle("FF2010", SPF_FULLBRIGHT, 2, 3.5 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 0.95);
+			A_SpawnParticle("FF9080", SPF_FULLBRIGHT, 2, 1.4 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 1.0);
+		}
 		if(health > 0 && !isFrozen())
 		{
 			// footfalls: the API's HCE_StepTick (Halo 2's Brute footsteps by surface, extract_footsteps.py)
@@ -3949,6 +3989,16 @@ class HCE_BruteHonorGuardAssaultRifle : HCE_BruteBase
 			hce_prevLeap = hce_leapState;
 		}
 		if(hce_fallTics > 0 && --hce_fallTics == 0) A_StartSound("HCE/Brute/BodyFall", CHAN_BODY, CHANF_OVERLAP, 0.9);
+		// the Stalker's eye: a red glint on its head that its camo doesn't hide, flaring now and then
+		if(bHCE_ActiveCamo && health > 0 && !(hce_severed & 1) && !isFrozen())
+		{
+			vector3 h = HCE_LimbOffset(HCE_LIMB_HEAD);
+			vector2 fw = AngleToVector(angle), lf = AngleToVector(angle + 90);
+			vector3 at = (fw * (h.x + radius * 0.35) + lf * h.y, h.z * 0.98);
+			double fl = (level.maptime % 70 < 6) ? 2.0 : 1.0 + 0.2 * sin(level.maptime * 24.0);
+			A_SpawnParticle("FF2010", SPF_FULLBRIGHT, 2, 3.5 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 0.95);
+			A_SpawnParticle("FF9080", SPF_FULLBRIGHT, 2, 1.4 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 1.0);
+		}
 		if(health > 0 && !isFrozen())
 		{
 			// footfalls: the API's HCE_StepTick (Halo 2's Brute footsteps by surface, extract_footsteps.py)
@@ -4436,6 +4486,16 @@ class HCE_BruteHonorGuardPlasmaRifle : HCE_BruteBase
 			hce_prevLeap = hce_leapState;
 		}
 		if(hce_fallTics > 0 && --hce_fallTics == 0) A_StartSound("HCE/Brute/BodyFall", CHAN_BODY, CHANF_OVERLAP, 0.9);
+		// the Stalker's eye: a red glint on its head that its camo doesn't hide, flaring now and then
+		if(bHCE_ActiveCamo && health > 0 && !(hce_severed & 1) && !isFrozen())
+		{
+			vector3 h = HCE_LimbOffset(HCE_LIMB_HEAD);
+			vector2 fw = AngleToVector(angle), lf = AngleToVector(angle + 90);
+			vector3 at = (fw * (h.x + radius * 0.35) + lf * h.y, h.z * 0.98);
+			double fl = (level.maptime % 70 < 6) ? 2.0 : 1.0 + 0.2 * sin(level.maptime * 24.0);
+			A_SpawnParticle("FF2010", SPF_FULLBRIGHT, 2, 3.5 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 0.95);
+			A_SpawnParticle("FF9080", SPF_FULLBRIGHT, 2, 1.4 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 1.0);
+		}
 		if(health > 0 && !isFrozen())
 		{
 			// footfalls: the API's HCE_StepTick (Halo 2's Brute footsteps by surface, extract_footsteps.py)
@@ -4923,6 +4983,16 @@ class HCE_BruteMajorShotgun : HCE_BruteBase
 			hce_prevLeap = hce_leapState;
 		}
 		if(hce_fallTics > 0 && --hce_fallTics == 0) A_StartSound("HCE/Brute/BodyFall", CHAN_BODY, CHANF_OVERLAP, 0.9);
+		// the Stalker's eye: a red glint on its head that its camo doesn't hide, flaring now and then
+		if(bHCE_ActiveCamo && health > 0 && !(hce_severed & 1) && !isFrozen())
+		{
+			vector3 h = HCE_LimbOffset(HCE_LIMB_HEAD);
+			vector2 fw = AngleToVector(angle), lf = AngleToVector(angle + 90);
+			vector3 at = (fw * (h.x + radius * 0.35) + lf * h.y, h.z * 0.98);
+			double fl = (level.maptime % 70 < 6) ? 2.0 : 1.0 + 0.2 * sin(level.maptime * 24.0);
+			A_SpawnParticle("FF2010", SPF_FULLBRIGHT, 2, 3.5 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 0.95);
+			A_SpawnParticle("FF9080", SPF_FULLBRIGHT, 2, 1.4 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 1.0);
+		}
 		if(health > 0 && !isFrozen())
 		{
 			// footfalls: the API's HCE_StepTick (Halo 2's Brute footsteps by surface, extract_footsteps.py)
@@ -5415,6 +5485,16 @@ class HCE_BruteMajorSpiker : HCE_BruteBase
 			hce_prevLeap = hce_leapState;
 		}
 		if(hce_fallTics > 0 && --hce_fallTics == 0) A_StartSound("HCE/Brute/BodyFall", CHAN_BODY, CHANF_OVERLAP, 0.9);
+		// the Stalker's eye: a red glint on its head that its camo doesn't hide, flaring now and then
+		if(bHCE_ActiveCamo && health > 0 && !(hce_severed & 1) && !isFrozen())
+		{
+			vector3 h = HCE_LimbOffset(HCE_LIMB_HEAD);
+			vector2 fw = AngleToVector(angle), lf = AngleToVector(angle + 90);
+			vector3 at = (fw * (h.x + radius * 0.35) + lf * h.y, h.z * 0.98);
+			double fl = (level.maptime % 70 < 6) ? 2.0 : 1.0 + 0.2 * sin(level.maptime * 24.0);
+			A_SpawnParticle("FF2010", SPF_FULLBRIGHT, 2, 3.5 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 0.95);
+			A_SpawnParticle("FF9080", SPF_FULLBRIGHT, 2, 1.4 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 1.0);
+		}
 		if(health > 0 && !isFrozen())
 		{
 			// footfalls: the API's HCE_StepTick (Halo 2's Brute footsteps by surface, extract_footsteps.py)
@@ -5907,6 +5987,16 @@ class HCE_BruteMinorAssaultRifle : HCE_BruteBase
 			hce_prevLeap = hce_leapState;
 		}
 		if(hce_fallTics > 0 && --hce_fallTics == 0) A_StartSound("HCE/Brute/BodyFall", CHAN_BODY, CHANF_OVERLAP, 0.9);
+		// the Stalker's eye: a red glint on its head that its camo doesn't hide, flaring now and then
+		if(bHCE_ActiveCamo && health > 0 && !(hce_severed & 1) && !isFrozen())
+		{
+			vector3 h = HCE_LimbOffset(HCE_LIMB_HEAD);
+			vector2 fw = AngleToVector(angle), lf = AngleToVector(angle + 90);
+			vector3 at = (fw * (h.x + radius * 0.35) + lf * h.y, h.z * 0.98);
+			double fl = (level.maptime % 70 < 6) ? 2.0 : 1.0 + 0.2 * sin(level.maptime * 24.0);
+			A_SpawnParticle("FF2010", SPF_FULLBRIGHT, 2, 3.5 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 0.95);
+			A_SpawnParticle("FF9080", SPF_FULLBRIGHT, 2, 1.4 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 1.0);
+		}
 		if(health > 0 && !isFrozen())
 		{
 			// footfalls: the API's HCE_StepTick (Halo 2's Brute footsteps by surface, extract_footsteps.py)
@@ -6399,6 +6489,16 @@ class HCE_BruteMinorPlasmaRifle : HCE_BruteBase
 			hce_prevLeap = hce_leapState;
 		}
 		if(hce_fallTics > 0 && --hce_fallTics == 0) A_StartSound("HCE/Brute/BodyFall", CHAN_BODY, CHANF_OVERLAP, 0.9);
+		// the Stalker's eye: a red glint on its head that its camo doesn't hide, flaring now and then
+		if(bHCE_ActiveCamo && health > 0 && !(hce_severed & 1) && !isFrozen())
+		{
+			vector3 h = HCE_LimbOffset(HCE_LIMB_HEAD);
+			vector2 fw = AngleToVector(angle), lf = AngleToVector(angle + 90);
+			vector3 at = (fw * (h.x + radius * 0.35) + lf * h.y, h.z * 0.98);
+			double fl = (level.maptime % 70 < 6) ? 2.0 : 1.0 + 0.2 * sin(level.maptime * 24.0);
+			A_SpawnParticle("FF2010", SPF_FULLBRIGHT, 2, 3.5 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 0.95);
+			A_SpawnParticle("FF9080", SPF_FULLBRIGHT, 2, 1.4 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 1.0);
+		}
 		if(health > 0 && !isFrozen())
 		{
 			// footfalls: the API's HCE_StepTick (Halo 2's Brute footsteps by surface, extract_footsteps.py)
@@ -6892,6 +6992,16 @@ class HCE_BruteStalkerSpiker : HCE_BruteBase
 			hce_prevLeap = hce_leapState;
 		}
 		if(hce_fallTics > 0 && --hce_fallTics == 0) A_StartSound("HCE/Brute/BodyFall", CHAN_BODY, CHANF_OVERLAP, 0.9);
+		// the Stalker's eye: a red glint on its head that its camo doesn't hide, flaring now and then
+		if(bHCE_ActiveCamo && health > 0 && !(hce_severed & 1) && !isFrozen())
+		{
+			vector3 h = HCE_LimbOffset(HCE_LIMB_HEAD);
+			vector2 fw = AngleToVector(angle), lf = AngleToVector(angle + 90);
+			vector3 at = (fw * (h.x + radius * 0.35) + lf * h.y, h.z * 0.98);
+			double fl = (level.maptime % 70 < 6) ? 2.0 : 1.0 + 0.2 * sin(level.maptime * 24.0);
+			A_SpawnParticle("FF2010", SPF_FULLBRIGHT, 2, 3.5 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 0.95);
+			A_SpawnParticle("FF9080", SPF_FULLBRIGHT, 2, 1.4 * fl, 0, at.x, at.y, at.z, 0, 0, 0, 0, 0, 0, 1.0);
+		}
 		if(health > 0 && !isFrozen())
 		{
 			// footfalls: the API's HCE_StepTick (Halo 2's Brute footsteps by surface, extract_footsteps.py)
@@ -7000,10 +7110,10 @@ class HCE_BruteStalkerSpiker : HCE_BruteBase
 	}
 	override void HCE_PlainShaders()      // hce_simpleshaders: the camo skins without the camo shader
 	{
-		A_ChangeModel('None', 0, "", 'None', 0, "models/hce_dig/Brute/skins", 'brute_major_bth_brute_plain.png', CMDL_USESURFACESKIN);
+		A_ChangeModel('None', 0, "", 'None', 0, "models/hce_dig/Brute/skins", 'brute_stalker_major_bth_brute_plain.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 0, "", 'None', 1, "models/hce_dig/Brute/skins", 'hce_hidden_plain.png', CMDL_USESURFACESKIN);
-		A_ChangeModel('None', 0, "", 'None', 2, "models/hce_dig/Brute/skins", 'brute_major_bth_brute_hair_plain.png', CMDL_USESURFACESKIN);
-		A_ChangeModel('None', 0, "", 'None', 3, "models/hce_dig/Brute/skins", 'brute_major_bth_brute_head_plain.png', CMDL_USESURFACESKIN);
+		A_ChangeModel('None', 0, "", 'None', 2, "models/hce_dig/Brute/skins", 'brute_stalker_major_bth_brute_hair_plain.png', CMDL_USESURFACESKIN);
+		A_ChangeModel('None', 0, "", 'None', 3, "models/hce_dig/Brute/skins", 'brute_stalker_major_bth_brute_head_plain.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 0, "", 'None', 4, "models/hce_dig/Brute/skins", 'hce_hidden_plain.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 0, "", 'None', 5, "models/hce_dig/Brute/skins", 'hce_hidden_plain.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 0, "", 'None', 6, "models/hce_dig/Brute/skins", 'hce_hidden_plain.png', CMDL_USESURFACESKIN);
@@ -7014,14 +7124,14 @@ class HCE_BruteStalkerSpiker : HCE_BruteBase
 		A_ChangeModel('None', 0, "", 'None', 11, "models/hce_dig/Brute/skins", 'hce_hidden_plain.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 0, "", 'None', 12, "models/hce_dig/Brute/skins", 'hce_hidden_plain.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 0, "", 'None', 13, "models/hce_dig/Brute/skins", 'hce_hidden_plain.png', CMDL_USESURFACESKIN);
-		A_ChangeModel('None', 0, "", 'None', 14, "models/hce_dig/Brute/skins", 'brute_major_bth_brute_plain.png', CMDL_USESURFACESKIN);
+		A_ChangeModel('None', 0, "", 'None', 14, "models/hce_dig/Brute/skins", 'brute_stalker_major_bth_brute_plain.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 0, "", 'None', 15, "models/hce_dig/Brute/skins", 'hce_hidden_plain.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 0, "", 'None', 16, "models/hce_dig/Brute/skins", 'hce_hidden_plain.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 0, "", 'None', 17, "models/hce_dig/Brute/skins", 'hce_hidden_plain.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 0, "", 'None', 18, "models/hce_dig/Brute/skins", 'hce_hidden_plain.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 0, "", 'None', 19, "models/hce_dig/Brute/skins", 'hce_hidden_plain.png', CMDL_USESURFACESKIN);
-		A_ChangeModel('None', 0, "", 'None', 28, "models/hce_dig/Brute/skins", 'brute_major_bth_brute_hair_plain.png', CMDL_USESURFACESKIN);
-		A_ChangeModel('None', 0, "", 'None', 29, "models/hce_dig/Brute/skins", 'brute_major_bth_brute_head_plain.png', CMDL_USESURFACESKIN);
+		A_ChangeModel('None', 0, "", 'None', 28, "models/hce_dig/Brute/skins", 'brute_stalker_major_bth_brute_hair_plain.png', CMDL_USESURFACESKIN);
+		A_ChangeModel('None', 0, "", 'None', 29, "models/hce_dig/Brute/skins", 'brute_stalker_major_bth_brute_head_plain.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 0, "", 'None', 30, "models/hce_dig/Brute/skins", 'hce_hidden_plain.png', CMDL_USESURFACESKIN);
 	}
 }
@@ -9000,6 +9110,9 @@ class HCE_EliteHonorGuardPlasmaCarbine : HCE_EliteRifleBase
 		static const int BS[] = { 0, 1, 2, 3, 4, 5, 11, 12, 13, 14 };
 		for(int i = 0; i < BS.Size(); i++) A_ChangeModel('None', 0, "", 'None', BS[i], "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 1, "models/hce/EliteKit", "honor_body.iqm", 1, "", 'None');
+		A_ChangeModel('None', 1, "", 'None', 18, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
+		A_ChangeModel('None', 1, "", 'None', 19, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
+		A_ChangeModel('None', 1, "", 'None', 20, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 	}
 	override void HCE_OnSever(int limb, bool gunArm)
 	{
@@ -9009,11 +9122,15 @@ class HCE_EliteHonorGuardPlasmaCarbine : HCE_EliteRifleBase
 			A_ChangeModel('None', 1, "", 'None', 1, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 			A_ChangeModel('None', 1, "", 'None', 3, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 			A_ChangeModel('None', 1, "", 'None', 15, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
+			A_ChangeModel('None', 1, "", 'None', 18, "models/hce/EliteKit", 'gore_Elite.png', CMDL_USESURFACESKIN);
+			A_ChangeModel('None', 0, "", 'None', 16, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 		}
 		if(limb == HCE_LIMB_RARM)
 		{
 			A_ChangeModel('None', 1, "", 'None', 4, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 			A_ChangeModel('None', 1, "", 'None', 16, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
+			A_ChangeModel('None', 1, "", 'None', 19, "models/hce/EliteKit", 'gore_Elite.png', CMDL_USESURFACESKIN);
+			A_ChangeModel('None', 0, "", 'None', 17, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 		}
 		if(limb == HCE_LIMB_HEAD)
 		{
@@ -9021,6 +9138,8 @@ class HCE_EliteHonorGuardPlasmaCarbine : HCE_EliteRifleBase
 			A_ChangeModel('None', 1, "", 'None', 9, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 			A_ChangeModel('None', 1, "", 'None', 11, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 			A_ChangeModel('None', 1, "", 'None', 13, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
+			A_ChangeModel('None', 1, "", 'None', 20, "models/hce/EliteKit", 'gore_Elite.png', CMDL_USESURFACESKIN);
+			A_ChangeModel('None', 0, "", 'None', 15, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 		}
 	}
 	override void HCE_GibOverride(int limb, out String path, out Name model, out int stub, out Name tex)
@@ -10050,6 +10169,9 @@ class HCE_EliteRangerPlasmaCarbine : HCE_EliteRifleBase
 		for(int i = 0; i < BS.Size(); i++) A_ChangeModel('None', 0, "", 'None', BS[i], "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 		A_ChangeModel('None', 1, "models/hce/EliteKit", "ranger_body.iqm", 1, "", 'None');
 		A_ChangeModel('None', 2, "models/hce/EliteKit", "elite_jetpack.iqm", 2, "", 'None');
+		A_ChangeModel('None', 1, "", 'None', 12, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
+		A_ChangeModel('None', 1, "", 'None', 13, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
+		A_ChangeModel('None', 1, "", 'None', 14, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 		hce_jetNozzle = (-0.1561, 0.0816, 0.67944) * 80.0;
 		hce_jetDir = (-0.807, 0.174, -0.565);
 	}
@@ -10059,16 +10181,22 @@ class HCE_EliteRangerPlasmaCarbine : HCE_EliteRifleBase
 		if(limb == HCE_LIMB_LARM)
 		{
 			A_ChangeModel('None', 1, "", 'None', 1, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
+			A_ChangeModel('None', 1, "", 'None', 12, "models/hce/EliteKit", 'gore_Elite.png', CMDL_USESURFACESKIN);
+			A_ChangeModel('None', 0, "", 'None', 16, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 		}
 		if(limb == HCE_LIMB_RARM)
 		{
 			A_ChangeModel('None', 1, "", 'None', 2, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
+			A_ChangeModel('None', 1, "", 'None', 13, "models/hce/EliteKit", 'gore_Elite.png', CMDL_USESURFACESKIN);
+			A_ChangeModel('None', 0, "", 'None', 17, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 		}
 		if(limb == HCE_LIMB_HEAD)
 		{
 			A_ChangeModel('None', 1, "", 'None', 6, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 			A_ChangeModel('None', 1, "", 'None', 9, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 			A_ChangeModel('None', 1, "", 'None', 11, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
+			A_ChangeModel('None', 1, "", 'None', 14, "models/hce/EliteKit", 'gore_Elite.png', CMDL_USESURFACESKIN);
+			A_ChangeModel('None', 0, "", 'None', 15, "models/hce/weapons", 'hce_hidden.png', CMDL_USESURFACESKIN);
 		}
 	}
 	override void HCE_GibOverride(int limb, out String path, out Name model, out int stub, out Name tex)
