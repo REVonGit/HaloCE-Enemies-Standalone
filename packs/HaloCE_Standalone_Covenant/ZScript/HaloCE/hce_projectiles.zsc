@@ -1,4 +1,6 @@
 // Enemy projectiles: HDE visuals, Halo CE impact damage
+
+
 class HCE_ARBullet : HCES_ARBullet
 {
 	Default
@@ -19,6 +21,14 @@ class HCE_H2BeamShot : HCE_BeamPuff
 {
 	Default
 	{
+	}
+}
+
+class HCE_BinaryRifleBolt : HCES_HardlightGreen
+{
+	Default
+	{
+		HCES_SlowProjectile.BaseDamage 90;
 	}
 }
 
@@ -87,6 +97,14 @@ class HCE_HydraMissile : HCES_Rocket
 {
 	Default
 	{
+	}
+}
+
+class HCE_LightRifleBolt : HCES_HardlightBlue
+{
+	Default
+	{
+		HCES_SlowProjectile.BaseDamage 18;
 	}
 }
 
@@ -166,6 +184,14 @@ class HCE_Rocket : HCES_Rocket
 	}
 }
 
+class HCE_ScattershotBolt : HCES_HardlightViolet
+{
+	Default
+	{
+		HCES_SlowProjectile.BaseDamage 9;
+	}
+}
+
 class HCE_ShotgunPellet : HCES_ShotgunPellet
 {
 	Default
@@ -218,6 +244,14 @@ class HCE_StickyDetCharge : HCES_PlasmaGrenade
 {
 	Default
 	{
+	}
+}
+
+class HCE_SuppressorBolt : HCES_HardlightCyan
+{
+	Default
+	{
+		HCES_SlowProjectile.BaseDamage 8;
 	}
 }
 
