@@ -32,6 +32,7 @@ server bool hce_cleanup = false;       // performance: garbage collector, remove
 server int hce_maxcorpses = 48;        // garbage collector: enemy bodies kept (-1 no limit)
 server int hce_maxgibs = 32;           // garbage collector: severed heads and limbs kept (-1 no limit)
 server int hce_maxgore = 64;           // garbage collector: Halo gore floor splats kept (-1 no limit)
+server int hce_floodlevel = 1;           // the level the Flood first appears on (MAPxx = xx, ExMy = (x-1)*9+y); before it, other enemies take their places
 server float hces_loot = 1.0;           // standalone loot: 0 = enemies drop nothing, 1 = balanced, 2 = generous
 server bool hces_loot_weapons = true;    // standalone loot: enemies can drop Doom weapons the player is missing
 server bool hces_skull_gruntbirthdayparty = false;    // skull: Headshot kills burst into confetti.
