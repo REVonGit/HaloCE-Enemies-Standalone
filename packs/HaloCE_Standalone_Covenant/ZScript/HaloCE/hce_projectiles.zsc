@@ -64,6 +64,14 @@ class HCE_DBLShotgunPellet : HCES_ShotgunPellet
 	}
 }
 
+class HCE_EnforcerNeedle : HCES_HardlightCyan
+{
+	Default
+	{
+		HCES_SlowProjectile.BaseDamage 6;
+	}
+}
+
 class HCE_Flame : HCES_Flame
 {
 	Default
