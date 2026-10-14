@@ -278,6 +278,13 @@ HCES/SBEAM_FIRESTART1 "sounds/hces/sentinel_beam/sb_fire_start1.ogg"
 HCES/SBEAM_FIRESTART2 "sounds/hces/sentinel_beam/sb_fire_start2.ogg"
 HCES/SBEAM_FIRESTART3 "sounds/hces/sentinel_beam/sb_fire_start3.ogg"
 $random HCES/Halo/Weapons/SentinelBeam/Fire/Begin { HCES/SBEAM_FIRESTART1 HCES/SBEAM_FIRESTART2 HCES/SBEAM_FIRESTART3 }
+HCES/SBEAM_FIRESTOP1 "sounds/hces/sentinel_beam/sb_fire_end1.ogg"
+HCES/SBEAM_FIRESTOP2 "sounds/hces/sentinel_beam/sb_fire_end2.ogg"
+HCES/SBEAM_FIRESTOP3 "sounds/hces/sentinel_beam/sb_fire_end3.ogg"
+$random HCES/Halo/Weapons/SentinelBeam/Fire/End { HCES/SBEAM_FIRESTOP1 HCES/SBEAM_FIRESTOP2 HCES/SBEAM_FIRESTOP3 }
+HCES/SBEAM_FIRELOOP1 "sounds/hces/sentinel_beam/sb_fire_loop1.ogg"
+HCES/SBEAM_FIRELOOP2 "sounds/hces/sentinel_beam/sb_fire_loop2.ogg"
+$random HCES/Halo/Weapons/SentinelBeam/Fire/Loop { HCES/SBEAM_FIRELOOP1 HCES/SBEAM_FIRELOOP2 }
 HCES/SGFIRE1 "sounds/hces/shotgun/sgfire1.ogg"
 HCES/SGFIRE2 "sounds/hces/shotgun/sgfire2.ogg"
 HCES/SGFIRE3 "sounds/hces/shotgun/sgfire3.ogg"
