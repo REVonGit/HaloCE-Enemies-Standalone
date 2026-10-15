@@ -198,6 +198,7 @@ class HCE_DraethBase : HCES_EnemyBase abstract
 		if(hce_shellActor) hce_shellActor.SetAnimation(n, -1, hce_applyFrame, -1, -1, blend, loop ? SAF_LOOP : 0);   // the shield flare moves with it
 		if(hce_holoActor) hce_holoActor.SetAnimation(n, -1, hce_applyFrame, -1, -1, blend, loop ? SAF_LOOP : 0);   // and a hologram companion
 	}
+	override Name HCE_StepSet() { return 'reaver'; }    // the Reavers' own steps
 	override void HCE_ResumeAnim()
 	{
 		if(hce_curAnim == 'None') return;
@@ -472,7 +473,7 @@ class HCE_DraethCommanderExcavator : HCE_DraethBase
 		HCES_EnemyBase.HCE_FlyHeight 0;
 		HCES_EnemyBase.HCE_FirePattern 1, 1, 1, 1.20, 1.92, 0;
 		HCES_EnemyBase.HCE_FireSounds "HCES/Halo/Weapons/PlasmaPistol/Fire/Charged", "HCES/Halo/Weapons/PlasmaRifle/Fire/Bass", "", "";
-		HCES_EnemyBase.HCE_Voices "Elite_Dogmatic,Elite_Loose";
+		HCES_EnemyBase.HCE_Voices "Reaver";
 		HCES_EnemyBase.HCE_Drops "None", "None";
 		+HCES_EnemyBase.HCE_Berserks
 		+HCES_EnemyBase.HCE_Evades
@@ -641,7 +642,7 @@ class HCE_DraethCommanderExcavatorCamo : HCE_DraethBase
 		HCES_EnemyBase.HCE_FlyHeight 0;
 		HCES_EnemyBase.HCE_FirePattern 1, 1, 1, 1.20, 1.92, 0;
 		HCES_EnemyBase.HCE_FireSounds "HCES/Halo/Weapons/PlasmaPistol/Fire/Charged", "HCES/Halo/Weapons/PlasmaRifle/Fire/Bass", "", "";
-		HCES_EnemyBase.HCE_Voices "Elite_Dogmatic,Elite_Loose";
+		HCES_EnemyBase.HCE_Voices "Reaver";
 		HCES_EnemyBase.HCE_Drops "None", "None";
 		+HCES_EnemyBase.HCE_ActiveCamo
 		+HCES_EnemyBase.HCE_Berserks
@@ -815,7 +816,7 @@ class HCE_DraethMajorNeedler : HCE_DraethBase
 		HCES_EnemyBase.HCE_FlyHeight 0;
 		HCES_EnemyBase.HCE_FirePattern 3, 3, 12, 1.76, 2.86, 0;
 		HCES_EnemyBase.HCE_FireSounds "HCES/Halo/Weapons/Needler/Fire", "HCES/Halo/Weapons/Needler/Fire/Bass", "", "";
-		HCES_EnemyBase.HCE_Voices "Elite_Dogmatic,Elite_Loose";
+		HCES_EnemyBase.HCE_Voices "Reaver";
 		HCES_EnemyBase.HCE_Drops "None", "None";
 		+HCES_EnemyBase.HCE_Berserks
 		+HCES_EnemyBase.HCE_Evades
@@ -984,7 +985,7 @@ class HCE_DraethMajorPlasmaRifle : HCE_DraethBase
 		HCES_EnemyBase.HCE_FlyHeight 0;
 		HCES_EnemyBase.HCE_FirePattern 4, 7, 4, 0.75, 1.33, 0;
 		HCES_EnemyBase.HCE_FireSounds "HCES/Halo/Weapons/PlasmaRifle/Fire", "HCES/Halo/Weapons/PlasmaRifle/Fire/Bass", "", "";
-		HCES_EnemyBase.HCE_Voices "Elite_Dogmatic,Elite_Loose";
+		HCES_EnemyBase.HCE_Voices "Reaver";
 		HCES_EnemyBase.HCE_Drops "None", "None";
 		+HCES_EnemyBase.HCE_Berserks
 		+HCES_EnemyBase.HCE_Evades
@@ -1153,7 +1154,7 @@ class HCE_DraethMinorNeedler : HCE_DraethBase
 		HCES_EnemyBase.HCE_FlyHeight 0;
 		HCES_EnemyBase.HCE_FirePattern 3, 3, 12, 1.76, 2.86, 0;
 		HCES_EnemyBase.HCE_FireSounds "HCES/Halo/Weapons/Needler/Fire", "HCES/Halo/Weapons/Needler/Fire/Bass", "", "";
-		HCES_EnemyBase.HCE_Voices "Elite_Dogmatic,Elite_Loose";
+		HCES_EnemyBase.HCE_Voices "Reaver";
 		HCES_EnemyBase.HCE_Drops "None", "None";
 		+HCES_EnemyBase.HCE_Berserks
 		+HCES_EnemyBase.HCE_Evades
@@ -1321,7 +1322,7 @@ class HCE_DraethMinorPlasmaRifle : HCE_DraethBase
 		HCES_EnemyBase.HCE_FlyHeight 0;
 		HCES_EnemyBase.HCE_FirePattern 4, 7, 4, 1.00, 1.78, 0;
 		HCES_EnemyBase.HCE_FireSounds "HCES/Halo/Weapons/PlasmaRifle/Fire", "HCES/Halo/Weapons/PlasmaRifle/Fire/Bass", "", "";
-		HCES_EnemyBase.HCE_Voices "Elite_Dogmatic,Elite_Loose";
+		HCES_EnemyBase.HCE_Voices "Reaver";
 		HCES_EnemyBase.HCE_Drops "None", "None";
 		+HCES_EnemyBase.HCE_Berserks
 		+HCES_EnemyBase.HCE_Evades
