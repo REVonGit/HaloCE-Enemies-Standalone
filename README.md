@@ -22,6 +22,7 @@ packs/<Pack>/        each folder is exactly the root of one pk3: edit files here
 build.py, Build_PK3s.bat   compile packs/ into dist/*.pk3, plus the merged pack
 tools/                     merge_hce_packs.py (merging)
 docs/PACK_README.md        the full player-facing manual
+docs/HACKING.md            forking and editing: where to change what, the rules that keep forks compatible
 ```
 
 ## Compiling

@@ -4,11 +4,15 @@
 // would include its allies, so this one never picks a new target once its victim is gone.
 class HCE_PulseCarbineHoming : HCES_PulseCarbineProj
 {
+	// Lighter set-up (as HCE_DigLitePlasma) plus the homing lock: when fired by a monster, tracer becomes the shooter's
+	// own target so the bolt homes on it and never on an ally.
 	override void PostBeginPlay()
 	{
 		super.PostBeginPlay();
 		if(target && !target.player && target.target) tracer = target.target;
 	}
+	// Homes only while it still has a tracer; with none it flies straight instead of letting HDE pick the nearest
+	// visible thing, which could be the shooter's ally.
 	override void Handle_Homing(double turnMax, bool ignoreCorpses)
 	{
 		if(!tracer) return;
