@@ -2564,7 +2564,7 @@ class HCE_SentinelKnightCommanderLightRifle : HCE_SentinelKnightBase
 		HCES_EnemyBase.HCE_Feign 0.00, 0.0;
 		HCES_EnemyBase.HCE_Shield 150, 5.0, 6.0;
 		HCES_EnemyBase.HCE_FlyHeight 0;
-		HCES_EnemyBase.HCE_FirePattern 3, 3, 5, 0.90, 1.50, 0;
+		HCES_EnemyBase.HCE_FirePattern 3, 6, 3, 0.90, 1.50, 0;
 		HCES_EnemyBase.HCE_FireSounds "HCES/Halo/Weapons/LightRifle/Fire", "HCES/Halo/Weapons/LightRifle/Fire/Bass", "", "";
 		HCES_EnemyBase.HCE_Voices "SentinelKnight";
 		HCES_EnemyBase.HCE_Drops "None", "None";
@@ -3098,7 +3098,7 @@ class HCE_SentinelKnightMajorLightRifle : HCE_SentinelKnightBase
 		HCES_EnemyBase.HCE_Feign 0.00, 0.0;
 		HCES_EnemyBase.HCE_Shield 100, 5.0, 6.0;
 		HCES_EnemyBase.HCE_FlyHeight 0;
-		HCES_EnemyBase.HCE_FirePattern 3, 3, 5, 0.90, 1.50, 0;
+		HCES_EnemyBase.HCE_FirePattern 3, 6, 3, 0.90, 1.50, 0;
 		HCES_EnemyBase.HCE_FireSounds "HCES/Halo/Weapons/LightRifle/Fire", "HCES/Halo/Weapons/LightRifle/Fire/Bass", "", "";
 		HCES_EnemyBase.HCE_Voices "SentinelKnight";
 		HCES_EnemyBase.HCE_Drops "None", "None";
@@ -3629,7 +3629,7 @@ class HCE_SentinelKnightMinorLightRifle : HCE_SentinelKnightBase
 		HCES_EnemyBase.HCE_Feign 0.00, 0.0;
 		HCES_EnemyBase.HCE_Shield 50, 5.0, 6.0;
 		HCES_EnemyBase.HCE_FlyHeight 0;
-		HCES_EnemyBase.HCE_FirePattern 3, 3, 5, 0.90, 1.50, 0;
+		HCES_EnemyBase.HCE_FirePattern 3, 6, 3, 0.90, 1.50, 0;
 		HCES_EnemyBase.HCE_FireSounds "HCES/Halo/Weapons/LightRifle/Fire", "HCES/Halo/Weapons/LightRifle/Fire/Bass", "", "";
 		HCES_EnemyBase.HCE_Voices "SentinelKnight";
 		HCES_EnemyBase.HCE_Drops "None", "None";
