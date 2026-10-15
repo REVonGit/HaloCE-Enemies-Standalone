@@ -1,6 +1,31 @@
 // Enemy projectiles: HDE visuals, Halo CE impact damage
 
 
+// Mercury Rising's Artillery Sentinel: a hard-light mortar shell on an arc, bursting where it comes down
+class HCE_HardlightMortar : HCES_HardlightGreen
+{
+	Default { Scale 0.024; -NOGRAVITY; Gravity 0.43; }
+	// the lob's velocity is set right after the spawn (HCE_LobAt): kept through HDE's own set-up (which aims it straight)
+	override void PostBeginPlay()
+	{
+		vector3 v = vel;
+		super.PostBeginPlay();
+		if(v.Length() > 0) { vel = v; angle = atan2(v.y, v.x); }
+	}
+	States
+	{
+	Death:
+	XDeath:
+	Crash:
+		TNT1 A 0
+		{
+			A_Explode(int(40 * max(0.1, DamageMultiply)), 112, 0);
+			A_StartSound("HCES/Halo/Wraith/MissileExplosion", CHAN_BODY, CHANF_OVERLAP);
+		}
+		Goto Super::Death;
+	}
+}
+
 class HCE_ARBullet : HCES_ARBullet
 {
 	Default
@@ -69,6 +94,14 @@ class HCE_EnforcerNeedle : HCES_HardlightCyan
 	Default
 	{
 		HCES_SlowProjectile.BaseDamage 6;
+	}
+}
+
+class HCE_ExcavatorBolt : HCES_PlasmaRifleBolt
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 12;
 	}
 }
 
@@ -185,6 +218,14 @@ class HCE_PlasmaRifleBolt : HCES_PlasmaRifleBolt
 	}
 }
 
+class HCE_PlasmaShotgunBolt : HCES_PlasmaRifleBolt
+{
+	Default
+	{
+		HCES_Projectile.BaseDamage 13;
+	}
+}
+
 class HCE_Rocket : HCES_Rocket
 {
 	Default
@@ -197,6 +238,22 @@ class HCE_ScattershotBolt : HCES_HardlightViolet
 	Default
 	{
 		HCES_SlowProjectile.BaseDamage 9;
+	}
+}
+
+class HCE_SentinelMortar : HCE_HardlightMortar
+{
+	Default
+	{
+		HCES_SlowProjectile.BaseDamage 30;
+	}
+}
+
+class HCE_CompilerBolt : HCES_HardlightBlue
+{
+	Default
+	{
+		HCES_SlowProjectile.BaseDamage 8;
 	}
 }
 

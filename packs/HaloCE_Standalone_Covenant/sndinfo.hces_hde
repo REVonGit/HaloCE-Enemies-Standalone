@@ -363,6 +363,10 @@ HCES/DBBASS3 "sounds/hces/supershotgun/dbbass3.ogg"
 HCES/DBBASS4 "sounds/hces/supershotgun/dbbass4.ogg"
 $random HCES/Halo/Weapons/SuperShotgun/Fire/Bass { HCES/DBBASS1 HCES/DBBASS2 HCES/DBBASS3 HCES/DBBASS4 }
 HCES/Halo/Weapons/SuperShotgun/Reload "sounds/hces/supershotgun/dbreload.ogg"
+HCES/Halo/Wraith/MissileExplosion1 "sounds/hces/vehicles/wraith/mortar_explode1.ogg"
+HCES/Halo/Wraith/MissileExplosion2 "sounds/hces/vehicles/wraith/mortar_explode2.ogg"
+HCES/Halo/Wraith/MissileExplosion3 "sounds/hces/vehicles/wraith/mortar_explode3.ogg"
+$random HCES/Halo/Wraith/MissileExplosion { HCES/Halo/Wraith/MissileExplosion1 HCES/Halo/Wraith/MissileExplosion2 HCES/Halo/Wraith/MissileExplosion3 }
 HCES/NDLRICOCHET1 "sounds/hces/needler/ricochet/needle_ricochet1.ogg"
 HCES/NDLRICOCHET2 "sounds/hces/needler/ricochet/needle_ricochet2.ogg"
 HCES/NDLRICOCHET3 "sounds/hces/needler/ricochet/needle_ricochet3.ogg"

@@ -59,6 +59,18 @@ Model HCE_DBLShotgunPellet
 	FrameIndex HCEM A 0 0
 }
 
+Model HCE_ExcavatorBolt
+{
+	Path "models/hces"
+	Model 0 "plasma.md3"
+	Skin 0 "laser.png"
+	Scale 5.0 10.0 10.0
+	USEACTORPITCH
+	USEACTORROLL
+	CORRECTPIXELSTRETCH
+	FrameIndex HCEM A 0 0
+}
+
 Model HCE_GPMGBullet
 {
 	Path "models/hces"
@@ -157,6 +169,18 @@ Model HCE_PlasmaPistolBolt
 }
 
 Model HCE_PlasmaRifleBolt
+{
+	Path "models/hces"
+	Model 0 "plasma.md3"
+	Skin 0 "laser.png"
+	Scale 5.0 10.0 10.0
+	USEACTORPITCH
+	USEACTORROLL
+	CORRECTPIXELSTRETCH
+	FrameIndex HCEM A 0 0
+}
+
+Model HCE_PlasmaShotgunBolt
 {
 	Path "models/hces"
 	Model 0 "plasma.md3"

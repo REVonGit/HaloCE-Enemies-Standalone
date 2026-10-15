@@ -1,6 +1,6 @@
 # Halo CE Enemies, standalone version
 
-Halo: Combat Evolved's enemies (Covenant, Flood, Sentinels and Marines), plus the Digsite / SPV3 / Halo 2 enemies (all in the Covenant pack), as UZDoom / GZDoom monsters that need **no HaloDoom Evolved**. They play on any IWAD, next to other gameplay and weapon mods.
+Halo: Combat Evolved's enemies (Covenant, Flood, Sentinels and Marines), plus the Digsite / SPV3 / Halo 2 enemies (all in the Covenant pack) and Mercury Rising's (its six Sentinels, the Artybug, the Geist, the Draeth, female Marines and field medics), as UZDoom / GZDoom monsters that need **no HaloDoom Evolved**. They play on any IWAD, next to other gameplay and weapon mods.
 
 What the standalone core (inside the Covenant pack) adds over the HDE version:
 * **Built-in API:** the enemy API is inside the core, as `HCES_EnemyBase`.
