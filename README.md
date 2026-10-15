@@ -69,7 +69,8 @@ HaloCE_Standalone_Covenant.pk3 -> HaloCE_Standalone_Flood / _Sentinels / _Marine
 * **HaloDoom Evolved:** the projectile, effect and shield code and its sounds, sprites and models are ported from HaloDoom Evolved (Local_DEV); see `CREDITS_STANDALONE.txt` in the core.
 * **Gore:** the gore stumps and gore textures are by Tropical Thunder 98, from the XAM Campaign Overhaul.
 * **Engineer:** from Halo CE Ruby's Rebalance.
-* **Blind Wolf and Thorn Beast:** created by SOI_7.
+* **Blind Wolf:** created by SOI_7.
+* **Thorn Beast:** created by omargabagu; its sounds by Ruby of Blue.
 * **Marine kit:** the extra Marine accessories and permutations are Elefant's.
 * **Additional Brute and Elite content:** by Shigure (the Ultra Zealot's armour and arm shield among it).
 * **Elite Vanguard animations:** by Masterz1337 and Ruby of Blue (the shield Elite's animations, which the Ultra Zealot's sword stance uses).
