@@ -1,6 +1,6 @@
 # Halo CE Enemies, standalone version
 
-Halo: Combat Evolved's enemies (Covenant, Flood, Sentinels and Marines), plus the Digsite / SPV3 / Halo 2 add-on, as UZDoom / GZDoom monsters that need **no HaloDoom Evolved**. They play on any IWAD, next to other gameplay and weapon mods.
+Halo: Combat Evolved's enemies (Covenant, Flood, Sentinels and Marines), plus the Digsite / SPV3 / Halo 2 enemies (all in the Covenant pack), as UZDoom / GZDoom monsters that need **no HaloDoom Evolved**. They play on any IWAD, next to other gameplay and weapon mods.
 
 What the standalone core (inside the Covenant pack) adds over the HDE version:
 * **Built-in API:** the enemy API is inside the core, as `HCES_EnemyBase`.
@@ -15,7 +15,7 @@ The HDE version is in **HaloCE-Enemies-HDE**, and that repo's `generator/build_s
 packs/<Pack>/        each folder is exactly the root of one pk3: edit files here
   HaloCE_Standalone_Covenant/    the main pack: the Core (enemy AI, HDE-derived projectiles / effects, loot director,
                                  handler, CVars, console commands), the Covenant (Grunts, Jackals, Elites, Hunters, and
-                                 the Digsite / SPV3 / Halo 2 add-on: Drones, Brutes, Engineer, Blind Wolf, Thorn Beast,
+                                 the Digsite / SPV3 / Halo 2 enemies: Drones, Brutes, Engineer, Blind Wolf, Thorn Beast,
                                  Slug Men, Drinol, carbine Elites) and the enemy dialogue
   HaloCE_Standalone_Marines/     the Marines, their arsenal and Sergeant Johnson, with the Marine dialogue
   HaloCE_Standalone_Flood/  _Sentinels/
@@ -65,7 +65,7 @@ HaloCE_Standalone_Covenant.pk3 -> HaloCE_Standalone_Flood / _Sentinels / _Marine
 ## Credits and rights
 
 * **Halo assets:** Halo, its characters, models, textures and sounds are property of Microsoft / 343 Industries / Bungie, used under the Game Content Usage Rules (non-commercial).
-* **Digsite and SPV3:** the Digsite add-on uses Digsite source assets (licensed for MCC projects only) and SPV3 content. **Keep this repository private** unless you have cleared that.
+* **Digsite and SPV3:** the Digsite enemies (in the Covenant pack) use Digsite source assets (licensed for MCC projects only) and SPV3 content. **Keep this repository private** unless you have cleared that.
 * **HaloDoom Evolved:** the projectile, effect and shield code and its sounds, sprites and models are ported from HaloDoom Evolved (Local_DEV); see `CREDITS_STANDALONE.txt` in the core.
 * **Gore:** the gore stumps and gore textures are by Tropical Thunder 98, from the XAM Campaign Overhaul.
 * **Engineer:** from Halo CE Ruby's Rebalance.
