@@ -97,14 +97,6 @@ class HCE_EnforcerNeedle : HCES_HardlightCyan
 	}
 }
 
-class HCE_ExcavatorBolt : HCES_PlasmaRifleBolt
-{
-	Default
-	{
-		HCES_Projectile.BaseDamage 12;
-	}
-}
-
 class HCE_Flame : HCES_Flame
 {
 	Default
