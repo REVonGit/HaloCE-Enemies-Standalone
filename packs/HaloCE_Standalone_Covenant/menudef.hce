@@ -60,6 +60,9 @@ OptionMenu "HCE_AIOptions"
 	Option "Sentinels fight for you", "hce_sentinelallies", "OnOff"
 	StaticText "On: they follow you and take squad orders like Marines.", 1
 	StaticText "Off: they are hostile, as in Halo CE.", 1
+	Slider "Human guns in the world", "hce_humanweapons", 0, 1, 0.05, 2
+	StaticText "How often a Covenant gun HaloDoom places for a map's own", 1
+	StaticText "weapons becomes a human gun (enemy drops aren't touched).", 1
 	Slider "Digsite enemy spawns", "hce_digsite_spawns", 0, 2, 0.1, 1
 }
 
