@@ -1059,7 +1059,7 @@ Options > Halo CE Performance:
 Under the hood, with nothing to set:
 * **Only what an enemy wears and holds is drawn.** Each body model carries every gun its kind can hold, the other ranks' armour, both Grunt backs, the Marine kit's pieces and the gore stumps. They used to be hidden behind a see-through skin, which the engine still draws every frame; now the engine skips them altogether. That's up to 83% fewer triangles and far fewer draw calls per enemy (Slug Man 7,975 → at most 1,348 triangles; Brute 14,091 → 3,956; Halo 2 Jackal 13,345 → 3,992; Flood human 10,378 → 3,203; Elite 4,083 → 2,696), and a corpse no longer draws its gun or a broken Jackal shield. Nothing looks different.
 * **Smaller models.** Animations no enemy ever plays are left out of the models (949 of them across 51 bodies, about a fifth of the animation data), so the packs load faster and take less memory.
-* **The AI is cheap.** Measured in a fight against the player: 0.01–0.05 ms of game time per enemy per tic (a vanilla Imp: 0.01 ms), so even 100 enemies fighting take a few milliseconds of the 28 ms a tic allows. The biggest bursts in a firefight are the plasma bolts' spark and smoke effects (carried over from HaloDoom Evolved).
+* **The AI is cheap.** Measured in a fight against the player: 0.01–0.05 ms of game time per enemy per tic (a vanilla Imp: 0.01 ms), so even 100 enemies fighting take a few milliseconds of the 28 ms a tic allows. The plasma bolts here already draw their trails as particles, the cheapest way the engine has.
 
 ## Skulls
 
