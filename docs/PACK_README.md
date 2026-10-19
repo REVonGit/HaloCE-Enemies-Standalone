@@ -832,7 +832,7 @@ The enemies work with [Nash's Gore Mod](https://github.com/poperigby/nashgore) (
   |---|---|
   | Elites, Jackals | lavender Elite splats (CE + H2) |
   | Grunts | blue Grunt splats (CE + H2) |
-  | Hunters, Slug Men | orange Hunter splats (CE + H2) and CE's glowing splat (drawn bright) |
+  | Hunters, Slug Men, Artybug | orange Hunter splats (CE + H2) and CE's glowing splat (drawn bright) |
   | Brutes | Halo 2's navy Brute splat |
   | Drones | Halo 2's khaki "bugger" splats |
   | Engineers | Halo CE's pink Engineer splat |
