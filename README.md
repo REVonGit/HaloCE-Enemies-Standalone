@@ -15,7 +15,7 @@ The HDE version is in **HaloCE-Enemies-HDE**, and that repo's `generator/build_s
 packs/<Pack>/        each folder is exactly the root of one pk3: edit files here
   HaloCE_Standalone_Covenant/    the main pack: the Core (enemy AI, HDE-derived projectiles / effects, loot director,
                                  handler, CVars, console commands), the Covenant (Grunts, Jackals, Elites, Hunters, and
-                                 the Digsite / SPV3 / Halo 2 enemies: Drones, Brutes, Engineer, Blind Wolf, Thorn Beast,
+                                 the Digsite / SPV3 / Halo 2 enemies: Drones, Brutes, Engineer, Blind Wolf,
                                  Slug Men, Drinol, carbine Elites) and the enemy dialogue
   HaloCE_Standalone_Marines/     the Marines, their arsenal and Sergeant Johnson, with the Marine dialogue
   HaloCE_Standalone_Flood/  _Sentinels/
@@ -71,7 +71,6 @@ HaloCE_Standalone_Covenant.pk3 -> HaloCE_Standalone_Flood / _Sentinels / _Marine
 * **Gore:** the gore stumps and gore textures are by Tropical Thunder 98, from the XAM Campaign Overhaul.
 * **Engineer:** from Halo CE Ruby's Rebalance.
 * **Blind Wolf:** created by SOI_7.
-* **Thorn Beast:** created by omargabagu; its sounds by Ruby of Blue.
 * **Marine kit:** the extra Marine accessories and permutations are Elefant's.
 * **Additional Brute and Elite content:** by Shigure (the Ultra Zealot's armour and arm shield among it).
 * **Elite Vanguard animations:** by Masterz1337 and Ruby of Blue (the shield Elite's animations, which the Ultra Zealot's sword stance uses).

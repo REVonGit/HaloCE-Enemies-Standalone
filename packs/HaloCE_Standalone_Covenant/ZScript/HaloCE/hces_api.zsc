@@ -7465,7 +7465,7 @@ class HCES_EnemyBase : Actor abstract
 	virtual bool HCE_HeadKills()
 	{
 		String t = GetTag();
-		return t != "Drinol" && t != "BlindWolf" && t != "ThornBeast" && t != "Engineer";
+		return t != "Drinol" && t != "BlindWolf" && t != "Engineer";
 	}
 
 	// True when the inflictor's class name, or the player's ready weapon's, contains a precision-weapon key (magnum,
