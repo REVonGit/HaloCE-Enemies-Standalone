@@ -1,0 +1,138 @@
+AddOptionMenu "OptionsMenu"
+{
+	Submenu "Halo CE Gore", "HCE_GoreOptions"
+	Submenu "Halo CE AI", "HCE_AIOptions"
+	Submenu "Halo CE Performance", "HCE_PerfOptions"
+	Submenu "Halo CE Bestiary", "HCE_Bestiary"
+}
+
+OptionValue "HCE_Difficulty"
+{
+	-1, "From the skill level"
+	0, "Easy"
+	1, "Normal"
+	2, "Heroic"
+	3, "Legendary"
+}
+
+OptionMenu "HCE_AIOptions"
+{
+	Title "Halo CE AI"
+	Option "Halo difficulty", "hce_difficulty", "HCE_Difficulty"
+	StaticText "Halo CE's own difficulty table: damage, toughness, aim,", 1
+	StaticText "rate of fire, reactions and grenades.", 1
+	StaticText ""
+	StaticText "Behaviour", 1
+	Option "Fight from cover", "hce_cover", "OnOff"
+	Option "Squad tactics", "hce_tactics", "OnOff"
+	Option "Squad posts", "hce_posting", "OnOff"
+	Option "Grunt and Jackal squads", "hce_squads", "OnOff"
+	Option "Jumping and climbing", "hce_jumping", "OnOff"
+	Option "Idle patrols", "hce_patrols", "OnOff"
+	Option "Search for lost targets", "hce_search", "OnOff"
+	Option "Dodge grenades", "hce_grenadedodge", "OnOff"
+	Option "Hunters in bonded pairs", "hce_hunterpairs", "OnOff"
+	Option "Marines turn on a traitor", "hce_betrayal", "OnOff"
+	Option "Drop weapons", "hce_dropweapons", "OnOff"
+	Slider "Shooting the dead", "hce_corpseshoot", 0, 1, 0.05, 2
+	Slider "Sleeping Grunts", "hce_sleepinggrunts", 0, 1, 0.05, 2
+	Slider "Most pursuers per target (0 = any)", "hce_maxpursuers", 0, 12, 1, 0
+	StaticText ""
+	StaticText "Balance", 1
+	Slider "Enemy weapon damage", "hce_enemydamage", 0.1, 3, 0.1, 1
+	Slider "Enemy projectile damage", "hce_nerf_projectiles", 0.1, 1.5, 0.05, 2
+	Slider "Enemy health", "hce_nerf_health", 0.1, 2, 0.05, 2
+	Slider "Enemy shields", "hce_nerf_shields", 0.1, 2, 0.05, 2
+	Slider "Enemy aim error", "hce_enemyspread", 0.5, 4, 0.05, 2
+	Slider "Enemy aim tracking", "hce_enemytracking", 1, 10, 0.5, 1
+	Slider "Pause between bursts", "hce_burstpause", 0.5, 3, 0.1, 1
+	Slider "Grenade frequency", "hce_grenadefreq", 0, 3, 0.1, 1
+	Slider "Gunfire hearing range", "hce_hearing", 256, 4096, 128, 0
+	StaticText ""
+	StaticText "Spawning", 1
+	Option "Keep Doom's monsters", "hce_keepdoommonsters", "OnOff"
+	Slider "Flood appears from level", "hce_floodlevel", 1, 32, 1, 0
+	StaticText "MAPxx counts as xx, ExMy as (x-1)*9+y. Earlier levels", 1
+	StaticText "get Covenant and Sentinels in the Flood's places.", 1
+	Slider "Marine encounters per map", "hce_encounters", 0, 6, 1, 0
+	Slider "Chance of each encounter", "hce_encounterchance", 0, 1, 0.05, 2
+	StaticText "Marine fire teams fighting the Covenant or Flood somewhere", 1
+	StaticText "on the map, held till you arrive; survivors join your squad.", 1
+	Option "Sentinels fight for you", "hce_sentinelallies", "OnOff"
+	StaticText "On: they follow you and take squad orders like Marines.", 1
+	StaticText "Off: they are hostile, as in Halo CE.", 1
+	Slider "Human guns in the world", "hce_humanweapons", 0, 1, 0.05, 2
+	StaticText "How often a Covenant gun HaloDoom places for a map's own", 1
+	StaticText "weapons becomes a human gun (enemy drops aren't touched).", 1
+	Slider "Digsite enemy spawns", "hce_digsite_spawns", 0, 2, 0.1, 1
+}
+
+OptionMenu "HCE_GoreOptions"
+{
+	Title "Halo CE Gore"
+	Option "Blood on bodies", "hce_bodyblood", "OnOff"
+	StaticText "Enemies get bloodier as they are hurt.", 1
+	StaticText ""
+	Option "Dismemberment", "hce_dismember", "OnOff"
+	StaticText "Hard kills can take heads and arms off.", 1
+	StaticText ""
+	Option "Halo blood with NashGore", "hce_halogore", "OnOff"
+	StaticText "With NashGore loaded: Halo CE / Halo 2 decals and bursts.", 1
+}
+
+OptionMenu "HCE_PerfOptions"
+{
+	Title "Halo CE Performance"
+	Slider "Gore amount", "hce_gorescale", 0, 1, 0.05, 2
+	StaticText "Share of blood spurts, gibs and gore puffs spawned.", 1
+	StaticText ""
+	Option "Simple active camo", "hce_simpleshaders", "OnOff"
+	StaticText "Cloaked enemies drawn as a faint body without", 1
+	StaticText "the camo shimmer shader. Applies to newly spawned enemies.", 1
+	StaticText ""
+	Option "Garbage collector", "hce_cleanup", "OnOff"
+	StaticText "Removes the oldest bodies, limbs and gore splats past", 1
+	StaticText "the limits below. Never anything a player can see.", 1
+	Slider "Bodies kept", "hce_maxcorpses", 0, 256, 4, 0
+	Slider "Severed limbs kept", "hce_maxgibs", 0, 128, 4, 0
+	Slider "Gore splats kept", "hce_maxgore", 0, 256, 8, 0
+}
+
+ListMenu "HCE_Bestiary"
+{
+	Class "HCE_BestiaryMenu"
+}
+
+AddOptionMenu "OptionsMenu"
+{
+	Submenu "Halo CE Skulls", "HCES_Skulls"
+}
+
+OptionMenu "HCES_Skulls"
+{
+	Title "Halo CE Skulls"
+	Option "Grunt Birthday Party", "hces_skull_gruntbirthdayparty", "OnOff"
+	StaticText "Headshot kills burst into confetti.", 1
+	Option "Grunt Funeral", "hces_skull_gruntfuneral", "OnOff"
+	StaticText "Grunts explode when they die.", 1
+	Option "Zombie Funeral", "hces_skull_zombiefuneral", "OnOff"
+	StaticText "The Flood and zombies explode when they die.", 1
+	Option "Mythic", "hces_skull_mythic", "OnOff"
+	StaticText "Enemies have twice the health and shields.", 1
+	Option "Thunderstorm", "hces_skull_thunderstorm", "OnOff"
+	StaticText "Enemies come one rank up.", 1
+	Option "Anger", "hces_skull_anger", "OnOff"
+	StaticText "Enemies fire faster and pause less.", 1
+	Option "Catch", "hces_skull_catch", "OnOff"
+	StaticText "Enemies throw grenades twice as often.", 1
+	Option "Tough Luck", "hces_skull_toughluck", "OnOff"
+	StaticText "Enemies always dodge.", 1
+	Option "Ghost", "hces_skull_ghost", "OnOff"
+	StaticText "Enemies never flinch.", 1
+	Option "Assassins", "hces_skull_assassins", "OnOff"
+	StaticText "Every enemy wears active camo.", 1
+	Option "Famine", "hces_skull_famine", "OnOff"
+	StaticText "Enemies leave half the loot.", 1
+	Option "Bandana", "hces_skull_bandana", "OnOff"
+	StaticText "Infinite ammo.", 1
+}

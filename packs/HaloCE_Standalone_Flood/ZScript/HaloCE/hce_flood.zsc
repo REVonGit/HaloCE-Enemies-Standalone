@@ -1228,9 +1228,18 @@ class HCE_FloodcombatHumanArmoredUnarmed : HCE_FloodArmoredBase
 // rolls and its cosmetics. Changing a number here changes every FloodCarrier; one variant's numbers are in its own class
 class HCE_FloodCarrierBase : HCES_EnemyBase abstract
 {
+	override bool HCE_BurstsOnDeath() { return true; }   // it bursts when it dies: no body left
+	// no blood: a hit lets out a puff of Flood smoke (hce_flood_burst.zsc HCE_FloodSmokePuff)
+	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
+	{
+		int dealt = super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+		if(dealt > 0) HCE_FloodSmokePuff.Hit(self, inflictor, source, dealt);
+		return dealt;
+	}
 	Default
 	{
 		Monster;
+		+NOBLOOD
 		+DECOUPLEDANIMATIONS
 		+FLOORCLIP
 		+DONTHARMSPECIES
@@ -1403,8 +1412,11 @@ class HCE_Floodcarrier : HCE_FloodCarrierBase
 	}
 
 	// carrier pop: releases infection forms
+	// its pop: a frag grenade's (HDE's FragGrenadeExplosion: 120, 256 across, explosive)
+	override int, double HCE_BlastPower() { return 120, 256; }
 	override void HCE_OnDetonate()
 	{
+		if(health <= 0 && HCE_Incinerated()) return;   // (killed, not popped on its own:) a plasma grenade, the Plasma Caster, a rocket, the Hydra or fire: they burn up with it
 		Name n = 'HCE_FloodInfection';
 		class<Actor> ic = (class<Actor>)(n);
 		if(!ic) return;
@@ -8270,9 +8282,18 @@ class HCE_FloodcombatHumanUnarmed : HCE_FloodHumanBase
 // rolls and its cosmetics. Changing a number here changes every FloodInfection; one variant's numbers are in its own class
 class HCE_FloodInfectionBase : HCES_EnemyBase abstract
 {
+	override bool HCE_BurstsOnDeath() { return true; }   // it bursts when it dies: no body left
+	// no blood: a hit lets out a puff of Flood smoke (hce_flood_burst.zsc HCE_FloodSmokePuff)
+	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
+	{
+		int dealt = super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+		if(dealt > 0) HCE_FloodSmokePuff.Hit(self, inflictor, source, dealt);
+		return dealt;
+	}
 	Default
 	{
 		Monster;
+		+NOBLOOD
 		+DECOUPLEDANIMATIONS
 		+FLOORCLIP
 		+DONTHARMSPECIES
@@ -8446,7 +8467,7 @@ class HCE_FloodInfection : HCE_FloodInfectionBase
 		while(it.Next())
 		{
 			let c = HCES_EnemyBase(it.thing);
-			if(!c || !c.bCORPSE || !c.hce_enabled || c.hce_gibbed) continue;
+			if(!c || !c.bCORPSE || !c.hce_enabled || c.hce_gibbed || c.hce_derezSlot > 0) continue;
 			if(c.hce_feedBy && c.hce_feedBy != self && c.hce_feedBy.health > 0) continue;
 			if(!HCE_CanInfect(c)) continue;
 			double d = Distance2D(c);
@@ -8463,7 +8484,7 @@ class HCE_FloodInfection : HCE_FloodInfectionBase
 	// Brute with a Flood form of its own (not the Draeth; the Brutes only with the Digsite add-on's Flood Brute loaded)
 	bool HCE_CanInfect(HCES_EnemyBase c)
 	{
-		if(c.hce_team == HCE_TEAM_FLOOD) return c.bHCE_Resurrects && c.hce_reviveTics <= 0;
+		if(c.hce_team == HCE_TEAM_FLOOD) return c.bHCE_Resurrects && c.hce_reviveTics <= 0 && !c.hce_deadForGood;
 		if(c.bHCE_Resurrects) return false;
 		String cn = c.GetClassName();
 		if(cn.IndexOf("Draeth") >= 0) return false;

@@ -581,7 +581,7 @@ mixin class HCE_SquadCode
 			}
 			if(gd > 40 && d > 160 && level.maptime % 8 == (hce_scavOff & 7))
 			{
-				double fz = GetZAt(hce_formSpot.x, hce_formSpot.y, 0, GZF_ABSOLUTEPOS);
+				double fz = HCE_FloorAt(hce_formSpot.x, hce_formSpot.y, pos.z + 64);
 				hce_navVia = (0, 0);
 				if(HCE_Walkable((hce_formSpot, fz)) || (d < 320 && CheckSight(p))) { hce_crumbTic = 0; hce_navLost = 0; }   // a straight way: off the trail
 				else if(HCE_TrailFollow(PlayerNum(p))) { hce_navVia = hce_trailHit.xy; hce_navLost = 0; }
@@ -703,7 +703,7 @@ mixin class HCE_SquadCode
 
 	// ------------------------------------------------------------------
 	// Teleporters: when the player takes a teleporter (or a map's scripted teleport), the Marines following him who
-	// were with him come through after him a moment later, one by one, with the teleport fog, and take up places
+	// were with him come through after him a moment later, one by one, with the teleport fog (silent), and take up places
 	// round where he came out. A Marine left far behind (out of sight, 1800 units or more, for 20 seconds) catches
 	// up the same way. Holding Marines stay put.
 	// ------------------------------------------------------------------
@@ -739,13 +739,14 @@ mixin class HCE_SquadCode
 			{
 				double a = a0 + ((i % 2) ? 1 : -1) * ((i + 1) / 2) * 40;
 				vector2 sp = p.pos.xy + AngleToVector(a, 72 + 48 * r);
-				double fz = GetZAt(sp.x, sp.y, 0, GZF_ABSOLUTEPOS);
+				double fz = HCE_FloorAt(sp.x, sp.y, p.floorz + MaxStepHeight);
 				if(!level.IsPointInLevel((sp, fz + 1)) || abs(fz - p.floorz) > MaxStepHeight) continue;
-				if(GetZAt(sp.x, sp.y, 0, GZF_ABSOLUTEPOS | GZF_CEILING) - fz < height + 2) continue;
+				if(HCE_CeilAt(sp.x, sp.y, fz, height) - fz < height + 2) continue;
 				if(HCE_SightBlocked(p.pos + (0, 0, p.height * 0.5), (sp, fz + height * 0.5))) continue;
 				if(!CheckPosition(sp)) continue;
 				vector3 old = pos;
-				if(!Teleport((sp, fz), p.angle, TELF_SOURCEFOG | TELF_DESTFOG)) continue;
+				if(!Teleport((sp, fz), p.angle, 0)) continue;
+				Spawn("HCE_SilentTeleportFog", old); Spawn("HCE_SilentTeleportFog", pos);   // (the teleport's flash, without its sound)
 				hce_cvState = 0; hce_peekTics = 0; hce_doorWait = 0;
 				hce_stuckTics = 0; hce_unstickTics = 0; hce_stuckPos = pos.xy; hce_nearTic = level.maptime;
 				return true;
@@ -1379,6 +1380,8 @@ class HCE_Formation : Thinker
 		}
 		if(all.Size() == 0 || !HCES_EnemyBase.HCE_PostingOn()) return;
 		if(level.maptime >= knownTic) { knownTic = level.maptime + 35; Known(); }
+		// (an enemy gone since the last gathering, killed and removed or taken out of the map, off the list)
+		for(int i = foes.Size() - 1; i >= 0; i--) if(!foes[i] || foes[i].health <= 0) foes.Delete(i);
 		if(level.maptime % 3) return;
 		planIdx = (planIdx + 1) % all.Size();
 		Plan(all[planIdx]);
@@ -1483,7 +1486,7 @@ class HCE_Formation : Thinker
 			double bd = 1e9;
 			for(int i = 0; i < foes.Size(); i++) { double dd = m.Distance2D(foes[i]); if(dd < bd) { bd = dd; foe = foes[i]; } }
 		}
-		double az = m.GetZAt(a.x, a.y, 0, GZF_ABSOLUTEPOS);
+		double az = HCES_EnemyBase.HCE_FloorAt(a.x, a.y, m.pos.z + 64);
 		bool corner = m.HCE_HasAnim(HCE_A_COVER_L_IDLE) && m.HCE_HasAnim(HCE_A_COVER_R_IDLE);
 		bool low = m.HCE_HasAnim(HCE_A_CROUCH_IDLE);
 		vector2 best = a; double bestS = -1e9, bestZ = az; int bestK = 1, bestSd = 0;
@@ -1496,9 +1499,9 @@ class HCE_Formation : Thinker
 			else if(c == 1) { if(!m.hce_postOn) continue; p = m.hce_post; }
 			else { int j = c - 2; p = a + Actor.AngleToVector(a0 + (j % 8) * 45 + (j / 8) * 22, step * (j / 8 + 1)); }
 			if((p - a).Length() > r + 1) continue;
-			double pz = m.GetZAt(p.x, p.y, 0, GZF_ABSOLUTEPOS);
+			double pz = HCES_EnemyBase.HCE_FloorAt(p.x, p.y, az + 24);
 			if(!level.IsPointInLevel((p, pz + 1)) || abs(pz - az) > 24) continue;
-			if(m.GetZAt(p.x, p.y, 0, GZF_ABSOLUTEPOS | GZF_CEILING) - pz < m.height + 4) continue;
+			if(HCES_EnemyBase.HCE_CeilAt(p.x, p.y, pz, m.height) - pz < m.height + 4) continue;
 			if(m.HCE_HazardAt(p) || !HCES_EnemyBase.HCE_SpotFits(p, m.radius, pz)) continue;
 			if(c > 0 && m.HCE_WalkBlocked(m.pos + (0, 0, m.MaxStepHeight + 4), (p, pz + m.MaxStepHeight + 4))) continue;
 			int kind = 1, sd = 0; double sc = 0;
@@ -1563,7 +1566,7 @@ class HCE_Formation : Thinker
 		if(l < 1) return true;
 		FLineTraceData tr;
 		if(leader.LineTrace(atan2(d.y, d.x), l + 24, 0, TRF_THRUACTORS | TRF_THRUHITSCAN, leader.height * 0.5, data: tr)) return false;
-		double fz = leader.GetZAt(p.x, p.y, 0, GZF_ABSOLUTEPOS);
+		double fz = HCES_EnemyBase.HCE_FloorAt(p.x, p.y, leader.floorz + 32);
 		return abs(fz - leader.floorz) <= 32;
 	}
 
@@ -1990,11 +1993,15 @@ class HCES_EnemyBase : Actor abstract
 	{
 		super.Tick();
 		if(hce_derezSlot > 0 && !isFrozen()) { HCE_DerezTick(); if(bDestroyed) return; }
-		// the shield flare keeps up with the body: placed and turned where the body is now, every tic (its own tick runs too)
-		if(hce_shellActor) { hce_shellActor.SetOrigin(pos, true); hce_shellActor.angle = angle; hce_shellActor.pitch = pitch; hce_shellActor.roll = roll; }
+		// the shield flare (a Jackal's: its shield field) keeps up with the body: placed, turned and sized as the body is now,
+		// every tic (its own tick runs too). Sized too: a body made bigger after the shell came (a map's scale, a variant's)
+		// left a Jackal's shield at the old size, inside the arm
+		if(hce_shellActor) { hce_shellActor.SetOrigin(pos, true); hce_shellActor.angle = angle; hce_shellActor.pitch = pitch; hce_shellActor.roll = roll; hce_shellActor.scale = scale; }
+		if(hce_holoActor) hce_holoActor.scale = scale;
 		if(damageInfo.processing && InStateSequence(CurState, ResolveState("See")))
 			damageInfo.processing = false;
 
+		if(!hce_worldScaled && hce_enabled && health > 0 && GetAge() >= 1) HCE_WorldScale();     // a map at another scale (HCE_MapScale)
 		if(hce_vPending && hce_enabled && health > 0 && GetAge() >= 1) HCE_ApplyVariant();       // an HCEVARS variant
 		if(!hce_presetChecked && hce_enabled && health > 0 && GetAge() >= 1) HCE_PresetArm();   // HDE's weapon preset
 		if(hce_enabled && health > 0 && !default.bNOBLOOD) bNOBLOOD = HCE_ShieldUp();   // shields up: no blood
@@ -2008,6 +2015,11 @@ class HCES_EnemyBase : Actor abstract
 			vel.xy = (0, 0); hce_shove = (0, 0);
 		}
 		if(hce_enabled && hce_stickies.Size() > 0) HCE_StickyTick();
+		// infection forms pop the moment they touch what they're after: crawling, leaping or bumped into
+		if(hce_enabled && bHCE_Swarm && bHCE_Explodes && health > 0 && !hce_detonated && target && target.health > 0
+			&& HCE_TeamOf(target) != hce_team && Distance2D(target) <= radius + target.radius + 4
+			&& pos.z <= target.pos.z + target.height + 4 && pos.z + height >= target.pos.z - 4)
+		{ HCE_Detonate(); if(bDestroyed) return; }
 		if(hce_enabled && hce_ackAt > 0 && level.maptime >= hce_ackAt) { hce_ackAt = 0; if(health > 0) HCE_Say('Acknowledge', 1.0, 35, true); }
 		// HaloDoom Evolved's motion tracker shows a monster only while it has a target: a friendly Marine with none
 		// (following, holding) gets a stand-in dot that rides on him (hce_core.zsc HCE_RadarBlip)
@@ -2154,6 +2166,8 @@ class HCES_EnemyBase : Actor abstract
 		if(hce_enabled) dmg = HCE_ModifyIncoming(inflictor, source, dmg, mod, flags, angle);
 		if(hce_enabled) dmg = HCE_FireDeathCheck(inflictor, dmg, mod, flags);
 		if(hce_enabled) hce_lastMod = mod;      // read by HCE_Die, which runs inside the call below
+		if(hce_enabled) { hce_lastInf = inflictor ? inflictor.GetClassName() : ''; hce_lastWpn = (source && source.player && source.player.ReadyWeapon) ? source.player.ReadyWeapon.GetClassName() : ''; }
+		if(hce_enabled) hce_shotgunHit = mod != 'Melee' && HCE_IsShotgun(inflictor, source);   // (so is this)
 		if(hce_enabled && source && source != self) hce_lastHurter = source;     // HCE_SquadDeath: who killed a Marine
 		if(hce_enabled && inflictor && inflictor != source && !HCE_IsBurn(mod) && mod != 'Melee' && mod != 'Explosive')
 		{
@@ -2258,7 +2272,7 @@ class HCES_EnemyBase : Actor abstract
 	// the barrel's tip in the animation playing (the generated classes list their firing stances; a picked-up gun
 	// and anything unlisted: HCE_GunOffset)
 	virtual vector3 HCE_MuzzleAt(Name anim) { return hce_gunOffset; }
-	vector3 HCE_Muzzle() { return hce_hasLoadout ? hce_gunOffset : HCE_MuzzleAt(hce_curAnim); }
+	vector3 HCE_Muzzle() { return (hce_hasLoadout ? hce_gunOffset : HCE_MuzzleAt(hce_curAnim)) * (hce_bodyScale > 0 ? hce_bodyScale : 1.0); }
 
 	// Fires proj from the barrel's tip (HCE_Muzzle) in the aim direction. The muzzle offset is in body space (unpitched
 	// unless flying), so it is turned into aim space first and Fire3DProjectile's own turn puts it back.
@@ -2512,6 +2526,7 @@ class HCES_EnemyBase : Actor abstract
 	vector2 hce_dieDir;
 	bool   hce_hardKill;
 	Name   hce_lastMod;                // damage type of the latest hit (set before the engine can kill us)
+	Name   hce_lastInf, hce_lastWpn;   // what dealt it (the projectile or explosion) and the weapon in the hand that fired
 	Actor  hce_shieldActor;            // Jackals: the separate shield entity on the wrist (pack code spawns it)
 	double hce_jumpHeight;             // tallest ledge / obstacle this actor jumps onto (0 = derive from height)
 	int    hce_jumpState, hce_jumpTics, hce_jumpCooldown;
@@ -2687,6 +2702,8 @@ class HCES_EnemyBase : Actor abstract
 	// crouched (any 'crouch ...' animation), the body is a smaller target: its hitbox drops to the crouch's height
 	// (about 60% of standing), and comes back up when it stands, if there is headroom
 	bool hce_crouchBox;
+	double hce_standH;                  // its standing height (a scaled variant's own; 0: the default)
+	double HCE_StandHeight() { return hce_standH > 0 ? hce_standH : default.height; }
 	// Shrinks the hitbox to 62% of default height while a 'crouch ...' animation plays and restores it when standing,
 	// but only if there is ceiling room. To change the crouched height, edit the 0.62.
 	void HCE_CrouchHitbox(Name anim)
@@ -2695,7 +2712,7 @@ class HCES_EnemyBase : Actor abstract
 		String a = anim;
 		bool c = a.Left(7) == "crouch ";
 		if(c == hce_crouchBox) return;
-		double h = c ? default.height * 0.62 : default.height;
+		double h = c ? HCE_StandHeight() * 0.62 : HCE_StandHeight();
 		if(!c && ceilingz - pos.z < h) return;                    // no room to stand yet: stays low
 		A_SetSize(-1, h);
 		hce_crouchBox = c;
@@ -2752,9 +2769,19 @@ class HCES_EnemyBase : Actor abstract
 			hce_team = HCE_TEAM_HUMAN; hce_sentinelAlly = true; bFRIENDLY = true; bHCE_FollowPlayer = true;
 			if(bCOUNTKILL) { bCOUNTKILL = false; level.total_monsters--; }      // an ally is not a kill to make
 		}
+		// an ally by whoever put it there (a map, a mode: spawned friendly, a random spawner passing it on): any of the
+		// Covenant or the Sentinels on the player's side, the humans' team, kept with the player as a Marine squad is.
+		// (The HDE multiplayer pack's Firefight Ally Support sends them so.)
+		if(bFRIENDLY && hce_team != HCE_TEAM_HUMAN)
+		{
+			if(hce_team == HCE_TEAM_SENTINEL) hce_sentinelAlly = true;
+			hce_recruit = true;
+			hce_team = HCE_TEAM_HUMAN; bHCE_FollowPlayer = true;
+			if(bCOUNTKILL) { bCOUNTKILL = false; level.total_monsters--; }
+		}
 		static const int prefs[] = { HCE_WK_CLOSE, HCE_WK_MID, HCE_WK_LONG };
 		hce_weaponPref = prefs[random(0, 2)];             // a regular Marine's liking: close, mid or long range
-		if(hce_team == HCE_TEAM_HUMAN && hce_rankName.Length() == 0) HCE_RollName();
+		if(hce_team == HCE_TEAM_HUMAN && hce_rankName.Length() == 0 && !(hce_recruit && !hce_sentinelAlly)) HCE_RollName();   // (not a Marine's name for a Covenant ally)
 		curChaseAngle = angle;
 		hce_strafeDir = random(0, 1) ? 1 : -1;
 		hce_grenadeTics = int(hce_grenadeDelay * 35 * frandom(0.5, 1.0));
@@ -2816,7 +2843,7 @@ class HCES_EnemyBase : Actor abstract
 			&& (bAMBUSH || frandom(0, 1) < HCE_CVarF('hce_sleepinggrunts', 0.3)))
 			hce_sleeping = true;
 		Name shn = HCE_ShellClass();                   // the energy-shield flare shell (pack code)
-		if((hce_shieldMax > 0 || bHCE_FrontShield) && shn != 'None')     // a Jackal's: its shield field (HCE_ShieldField)
+		if((hce_shieldMax > 0 || bHCE_FrontShield) && shn != 'None' && !HCE_QuietShield())     // a Jackal's: its shield field (HCE_ShieldField)
 		{
 			class<Actor> shc = (class<Actor>)(shn);
 			if(shc) { hce_shellActor = Spawn(shc, pos, NO_REPLACE); if(hce_shellActor) hce_shellActor.master = self; }
@@ -3072,6 +3099,18 @@ class HCES_EnemyBase : Actor abstract
 	virtual Name HCE_GunHandBone() { return 'bip01 r hand'; }
 	virtual int HCE_ShieldSurface() { return 5; }
 	virtual Name HCE_ShellClass() { return 'None'; }
+	// a companion class named after this one ("<class><suffix>": a Jackal's ShieldField), or after the class it comes from
+	// when this one has none (a subclass: a mod's, an HCEVARS spawner's, is drawn with its parent's MODELDEF too, and had
+	// no shield at all); 'None' if no class up the line has one
+	Name HCE_ClassFor(String suffix)
+	{
+		for(class<Actor> c = GetClass(); c && c != 'HCES_EnemyBase'; c = (class<Actor>)(c.GetParentClass()))
+		{
+			Name fn = String.Format("%s%s", c.GetClassName(), suffix);
+			if((class<Actor>)(fn)) return fn;
+		}
+		return 'None';
+	}
 	virtual void HCE_DressShell(Actor s) {}        // packs: give the shield flare this variant's look (hidden surfaces, armour pieces)
 	virtual void HCE_DressShellVariant(Actor s) {} // packs: the surfaces this one variant's MODELDEF hides
 
@@ -3359,6 +3398,10 @@ class HCES_EnemyBase : Actor abstract
 		hce_combatUntil = level.maptime + 35 * 10;
 		hce_canSee = HCE_SightOf(target, 360);
 		if(hce_canSee) { hce_lastSeen = level.maptime; hce_lastKnown = target.pos; }
+		// a target it was handed without seeing it (Firefight's hunt, a script, Doom's sound alert): it knows where that
+		// one was when it was told, not the map's origin (an unset last-known spot sent searches there)
+		else if(target != hce_knownOf) hce_lastKnown = target.pos;
+		hce_knownOf = target;
 
 		// a target taken up outside the usual wake-up (a Marine following the player, a unit that heard the fight) left
 		// it in the idle or follow action: it fought through the default case, but its cover was reset every tic
@@ -3569,7 +3612,7 @@ class HCES_EnemyBase : Actor abstract
 		if(bHCE_Jetpack && HCE_TryJet(d)) return;
 
 		double toT = AngleTo(target);
-		if(d > hce_rangeMax) { moveA = toT; spd = hce_runSpeed; }
+		if(d > hce_rangeMax) { moveA = HCE_NavSteer(target.pos) ? hce_navAng : toT; spd = hce_runSpeed; }   // (round what's between, the map's graph)
 		else if(d < hce_rangeMin * 0.5 && hce_rangeMin > 0)
 		{
 			// too close: give ground diagonally, only where there is room behind
@@ -3634,6 +3677,15 @@ class HCES_EnemyBase : Actor abstract
 		double toward = atan2(hce_lastKnown.y - pos.y, hce_lastKnown.x - pos.x);
 		vector2 ahead = pos.xy + AngleToVector(toward, radius + 40);
 		if(HCE_HazardAt(ahead) || HCE_DangerStep(ahead)) { HCE_Hold(); return; }
+		if(HCE_NavSteer(target ? target.pos : hce_lastKnown))
+		{
+			// the map's graph: the bots' way to it (Doom's chase it stands in for went for the target itself)
+			HCE_Move(HCE_PickHeading(hce_navAng, hce_navAng), hce_runSpeed);
+			A_SetAngle(angle + clamp(DeltaAngle(angle, hce_moveAngle), -hce_turnRate, hce_turnRate), SPF_INTERPOLATE);
+			HCE_PickMoveAnim();
+			if(level.maptime - hce_lastSeen > 35 * 20) target = null;
+			return;
+		}
 		double sp = speed;
 		speed = max(1, hce_runSpeed);
 		vector2 was = pos.xy;
@@ -3644,6 +3696,71 @@ class HCES_EnemyBase : Actor abstract
 		hce_inPlaceTics = (pos.xy - was).Length() < 0.5 ? hce_inPlaceTics + 1 : 0;
 		HCE_Play(hce_inPlaceTics > 17 ? HCE_A_ALERT : HCE_A_MOVE_F);      // no marching on the spot when the way is shut
 		if(level.maptime - hce_lastSeen > 35 * 20) target = null;   // give up the search
+	}
+
+	// ------------------------------------------------------------------
+	// Map pathing (HCE_NavGraph, below): on a map with the bots' waypoint graph (HaloDoom Evolved's multiplayer maps,
+	// REVonGit/HDE-Maps), a walker heading somewhere it can't walk straight to takes the bots' way there: to the
+	// nearest waypoint it can see, then waypoint to waypoint along the cheapest route, cutting a corner whenever it
+	// can walk straight to the waypoint after the next, till it can walk straight to the goal.
+	// ------------------------------------------------------------------
+	int hce_navNode;                    // the waypoint it is making for (-1 none)
+	bool hce_navInit;
+	int hce_navGoal;               // the waypoint nearest its goal
+	int hce_navCheck;                   // when it next looks again (every half second or so)
+	bool hce_navDirect;                 // the goal is walkable straight: no route
+	double hce_navAng;                  // HCE_NavSteer's answer: the heading to take
+	double hce_navBest; int hce_navBestTic;   // its progress to the waypoint (no nearer in 3 s: a new one)
+	// Sets hce_navAng to the heading toward goal along the map's graph; false when there is no graph, the goal can be
+	// walked to straight (the caller moves as before), or the route is done.
+	bool HCE_NavSteer(vector3 goal)
+	{
+		if(bHCE_Flying || bNOGRAVITY) return false;
+		let g = HCE_NavGraph.Get(); if(!g) return false;
+		if(!hce_navInit) { hce_navInit = true; hce_navNode = -1; hce_navGoal = -1; }
+		if(level.maptime >= hce_navCheck)
+		{
+			hce_navCheck = level.maptime + random[HCENav](14, 22);
+			double far = (goal.xy - pos.xy).Length();
+			hce_navDirect = far < 96 || (far < 1600 && HCE_Walkable(goal));
+			// the goal's waypoint: kept while the goal stays near it (a new one only when it has moved 320 off)
+			vector3 gp = hce_navGoal >= 0 ? g.Pos(hce_navGoal) : goal;
+			if(hce_navGoal < 0 || (gp.xy - goal.xy).Length() > 320 || abs(gp.z - goal.z) > 96)
+			{
+				int t = g.Nearest(goal, null);
+				if(t != hce_navGoal) hce_navGoal = t;
+			}
+			// the waypoint after the next in reach: cut the corner
+			if(!hce_navDirect && hce_navNode >= 0)
+			{
+				int nx = g.NextNode(hce_navNode, hce_navGoal);
+				if(nx == -2) hce_navCheck = level.maptime + 1;
+				else if(nx >= 0 && nx != hce_navNode && HCE_Walkable(g.Pos(nx))) { hce_navNode = nx; hce_navBest = 1e9; }
+			}
+		}
+		if(hce_navDirect || hce_navGoal < 0) { hce_navNode = -1; return false; }
+		if(hce_navNode < 0)
+		{
+			hce_navNode = g.Nearest(pos, self);
+			if(hce_navNode < 0) return false;
+			hce_navBest = 1e9; hce_navBestTic = level.maptime;
+		}
+		vector3 w = g.Pos(hce_navNode);
+		double dw = (w.xy - pos.xy).Length();
+		if(dw < radius + 40)
+		{
+			// there: the next one on the route (at the goal's own waypoint: walk on to the goal)
+			if(hce_navNode == hce_navGoal) { hce_navDirect = true; hce_navNode = -1; return false; }
+			int nx = g.NextNode(hce_navNode, hce_navGoal);
+			if(nx == -2) { hce_navAng = atan2(w.y - pos.y, w.x - pos.x); return true; }        // (searched next tic: hold course)
+			if(nx < 0) { hce_navNode = -1; hce_navCheck = level.maptime + 35; return false; }   // no way there
+			hce_navNode = nx; w = g.Pos(nx); dw = (w.xy - pos.xy).Length();
+			hce_navBest = 1e9;
+		}
+		if(dw < hce_navBest - 8) { hce_navBest = dw; hce_navBestTic = level.maptime; }
+		else if(level.maptime - hce_navBestTic > 35 * 3) { hce_navNode = -1; hce_navBestTic = level.maptime; return false; }   // getting no nearer
+		hce_navAng = atan2(w.y - pos.y, w.x - pos.x);
+		return true;
 	}
 
 	// ------------------------------------------------------------------
@@ -4159,7 +4276,7 @@ class HCES_EnemyBase : Actor abstract
 			double a = a0 + k * 47;
 			double r = frandom(96, 320);
 			vector2 sp = c.xy + AngleToVector(a, r);
-			double fz = GetZAt(sp.x, sp.y, 0, GZF_ABSOLUTEPOS);
+			double fz = HCE_FloorAt(sp.x, sp.y, c.z + 64);
 			if(!level.IsPointInLevel((sp, fz + 1)) || abs(fz - c.z) > 64) continue;
 			if(HCE_SightBlocked(c + (0, 0, height * 0.5), (sp, fz + height * 0.5))) continue;    // open from where it was seen
 			return (sp, fz);
@@ -4206,7 +4323,8 @@ class HCES_EnemyBase : Actor abstract
 		if(l > 40 && hce_srLook == 0)
 		{
 			double sp = l > 200 ? hce_runSpeed * 0.8 : hce_walkSpeed;
-			if(!HCE_Move(HCE_PickHeading(atan2(dv.y, dv.x), atan2(dv.y, dv.x)), sp) && hce_stuckTics > 35 * 2) hce_srLook = level.maptime + 20;
+			double ga = HCE_NavSteer(hce_srGoal) ? hce_navAng : atan2(dv.y, dv.x);
+			if(!HCE_Move(HCE_PickHeading(ga, ga), sp) && hce_stuckTics > 35 * 2) hce_srLook = level.maptime + 20;
 			A_SetAngle(angle + clamp(DeltaAngle(angle, hce_moveAngle), -hce_turnRate, hce_turnRate), SPF_INTERPOLATE);
 			HCE_PickMoveAnim();
 			return;
@@ -4230,7 +4348,8 @@ class HCES_EnemyBase : Actor abstract
 		if(!hce_returnHome) return false;
 		vector2 dv = hce_home.xy - pos.xy;
 		if(dv.Length() < 48 || level.maptime > hce_returnUntil) { hce_returnHome = false; HCE_Say('KeepWatch', 0.3, 35 * 8); return false; }
-		HCE_Move(HCE_PickHeading(atan2(dv.y, dv.x), atan2(dv.y, dv.x)), hce_walkSpeed);
+		double ga = HCE_NavSteer(hce_home) ? hce_navAng : atan2(dv.y, dv.x);
+		HCE_Move(HCE_PickHeading(ga, ga), hce_walkSpeed);
 		A_SetAngle(angle + clamp(DeltaAngle(angle, hce_moveAngle), -hce_turnRate, hce_turnRate), SPF_INTERPOLATE);
 		HCE_PickMoveAnim();
 		return true;
@@ -4311,7 +4430,7 @@ class HCES_EnemyBase : Actor abstract
 			for(int i = 0; i < 10; i++)
 			{
 				vector2 sp = pos.xy + AngleToVector(i * 36 + frandom(-10, 10), rads[r]);
-				double fz = GetZAt(sp.x, sp.y, 0, GZF_ABSOLUTEPOS);
+				double fz = HCE_FloorAt(sp.x, sp.y, pos.z + 64);
 				if(!level.IsPointInLevel((sp, fz + 1))) continue;
 				double dt = (target.pos.xy - sp).Length();
 				if(dt < 384 || dt > max(hce_rangeMax * 1.1, 900)) continue;
@@ -4537,9 +4656,9 @@ class HCES_EnemyBase : Actor abstract
 				vector2 p = pos.xy + AngleToVector(a0 + i * 360.0 / n, rads[r]);
 				double dp = (target.pos.xy - p).Length();
 				if(dp < max(hce_rangeMin * 0.7, 128) || dp > max(max(hce_rangeMax, 256), dT) * 1.1) continue;
-				double pz = GetZAt(p.x, p.y, 0, GZF_ABSOLUTEPOS);
+				double pz = HCE_FloorAt(p.x, p.y, pos.z + MaxStepHeight * 2);
 				if(!level.IsPointInLevel((p, pz + 1)) || abs(pz - pos.z) > MaxStepHeight * 2) continue;
-				if(GetZAt(p.x, p.y, 0, GZF_ABSOLUTEPOS | GZF_CEILING) - pz < height + 4) continue;
+				if(HCE_CeilAt(p.x, p.y, pz, height) - pz < height + 4) continue;
 				if(HCE_HazardAt(p)) continue;                                             // no cover in the slime
 				if(HCE_SightBlocked(pos + (0, 0, MaxStepHeight + 4), (p, pz + MaxStepHeight + 4))) continue;   // no straight way there
 				int side;
@@ -4834,7 +4953,10 @@ class HCES_EnemyBase : Actor abstract
 				if(HCE_TryDoor(a)) { hce_moveSpeed = 0; HCE_Brake(); return false; }   // a door or lift it's waiting on
 				if(HCE_TryLift(a)) { hce_moveSpeed = 0; HCE_Brake(); return false; }   // a lift worked from elsewhere: off to work it
 				if(HCE_TryJump(a, true)) { hce_moveAngle = a; return true; }
-				if(HCE_TryDrop(a, spd)) { hce_moveAngle = a; return true; }
+				// a ledge on the way: off it straight ahead, or a little either side (an edge met at a slant), before
+				// any sidestep along it
+				static const double dfan[] = { 0, 25, -25, 50, -50 };
+				for(int d = 0; d < dfan.Size(); d++) if(HCE_TryDrop(a + dfan[d], spd)) { hce_moveAngle = a + dfan[d]; return true; }
 			}
 		}
 		// a friend in the way who's walking on himself: keep walking behind him (he'll clear the way next tic),
@@ -4881,7 +5003,7 @@ class HCES_EnemyBase : Actor abstract
 		{
 			// already standing over a drop (a lift has carried him up with a foot over its edge): a step that keeps
 			// him on the floor he's on may go on over it, or he'd never get off
-			if(floorz - dropoffz <= MaxDropoffHeight || abs(GetZAt(np.x, np.y, 0, GZF_ABSOLUTEPOS) - floorz) > 2 || !TryMove(np, 1)) return false;
+			if(floorz - dropoffz <= MaxDropoffHeight || abs(HCE_FloorAt(np.x, np.y, floorz + 2) - floorz) > 2 || !TryMove(np, 1)) return false;
 		}
 		vel.xy = (0, 0);
 		return true;
@@ -4947,12 +5069,12 @@ class HCES_EnemyBase : Actor abstract
 		vector2 dir = AngleToVector(ang, 1);
 		double fwdMin = radius * 2 + 12 + (overThing && bm ? bm.radius * 2 : 0);
 		vector2 far = pos.xy + dir * fwdMin;
-		double fzFar = GetZAt(far.x, far.y, 0, GZF_ABSOLUTEPOS);
+		double fzFar = HCE_FloorAt(far.x, far.y, top + MaxStepHeight);
 		if(abs(fzFar - pos.z) > MaxStepHeight && rise <= height * 0.6)
 		{
 			// a low wall crossed at a slant: floor again a little further on is a vault, not a climb onto the wall
 			vector2 far2 = far + dir * 48;
-			double fz2 = GetZAt(far2.x, far2.y, 0, GZF_ABSOLUTEPOS);
+			double fz2 = HCE_FloorAt(far2.x, far2.y, pos.z + MaxStepHeight);
 			if(abs(fz2 - pos.z) <= MaxStepHeight) { far = far2; fzFar = fz2; fwdMin += 48; }
 		}
 		bool vault;
@@ -4967,9 +5089,9 @@ class HCES_EnemyBase : Actor abstract
 		if(!vault && (mv.z < 8 || (rise < mv.z * 0.75 && !leap) || rise > mv.z * 1.25)) return false;
 		double fwd = max(mv.x, fwdMin);
 		vector2 land = pos.xy + dir * fwd;
-		double lz = GetZAt(land.x, land.y, 0, GZF_ABSOLUTEPOS);
+		double lz = HCE_FloorAt(land.x, land.y, (vault ? pos.z : top) + MaxStepHeight);
 		if(abs(lz - (vault ? pos.z : top)) > MaxStepHeight) return false;
-		if(GetZAt(land.x, land.y, 0, GZF_ABSOLUTEPOS | GZF_CEILING) - lz < height + 2) return false;
+		if(HCE_CeilAt(land.x, land.y, lz, height) - lz < height + 2) return false;
 		FLineTraceData tr;
 		if(LineTrace(ang, fwd + radius, 0, TRF_THRUACTORS | TRF_THRUHITSCAN, rise + 8, data: tr)) return false;            // a wall above it
 		if(LineTrace(ang, fwd + radius, 0, TRF_THRUACTORS | TRF_THRUHITSCAN, rise + height * 0.8, data: tr)) return false; // no room for the body
@@ -5031,8 +5153,8 @@ class HCES_EnemyBase : Actor abstract
 		vector2 dir = AngleToVector(ang, 1);
 		double reach = radius + 10;
 		vector2 p = pos.xy + dir * reach;
-		double fz = GetZAt(p.x, p.y, 0, GZF_ABSOLUTEPOS);
-		double cz = GetZAt(p.x, p.y, 0, GZF_ABSOLUTEPOS | GZF_CEILING);
+		double fz = HCE_FloorAt(p.x, p.y, pos.z + max(hce_jumpHeight, height * 2));   // (a ledge within reach: a 3D floor's too)
+		double cz = HCE_CeilAt(p.x, p.y, fz, height);
 		double top = fz;
 		bool overThing = false;
 		let bm = useBlocker ? BlockingMobj : null;
@@ -5048,7 +5170,7 @@ class HCES_EnemyBase : Actor abstract
 		// somewhere to land: past a ledge the ground must stay up (not a thin wall or a railing);
 		// over a thing it may be back at our own height
 		vector2 p2 = pos.xy + dir * (radius * 2 + 20);
-		double fz2 = GetZAt(p2.x, p2.y, 0, GZF_ABSOLUTEPOS);
+		double fz2 = HCE_FloorAt(p2.x, p2.y, top + MaxStepHeight);
 		if(!overThing && fz2 < top - MaxStepHeight) return false;
 		FLineTraceData tr;
 		if(LineTrace(ang, radius * 2 + 24, 0, TRF_THRUACTORS | TRF_THRUHITSCAN, rise + 8, data: tr)) return false;   // wall above it
@@ -5069,10 +5191,25 @@ class HCES_EnemyBase : Actor abstract
 	// going (their target, the spot they last saw it, or the player they follow) is down there, as long as the drop
 	// is safe for them (up to two and a half times their height) and doesn't land in a damaging floor. Halo's AI does
 	// the same with its 'safe to jump down' hint. They fall in the airborne animation and land in the landing one.
-	double HCE_SafeDrop() { return height * 2.5; }
+	double HCE_SafeDrop() { return max(192, height * 3); }
+
+	// The floor one can stand on at x, y: the highest at or below 'from', counting 3D floors (a bridge, a walkway, a
+	// catwalk over a pit). GetZAt sees only the sector's own floor, so over a 3D-floor bridge it gave the pit under it.
+	static double HCE_FloorAt(double x, double y, double from)
+	{
+		let s = level.PointInSector((x, y));
+		return s ? s.NextLowestFloorAt(x, y, from) : from;
+	}
+	// The ceiling over a floor at fz there (a 3D floor overhead counts): the lowest above fz .. fz + h.
+	static double HCE_CeilAt(double x, double y, double fz, double h)
+	{
+		let s = level.PointInSector((x, y));
+		return s ? s.NextHighestCeilingAt(x, y, fz, fz + h) : fz + h;
+	}
 
 	// Steps off the ledge ahead at 'spd' when the target, its last-known spot or the followed player is lower.
-	// Refuses a drop deeper than HCE_SafeDrop() or into a damaging floor. True: airborne (HCE_JumpTick lands it).
+	// Refuses a drop deeper than HCE_SafeDrop() (or, on a route over the map's graph, than the way down to its next
+	// waypoint) or into a damaging floor. True: airborne (HCE_JumpTick lands it).
 	// To change the safe depth, edit HCE_SafeDrop (2.5 x height).
 	// A small ledge (HCE_SmallDrop: up to 80% of its height, 48 at least) is walked off whatever it is doing and
 	// wherever it is going: fleeing, strafing, searching, taking cover or following, by every walking unit (the
@@ -5086,12 +5223,28 @@ class HCES_EnemyBase : Actor abstract
 		if(target && hce_canSee) goalZ = target.pos.z;
 		else if(target) goalZ = hce_lastKnown.z;
 		else if(HCE_InSquad() && HCE_SquadPlayer()) goalZ = HCE_SquadPlayer().pos.z;
+		// on a route over the map's graph: its next waypoint (the way may go down before it comes back up to the target)
+		let ng = (hce_navInit && hce_navNode >= 0 && !hce_navDirect) ? HCE_NavGraph.Get() : null;
+		double routeDrop = 0;
+		if(ng) { vector3 wp = ng.Pos(hce_navNode); goalZ = min(goalZ, wp.z); routeDrop = pos.z - wp.z; }
 		bool wanted = goalZ <= pos.z - MaxStepHeight;                       // something to go down for
+		// (a drop the route itself takes, as the bots do: as deep as the way down to its next waypoint; or, with what
+		// it's after lower down, as deep as the way down to it: never past it into a pit below)
+		double deepest = max(HCE_SafeDrop(), min(max(routeDrop, pos.z - goalZ) + 64, 768));
 		vector2 dir = AngleToVector(ang, 1);
-		vector2 p = pos.xy + dir * (radius + max(spd, 4) + 4);
-		double fz = GetZAt(p.x, p.y, 0, GZF_ABSOLUTEPOS);
-		double drop = pos.z - fz;
-		if(drop <= MaxStepHeight || drop > (wanted ? HCE_SafeDrop() : HCE_SmallDrop())) return false;
+		// the edge: the first floor lower than a step a little way ahead (an edge met at a slant is further off)
+		double fz = pos.z, drop = 0;
+		vector2 p = pos.xy;
+		for(int k = 0; k < 4; k++)
+		{
+			p = pos.xy + dir * (radius + max(spd, 4) + 4 + k * 14);
+			fz = HCE_FloorAt(p.x, p.y, pos.z + MaxStepHeight);
+			drop = pos.z - fz;
+			if(drop > MaxStepHeight) break;
+			if(fz > pos.z + MaxStepHeight) return false;        // a wall or a step up first
+		}
+		if(drop <= MaxStepHeight || drop > (wanted ? deepest : HCE_SmallDrop())) return false;
+		if(wanted && drop > HCE_SafeDrop() && fz < goalZ - 96) return false;   // a deep one only down to where it's going
 		if(!wanted && hce_team != HCE_TEAM_HUMAN && hce_team != HCE_TEAM_COVENANT && hce_team != HCE_TEAM_FLOOD) return false;
 		let sec = level.PointInSector(p);
 		if(sec && sec.damageamount > 0) return false;                        // lava, slime
@@ -5127,7 +5280,7 @@ class HCES_EnemyBase : Actor abstract
 			vector2 p = pos.xy + AngleToVector(a, r);
 			let sec = level.PointInSector(p);
 			if(!sec || sec.damageamount > 0) continue;
-			double fz = sec.floorplane.ZAtPoint(p), cz = sec.ceilingplane.ZAtPoint(p);
+			double fz = HCE_FloorAt(p.x, p.y, pos.z + 192), cz = HCE_CeilAt(p.x, p.y, fz, height + 8);
 			double rise = fz - pos.z;
 			if(rise > 192 || rise < -48 || cz - fz < height + 8) continue;
 			double apex = max(rise, 0) + 40;
@@ -5283,7 +5436,11 @@ class HCES_EnemyBase : Actor abstract
 	// overlay, with Halo CE's health bar). Rolled at spawn from the lists below; Johnson and Stacker have their own.
 	// ------------------------------------------------------------------
 	String hce_rankName;
-	bool hce_sentinelAlly;                 // a Sentinel on the player's side (hce_sentinelallies)
+	bool hce_sentinelAlly;                 // a Sentinel on the player's side (hce_sentinelallies, or spawned friendly)
+	bool hce_recruit;                      // one of the Covenant or the Sentinels spawned friendly: on the player's side
+	// the Marines' shields: unseen and unheard (no flare, sparks, impact flash or shatter; none of the shield's sounds).
+	// They still take the hits and recharge (HCE_Shield)
+	bool HCE_QuietShield() { return hce_team == HCE_TEAM_HUMAN && !hce_recruit && !hce_sentinelAlly; }
 	bool HCE_IsSentinel() { return hce_team == HCE_TEAM_SENTINEL || hce_sentinelAlly; }   // on either side
 
 	// Rolls hce_rankName at spawn: Sentinel allies get a designation; Marines a rank by class (Armored -> NCO ranks,
@@ -7062,6 +7219,7 @@ class HCES_EnemyBase : Actor abstract
 		{
 			int dmg = int(hce_meleeDamage * frandom(0.9, 1.1) * (bFRIENDLY ? 1.0 : HCE_Diff(HCE_D_DAMAGE)));
 			target.DamageMobj(self, self, dmg, 'Melee', 0, AngleTo(target));
+			if(bHCE_Swarm && bHCE_Explodes) { HCE_Detonate(); return; }   // infection forms pop on contact
 			if(bHCE_Swarm)
 			{
 				// infection forms latch, nibble and hop off again
@@ -7429,14 +7587,35 @@ class HCES_EnemyBase : Actor abstract
 		if(health <= 0 && hce_detonated) return;
 		hce_detonated = true;
 		A_StartSound(HCE_PopSound(), CHAN_BODY, CHANF_OVERLAP);
-		A_Explode(int(max(10, hce_meleeDamage)), int(radius * 3 + 32), XF_NOTMISSILE, true, int(radius * 2));
-		for(int i = 0; i < 24; i++)
+		int bd; double br; [bd, br] = HCE_BlastPower();
+		A_Explode(bd, int(br), XF_NOTMISSILE, true, int(radius * 2), damagetype: 'Explosive');
+		// the Flood's own pop (the Flood pack's HCE_FloodBurst: Halo 2's skin chunks, smoke and Flood splats), sized
+		// to the body; anything else, a plain spray
+		String fbn = "HCE_FloodBurst";
+		class<Actor> fb = fbn;
+		let burst = (fb && hce_team == HCE_TEAM_FLOOD) ? Spawn(fb, pos + (0, 0, height * 0.5), ALLOW_REPLACE) : null;
+		if(burst) { burst.scale *= clamp(radius / 24.0, 0.45, 1.6); burst.target = self; }
+		else for(int i = 0; i < 24; i++)
 			A_SpawnParticle("B8A060", 0, random(20, 40), random(3, 6), frandom(0, 360), 0, 0, height * 0.5, frandom(-3, 3), frandom(-3, 3), frandom(0, 4), 0, 0, -0.2);
 		HCE_OnDetonate();
 		if(health > 0) DamageMobj(self, self, health + 50, 'Explosive', DMG_FORCED);
 	}
 	bool hce_detonated;
 	virtual void HCE_OnDetonate() {}
+	// the pop's damage and radius (a carrier's is a frag grenade's: HCE_FloodCarrierBase)
+	virtual int, double HCE_BlastPower() { return int(max(10, hce_meleeDamage)), radius * 3 + 32; }
+	// killed by a blast or by fire: a plasma grenade, the Plasma Caster, a rocket, the Hydra, the flamethrower, any
+	// burning (a carrier killed so releases no infection forms: they burn up with it)
+	bool HCE_Incinerated()
+	{
+		if(HCE_IsBurn(hce_lastMod) || hce_burnHit || HCE_Burning()) return true;
+		String i = hce_lastInf; i = i.MakeLower();
+		static const String BLAST[] = { "plasmagrenade", "plasmacaster", "rocket", "hydra", "flame", "flamer", "fuelrod" };
+		for(int k = 0; k < BLAST.Size(); k++) if(i.IndexOf(BLAST[k]) >= 0) return true;
+		if(hce_lastMod == 'Melee') return false;
+		String w = hce_lastWpn; w = w.MakeLower();
+		return w == "halo_rocketlauncher" || w == "halo_hydra" || w == "halo_plasmacaster" || w == "halo_flamethrower";
+	}
 
 	// ------------------------------------------------------------------
 	// Damage: Hunter front armour, Jackal shield, flinches, stealth flicker
@@ -7775,7 +7954,10 @@ class HCES_EnemyBase : Actor abstract
 		if(hce_kamiNades.Size() > 0) HCE_KamikazeFling();
 		// a Flood form only feigning death (it will get up again) keeps its gun in its hand; it drops it if it never does
 		// (HCE_FeignOver: torn apart while down). One whose gun arm is already off dropped the gun with the arm
-		bool feign = bHCE_Resurrects && !hard && !hce_gibbed && frandom(0, 1) < max(0.25, hce_feignChance);
+		// killed outright, no fake-out: both arms off, on fire (or killed by fire), or a shotgun's kill
+		bool armless = (hce_severed & (1 << HCE_LIMB_LARM)) && (hce_severed & (1 << HCE_LIMB_RARM));
+		hce_deadForGood = armless || hce_burnHit || HCE_IsBurn(hce_lastMod) || HCE_Burning() || hce_shotgunHit;
+		bool feign = bHCE_Resurrects && !hard && !hce_gibbed && !hce_deadForGood && frandom(0, 1) < max(0.25, hce_feignChance);
 		if(!feign)
 		{
 			HCE_DropLoot();
@@ -7784,9 +7966,25 @@ class HCES_EnemyBase : Actor abstract
 		HCE_ResumeAnim();        // (an actor's first A_ChangeModel resets its animation: the death animation goes on)
 		A_BossDeath();   // map specials (E1M8 Barons, MAP07...) work through the replacee (see HCE_ReplaceHandler)
 		if(bHCE_Explodes && !hce_detonated) HCE_Detonate();
+		// a carrier or an infection form: gone in its own burst, no body left (the body timer removes it 3 s on)
+		if(HCE_BurstsOnDeath() && !hce_gibbed) { hce_gibbed = true; HCE_GibBurst(16, 6); }
 		if(feign) hce_reviveTics = int(35 * frandom(3, 3 + max(2, hce_feignTime)));
 	}
 	int hce_reviveTics;
+	Actor hce_knownOf;                 // the target hce_lastKnown is for
+	virtual bool HCE_BurstsOnDeath() { return false; }   // (the Flood pack: the carrier and the infection form)
+	bool hce_shotgunHit;                 // the latest hit was a shotgun's (HCE_IsShotgun)
+	bool hce_deadForGood;                // a Flood form killed outright: it doesn't feign, and no infection form raises it
+	// a shotgun's hit: its pellet (HDE's HCES_ShotgunPellet, the enemies' pellets, the double barrel's), or a player's
+	// shotgun in hand, or an enemy's hitscan shotgun
+	static bool HCE_IsShotgun(Actor inflictor, Actor source)
+	{
+		String inf = inflictor ? String.Format("%s", inflictor.GetClassName()) : "";
+		if(inf.MakeLower().IndexOf("shotgun") >= 0) return true;
+		if(source && source.player && source.player.ReadyWeapon && String.Format("%s", source.player.ReadyWeapon.GetClassName()).MakeLower().IndexOf("shotgun") >= 0) return true;
+		let he = HCES_EnemyBase(source);
+		return he && (!inflictor || inflictor == source) && String.Format("%s", he.hce_projectile).MakeLower().IndexOf("shotgun") >= 0;
+	}
 	// a body that was feigning death and won't get up after all (torn apart, frozen and shattered): its gun, kept in the
 	// hand while it lay feigning, drops now
 	void HCE_FeignOver()
@@ -8589,7 +8787,33 @@ class HCES_EnemyBase : Actor abstract
 		{
 			A_SetScale(scale.x * sc, scale.y * sc);
 			A_SetSize(radius * sc, height * sc);
+			hce_standH = height;
+			hce_bodyScale = (hce_bodyScale > 0 ? hce_bodyScale : 1.0) * sc;
 		}
+	}
+
+	// ------------------------------------------------------------------
+	// The map's scale: a map built bigger than Doom's (the HDE multiplayer pack's own maps, 96/56: its Spartans drawn that
+	// much bigger) has the Halo NPCs made bigger too, in proportion: the body and its box, the gun's muzzle, the pace,
+	// the steps and drops it takes, its leaps, its melee reach and its fighting ranges. A map pack says so by placing an
+	// HCE_MapScale (its scale.x the map's scale); none, the map is Doom's scale. Done once, on the first tic.
+	// ------------------------------------------------------------------
+	double hce_bodyScale;                  // the body's size over its class's (a scaled variant, the map's scale; 0: 1)
+	bool hce_worldScaled;
+	void HCE_WorldScale()
+	{
+		hce_worldScaled = true;
+		double s = HCE_MapScale.Get();
+		if(abs(s - 1) < 0.01) return;
+		A_SetScale(scale.x * s, scale.y * s);
+		A_SetSize(radius * s, height * s);
+		hce_standH = height;
+		hce_bodyScale = (hce_bodyScale > 0 ? hce_bodyScale : 1.0) * s;
+		hce_runSpeed *= s; hce_walkSpeed *= s; hce_lowWalkSpeed *= s; Speed *= s;
+		MaxStepHeight *= s; MaxDropOffHeight *= s;
+		if(hce_jumpHeight > 0) hce_jumpHeight *= s;          // (0: worked out from the height, already scaled)
+		hce_leapMin *= s; hce_leapMax *= s; hce_leapVel *= sqrt(s);   // (a leap's reach goes as the speed squared)
+		hce_meleeRange *= s; hce_rangeMin *= s; hce_rangeMax *= s; hce_maxRange *= s;
 	}
 
 	// Applies the stored variant on the first tic: re-arms if the weapon is one it can carry, then multiplies StartHealth,
@@ -8910,7 +9134,7 @@ class HCES_EnemyBase : Actor abstract
 		if(dw != 'None' && dw != '')
 		{
 			class<Actor> wc = (class<Actor>)(dw);
-			if(wc) HCE_Toss(wc, hce_team == HCE_TEAM_COVENANT);      // the Covenant always leave their gun
+			if(wc) HCE_Toss(wc, hce_team == HCE_TEAM_COVENANT || hce_team == HCE_TEAM_FLOOD);      // the Covenant and the Flood always leave their gun
 		}
 		if(hce_dropGrenade != 'None' && hce_dropGrenade != '' && hce_grenades > 0 && random(0, 1))
 		{
@@ -9277,7 +9501,7 @@ class HCES_EnemyBase : Actor abstract
 	// on, goes straight to fighting and plays the directional resurrect animation.
 	void HCE_Revive()
 	{
-		if(!bHCE_Resurrects || !bCORPSE) return;
+		if(!bHCE_Resurrects || !bCORPSE || hce_derezSlot > 0) return;
 		// not RaiseActor: it refuses a corpse whose state isn't a -1 tic frame, and the corpse ticks every tic (Dead:
 		// HCE_CorpseTick); flagging that state CanRaise would let Doom's Arch-viles raise every body too
 		let rs = FindState("Raise");
@@ -9286,6 +9510,9 @@ class HCES_EnemyBase : Actor abstract
 		SetState(rs);
 		hce_resurrected = true;
 		hce_corpseInit = false; bNOTAUTOAIMED = default.bNOTAUTOAIMED; bISMONSTER = default.bISMONSTER;
+		// its box back to standing height (Revive restores the flags, not the size: the body's was cut to 30%, and
+		// shots went over the risen form)
+		A_SetSize(-1, HCE_StandHeight()); hce_crouchBox = false;
 		int gl = HCE_GunLimb();
 		if(gl < 0 || !(hce_severed & (1 << gl))) { HCE_ShowGun(true); if(hce_hasLoadout) HCE_LoadoutVisual(hce_loadout); HCE_ResumeAnim(); }     // back up with its gun (if its arm is on)
 		hce_action = HCE_ACT_FIGHT;
@@ -9452,7 +9679,7 @@ class HCE_Shield : HCES_ShieldProcessor
 		+NOINTERACTION
 		RenderStyle "None";
 	}
-	bool hce_started;
+	bool hce_started, hce_quiet;   // hce_quiet: a Marine's (HCES_EnemyBase.HCE_QuietShield): nothing seen or heard
 	// HDE's HCES_ShieldProcessor counts the recharge wait twice a tic while the shield is empty: once here, so it waits its
 	// full delay (Halo's shield stun), as the player's does
 	override void updateShields()
@@ -9464,8 +9691,16 @@ class HCE_Shield : HCES_ShieldProcessor
 	// model on hits, on recharge from empty, and glows faintly while recharging; sparks (blue, red under 25%) on each hit.
 	override void DisplayShields()
 	{
-		if(!hce_started) { hce_started = true; prevShields = shields; bInvisible = true; return; }   // no flare for the shield it spawns with
+		if(!hce_started)
+		{
+			hce_started = true; prevShields = shields; bInvisible = true;   // no flare for the shield it spawns with
+			let q = HCES_EnemyBase(Owner);
+			hce_quiet = q && q.HCE_QuietShield();
+			if(hce_quiet) { snd_ShieldBreak = ""; snd_ShieldRecharging = ""; snd_ShieldLow = ""; snd_ShieldRecover = ""; }   // (HDE's own shield sounds)
+			return;
+		}
 		if(prevShields > 0 && shields <= 0) OnShieldBreak();
+		if(hce_quiet) { prevShields = shields; bInvisible = true; return; }   // (a Marine's: no flare, no sparks)
 		let e = HCES_EnemyBase(Owner);
 		if(e && e.hce_shellActor && !e.bHCE_FrontShield)
 		{
@@ -9489,7 +9724,7 @@ class HCE_Shield : HCES_ShieldProcessor
 	// a projectile (or a hitscan round) striking the shield: a flash and sparks where it hit, in the shield's colour
 	override double OnShieldDamage(double dmg, Name mod, Actor inflictor, Actor source)
 	{
-		if(Owner && dmg > 0)
+		if(Owner && dmg > 0 && !hce_quiet)
 		{
 			let e = HCES_EnemyBase(Owner);
 			color c = e ? e.HCE_ShieldColor() : Color(255, 127, 178, 255);
@@ -9505,6 +9740,7 @@ class HCE_Shield : HCES_ShieldProcessor
 		if(!Owner) return;
 		let e = HCES_EnemyBase(Owner);
 		if(e) e.HCE_OnShieldPop();
+		if(hce_quiet) return;   // (a Marine's: no flash, sound or shards)
 		if(e && e.hce_shellActor && !e.bHCE_FrontShield) { e.hce_shellActor.alpha = 1.0; e.hce_shellActor.bInvisible = false; }
 		Owner.A_StartSound(snd_ShieldBreak, CHAN_AUTO, CHANF_OVERLAP);
 		// the shield shatters like glass: HCE_ShieldShatter (core pack) throws the shards; without it, sparks
@@ -10263,4 +10499,188 @@ class HCE_Callouts : Thinker
 			}
 		}
 	}
+}
+
+// ----------------------------------------------------------------------
+// The map's waypoint graph, for HCES_EnemyBase.HCE_NavSteer: HaloDoom Evolved's multiplayer maps
+// (REVonGit/HDE-Maps) link the old mod's bot waypoints at level start for their bots and publish the result on the
+// waypoint actors (class HDEMP_BotNode: score its index, tag its links "to:cost,..."). Read once, by name, so this
+// pack loads without that one. For each goal waypoint asked for, a Dijkstra over the links turned round gives every
+// waypoint its next step toward it; kept for the level (the graph doesn't change), so a whole wave heading for one
+// player costs one search.
+// ----------------------------------------------------------------------
+class HCE_NavGraph : Thinker
+{
+	Array<Actor> nodes;
+	Array<double> nx, ny, nz;
+	Array<int> rStart, rCount, rAdj; Array<double> rCost;   // the links turned round: who leads to each node
+	Array<int> goals; Array<int> nextOf;                     // per goal searched: every node's next step (n a goal)
+	bool none;                                               // no graph on this map
+
+	// the level's graph, read the first time it is wanted (null: none, or not published yet)
+	static HCE_NavGraph Get()
+	{
+		let it = ThinkerIterator.Create("HCE_NavGraph", STAT_INFO);
+		let g = HCE_NavGraph(it.Next());
+		if(!g)
+		{
+			if(level.maptime < 2) return null;                   // (the maps build theirs on the first tic)
+			g = new("HCE_NavGraph"); g.ChangeStatNum(STAT_INFO);
+			g.Load();
+		}
+		return g.none ? null : g;
+	}
+
+	void Load()
+	{
+		none = true;
+		String cn = "HDEMP_BotNode";
+		class<Actor> nc = cn;
+		if(!nc) return;
+		let it = ThinkerIterator.Create(nc); Actor a;
+		Array<Actor> found; while(a = Actor(it.Next())) found.Push(a);
+		int n = found.Size(); if(n < 2) return;
+		for(int i = 0; i < n; i++) { nodes.Push(null); nx.Push(0); ny.Push(0); nz.Push(0); }
+		for(int i = 0; i < n; i++)
+		{
+			int k = found[i].score;
+			if(k < 0 || k >= n || nodes[k]) return;              // not published (an older maps pack)
+			nodes[k] = found[i]; nx[k] = found[i].pos.x; ny[k] = found[i].pos.y; nz[k] = found[i].pos.z;
+		}
+		// the links, turned round
+		Array<int> from, to; Array<double> cost;
+		for(int i = 0; i < n; i++)
+		{
+			String t = nodes[i].GetTag("");
+			if(t.Length() == 0) continue;
+			Array<String> ls; t.Split(ls, ",");
+			for(int l = 0; l < ls.Size(); l++)
+			{
+				Array<String> p; ls[l].Split(p, ":");
+				if(p.Size() != 2) continue;
+				int j = p[0].ToInt(); if(j < 0 || j >= n) continue;
+				from.Push(i); to.Push(j); cost.Push(max(1, p[1].ToDouble()));
+			}
+		}
+		if(!from.Size()) return;
+		for(int i = 0; i < n; i++) { rStart.Push(0); rCount.Push(0); }
+		for(int l = 0; l < to.Size(); l++) rCount[to[l]]++;
+		int acc = 0; for(int i = 0; i < n; i++) { rStart[i] = acc; acc += rCount[i]; rCount[i] = 0; }
+		for(int l = 0; l < to.Size(); l++) { rAdj.Push(0); rCost.Push(0); }
+		for(int l = 0; l < to.Size(); l++) { int j = to[l], at = rStart[j] + rCount[j]++; rAdj[at] = from[l]; rCost[at] = cost[l]; }
+		none = false;
+		if(developer) Console.Printf("Halo CE enemies: the map's waypoint graph, %d waypoints, %d links", n, from.Size());
+	}
+
+	vector3 Pos(int i) { return (nx[i], ny[i], nz[i]); }
+
+	// the waypoint nearest p (within 160 up or down); with 'seer', only one it can see, and within 1200
+	int Nearest(vector3 p, Actor seer)
+	{
+		int best = -1; double bd = 1e18;
+		Array<int> ci; Array<double> cd;
+		for(int i = 0; i < nodes.Size(); i++)
+		{
+			double dz = abs(nz[i] - p.z); if(dz > 160) continue;
+			double d = (nx[i] - p.x) * (nx[i] - p.x) + (ny[i] - p.y) * (ny[i] - p.y) + dz * dz * 4;
+			if(!seer) { if(d < bd) { bd = d; best = i; } continue; }
+			if(d < 1200 * 1200) { ci.Push(i); cd.Push(d); }
+		}
+		if(!seer) return best;
+		// seen: the nearest few it can see (checked nearest first, at most 12 sight checks)
+		for(int tries = 0; tries < 12 && ci.Size(); tries++)
+		{
+			int k = 0; for(int j = 1; j < cd.Size(); j++) if(cd[j] < cd[k]) k = j;
+			int i = ci[k]; ci.Delete(k); cd.Delete(k);
+			if(nodes[i] && seer.CheckSight(nodes[i], SF_IGNOREVISIBILITY)) return i;
+		}
+		return -1;
+	}
+
+	// the next waypoint from 'at' toward 'goal' (-1: no way there)
+	int NextNode(int at, int goal)
+	{
+		int n = nodes.Size();
+		if(at < 0 || goal < 0 || at >= n || goal >= n) return -1;
+		if(at == goal) return goal;
+		int gi = goals.Find(goal);
+		if(gi == goals.Size())
+		{
+			if(searchedAt == level.maptime) return -2;         // one search a tic: the rest wait a tic (-2)
+			searchedAt = level.maptime;
+			int t0 = MSTime();
+			Search(goal); gi = goals.Size() - 1;
+			if(developer >= 2) Console.Printf("Halo CE enemies: route search to waypoint %d, %d ms", goal, MSTime() - t0);
+		}
+		return nextOf[gi * n + at];
+	}
+	int searchedAt;
+
+	// Dijkstra out from the goal over the links turned round: each node's next step is the one it was reached from
+	void Search(int goal)
+	{
+		int n = nodes.Size(), base = nextOf.Size();
+		goals.Push(goal);
+		Array<double> dist; Array<bool> done;
+		for(int i = 0; i < n; i++) { nextOf.Push(-1); dist.Push(1e18); done.Push(false); }
+		dist[goal] = 0; nextOf[base + goal] = goal;
+		// a binary heap of (distance, node), stale entries skipped
+		hk.Clear(); hv.Clear(); Push(0, goal);
+		while(hk.Size())
+		{
+			double ud = hk[0]; int u = hv[0]; Pop();
+			if(done[u]) continue;
+			done[u] = true;
+			for(int k = rStart[u]; k < rStart[u] + rCount[u]; k++)
+			{
+				int v = rAdj[k]; double nd = ud + rCost[k];
+				if(nd < dist[v]) { dist[v] = nd; nextOf[base + v] = u; Push(nd, v); }
+			}
+		}
+	}
+	Array<double> hk; Array<int> hv;
+	void Push(double k, int v)
+	{
+		hk.Push(k); hv.Push(v);
+		int i = hk.Size() - 1;
+		while(i > 0)
+		{
+			int p = (i - 1) / 2; if(hk[p] <= hk[i]) break;
+			double tk = hk[p]; hk[p] = hk[i]; hk[i] = tk; int tv = hv[p]; hv[p] = hv[i]; hv[i] = tv; i = p;
+		}
+	}
+	void Pop()
+	{
+		int last = hk.Size() - 1;
+		hk[0] = hk[last]; hv[0] = hv[last]; hk.Pop(); hv.Pop();
+		int n = hk.Size(), i = 0;
+		while(true)
+		{
+			int l = i * 2 + 1, r = l + 1, m = i;
+			if(l < n && hk[l] < hk[m]) m = l;
+			if(r < n && hk[r] < hk[m]) m = r;
+			if(m == i) break;
+			double tk = hk[m]; hk[m] = hk[i]; hk[i] = tk; int tv = hv[m]; hv[m] = hv[i]; hv[i] = tv; i = m;
+		}
+	}
+}
+
+// A map's scale over Doom's for the Halo NPCs (HCES_EnemyBase.HCE_WorldScale): a map pack whose maps are built bigger
+// places one of these (by name: "HCE_MapScale"), its scale.x the map's scale. The HDE multiplayer maps pack does.
+class HCE_MapScale : Actor
+{
+	Default { +NOINTERACTION +NOBLOCKMAP +NOGRAVITY RenderStyle "None"; }
+	States { Spawn: TNT1 A -1; Stop; }
+	static double Get()
+	{
+		let it = ThinkerIterator.Create("HCE_MapScale");
+		let m = Actor(it.Next());
+		return m ? max(0.1, m.scale.x) : 1.0;
+	}
+}
+
+// the teleport fog without its sound (a Marine catching up to his player: HCE_TeleportTick)
+class HCE_SilentTeleportFog : TeleportFog
+{
+	override void PostBeginPlay() {}   // (TeleportFog's own sounds misc/teleport)
 }

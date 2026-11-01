@@ -1,0 +1,205 @@
+// The Flood's own blood and bursts, from Halo 2 (extract_flood_gore.py: graphics/hcegore, sprites/hcegore,
+// decaldef.hcefloodgore).
+// * HCE_FloodBurst: a carrier, an infection form or a Flood Grunt popping (HCES_EnemyBase.HCE_Detonate spawns it,
+//   scaled to the body), after Halo 2's floodcarrier body_destroyed effect: skin chunks flung out tumbling
+//   (skin_burst), dark smoke (smoke_volumetric_dark) round a fiery flash (smoke_fiery_small), the wet spray
+//   (impact_spray) and the large Flood splats on the walls round it and the floor under it.
+//   A carrier or an infection form has no blood: its pop is dry, a cloud of the Flood's pale gas (HFGS, the smoke
+//   recoloured) for the spray and no splats; a carrier's a bigger blast, its fireball lighting the room for a moment.
+// * HCE_GorePuffFlood: the Flood's impact puff for the Halo gore (hce_gore.zsc picks it for the Flood).
+
+class HCE_FloodBurst : Actor
+{
+	Default { +NOINTERACTION +NOBLOCKMAP +NOTONAUTOMAP RenderStyle "None"; }
+	States
+	{
+	Spawn:
+		TNT1 A 1 NoDelay Pop();
+		Stop;
+	}
+	void Pop()
+	{
+		double k = scale.x;
+		color blood = target ? target.BloodColor : Color(255, 118, 112, 58);
+		if(blood == 0) blood = Color(255, 118, 112, 58);
+		// a carrier or an infection form has no blood (+NOBLOOD): its pop is fire, its gas, smoke and skin, nothing wet;
+		// a carrier's a proper blast (Halo 2's floodcarrier body_destroyed)
+		bool dry = target && target.bNOBLOOD;
+		if(dry) k = max(k, target.radius >= 14 ? 1.25 : 0.6);
+		// the flash (with its light), and the smoke round it
+		for(int i = 0; i < (dry ? 3 : 1); i++)
+		{
+			let f = Spawn("HCE_FloodBurstFire", pos + (frandom[HCEFB](-5, 5) * k * i, frandom[HCEFB](-5, 5) * k * i, frandom[HCEFB](-4, 6) * k * i));
+			if(!f) continue;
+			f.scale *= k * (i == 0 ? 1.5 : frandom[HCEFB](0.8, 1.2)); f.roll = frandom[HCEFB](0, 360);
+			if(i == 0) { HCE_FloodBurstFire(f).lightSize = 150 * k; }
+		}
+		// the flash under it: a bright ball for a few tics (a carrier's big, an infection form's small)
+		let fl = Spawn("HCE_FloodBurstFlash", pos); if(fl) { fl.scale *= k * (dry ? 1.3 : 0.9); fl.roll = frandom[HCEFB](0, 360); }
+		for(int i = 0; i < int(2 * k + 2); i++)
+		{
+			let sm = Spawn("HCE_FloodBurstSmoke", pos + (frandom[HCEFB](-8, 8) * k, frandom[HCEFB](-8, 8) * k, frandom[HCEFB](-6, 10) * k));
+			if(!sm) continue;
+			sm.scale *= k * frandom[HCEFB](0.7, 1.2); sm.frame = random[HCEFB](0, 1); sm.roll = frandom[HCEFB](0, 360);
+			sm.vel = (frandom[HCEFB](-0.8, 0.8), frandom[HCEFB](-0.8, 0.8), frandom[HCEFB](0.2, 0.9)) * k;
+		}
+		// (dry: a cloud of the Flood's pale gas, flung out and spreading, in place of the wet spray)
+		if(dry)
+			for(int i = 0; i < int(6 * k + 4); i++)
+			{
+				let gs = Spawn("HCE_FloodBurstGas", pos + (frandom[HCEFB](-6, 6) * k, frandom[HCEFB](-6, 6) * k, frandom[HCEFB](-6, 10) * k));
+				if(!gs) continue;
+				gs.scale *= k * frandom[HCEFB](0.6, 1.1); gs.frame = random[HCEFB](0, 1); gs.roll = frandom[HCEFB](0, 360);
+				double a = frandom[HCEFB](0, 360);
+				gs.vel = (AngleToVector(a, frandom[HCEFB](1.5, 4.5) * k), frandom[HCEFB](0.3, 2.2) * k);
+			}
+		// the wet spray, in the body's blood colour
+		if(!dry) for(int i = 0; i < int(8 * k + 3); i++)
+		{
+			let p = Spawn("HCE_GorePuffFlood", pos);
+			if(!p) continue;
+			p.SetShade(blood); p.frame = random[HCEFB](0, 3); p.scale *= k * frandom[HCEFB](0.8, 1.4);
+			p.vel = (frandom[HCEFB](-3, 3), frandom[HCEFB](-3, 3), frandom[HCEFB](0, 3)) * k;
+		}
+		// skin chunks
+		for(int i = 0; i < int(7 * k + 3); i++)
+		{
+			let c = Spawn("HCE_FloodChunk", pos);
+			if(!c) continue;
+			c.frame = random[HCEFB](0, 3); c.scale *= frandom[HCEFB](0.5, 1.0) * max(0.6, k);
+			double a = frandom[HCEFB](0, 360);
+			c.vel = (AngleToVector(a, frandom[HCEFB](2.5, 7) * max(0.7, k)), frandom[HCEFB](3, 8) * max(0.7, k));
+		}
+		if(dry) return;
+		// the splats: on the walls round it and the floor under it
+		for(int i = 0; i < 8; i++) A_SprayDecal("HCEGore_FloodBig", 96 * max(1., k), (0, 0, 0), (AngleToVector(i * 45 + frandom[HCEFB](-15, 15), 1), frandom[HCEFB](-0.3, 0.1)));
+		let fs = Spawn("HCE_FloodBurstPool", (pos.xy, floorz)); if(fs) fs.scale *= max(0.8, k);
+	}
+}
+
+// a hit on a carrier or an infection form: a puff or two of the burst's dark smoke at the wound, drifting away from
+// the shot (no blood: they're +NOBLOOD); bigger hits, more and bigger puffs
+class HCE_FloodSmokePuff play
+{
+	static void Hit(Actor v, Actor inflictor, Actor source, int dmg)
+	{
+		if(!v) return;
+		vector3 at = HCE_HaloGoreHandler.WoundPos(v, inflictor, source);
+		Actor from = source ? source : inflictor;
+		double away = from ? from.AngleTo(v) : v.angle + 180;
+		double size = clamp(dmg / 25.0, 0.5, 1.4) * clamp(v.radius / 16.0, 0.6, 1.2);
+		int n = HCES_EnemyBase.HCE_GoreCount(dmg >= 15 ? 3 : 2);
+		for(int i = 0; i < n; i++)
+		{
+			let sm = Actor.Spawn("HCE_FloodBurstSmoke", at, ALLOW_REPLACE);
+			if(!sm) continue;
+			sm.scale *= size * frandom[HCEFB](0.6, 1.0); sm.frame = random[HCEFB](0, 1); sm.roll = frandom[HCEFB](0, 360);
+			sm.vel = (Actor.AngleToVector(away + frandom[HCEFB](-45, 45), frandom[HCEFB](0.4, 1.4)), frandom[HCEFB](0.1, 0.7));
+		}
+	}
+}
+
+// the fireball (Halo 2's smoke_fiery_small, in fire colours), and its light while it lasts (lightSize: its radius at
+// the flash, 0 none)
+class HCE_FloodBurstFire : Actor
+{
+	double lightSize;
+	Default { +NOINTERACTION +NOBLOCKMAP +FORCEXYBILLBOARD +ROLLSPRITE RenderStyle "AddShaded"; StencilColor "FFC060"; Alpha 1.0; Scale 0.9; }
+	States
+	{
+	Spawn:
+		HFFI A 1 Bright
+		{
+			scale *= 1.09; roll += 2; A_FadeOut(0.075, FTF_REMOVE);
+			if(lightSize > 0 && !bDestroyed) A_AttachLight('HCEFloodBurst', DynamicLight.PointLight, Color(255, 255, 190, 110), int(lightSize * alpha), 0);
+		}
+		Loop;
+	}
+}
+
+// the fireball's flash (HFFL): a bright ball in fire colours, swelling and gone in a few tics
+class HCE_FloodBurstFlash : Actor
+{
+	Default { +NOINTERACTION +NOBLOCKMAP +FORCEXYBILLBOARD +ROLLSPRITE RenderStyle "AddShaded"; StencilColor "FFD890"; Alpha 1.0; Scale 0.8; }
+	States
+	{
+	Spawn:
+		HFFL A 2 Bright;
+		HFFL A 1 Bright { scale *= 1.18; A_FadeOut(0.16, FTF_REMOVE); }
+		Wait;
+	}
+}
+
+// the Flood's gas a carrier bursts into: its smoke in pale yellow-green, spreading and slowing as it thins
+class HCE_FloodBurstGas : Actor
+{
+	Default { +NOINTERACTION +NOBLOCKMAP +FORCEXYBILLBOARD +ROLLSPRITE RenderStyle "Translucent"; Alpha 0.75; Scale 0.45; }
+	States
+	{
+	Spawn:
+		HFGS # 1 { scale *= 1.035; vel *= 0.88; vel.z += 0.015; roll += 0.8; A_FadeOut(0.018); }
+		Loop;
+	}
+}
+
+class HCE_FloodBurstSmoke : Actor
+{
+	Default { +NOINTERACTION +NOBLOCKMAP +FORCEXYBILLBOARD +ROLLSPRITE RenderStyle "Translucent"; Alpha 0.55; Scale 0.5; }
+	States
+	{
+	Spawn:
+		HFSM # 1 { scale *= 1.02; vel *= 0.93; roll += 0.6; A_FadeOut(0.02); }
+		Loop;
+	}
+}
+
+// a piece of the body's skin, tumbling till it lands, then lying there a while
+class HCE_FloodChunk : Actor
+{
+	Default { Radius 3; Height 3; Gravity 0.7; +NOBLOCKMAP +MISSILE +DROPOFF +NOTELEPORT +ROLLSPRITE +FORCEXYBILLBOARD +THRUACTORS +BOUNCEONFLOORS +BOUNCEONWALLS BounceFactor 0.25; WallBounceFactor 0.3; BounceCount 3; Scale 0.35; }
+	States
+	{
+	Spawn:
+		HFSK # 1 { roll += 18; if(pos.z <= floorz + 1 && vel.Length() < 1) SetStateLabel("Rest"); }
+		Loop;
+	Death:
+	Rest:
+		HFSK # 175;
+		HFSK # 1 A_FadeOut(0.05);
+		Wait;
+	}
+}
+
+// the pool of Flood blood under a burst
+class HCE_FloodBurstPool : Actor
+{
+	Default { +FLATSPRITE +NOINTERACTION +NOBLOCKMAP +DONTSPLASH +NOTONAUTOMAP RenderStyle "Translucent"; Alpha 0.9; Scale 1.6; }
+	States
+	{
+	Spawn:
+		HPFL E 0 NoDelay { frame = random[HCEFB](4, 5); angle = frandom[HCEFB](0, 360); SetZ(floorz + 0.3); }
+		HPFL # 1050;
+		HPFL # 1 A_FadeOut(0.02);
+		Wait;
+	}
+}
+
+// the Flood's impact puff (Halo 2's impact spray), shaded with the victim's blood
+class HCE_GorePuffFlood : HCE_GorePuff
+{
+	override int Frames() { return 4; }
+	States
+	{
+	Precache:
+		HGBF ABCD 0; HSFL A 0; HPFL A 0; HKFL A 0; HFSK A 0; HFSM A 0; HFFI A 0; HFGS A 0; HFFL A 0;
+		Stop;
+	Spawn:
+		HGBF # 1
+		{
+			scale *= 1.07;
+			vel *= 0.86; vel.z -= 0.04;
+			A_FadeOut(0.06);
+		}
+		Loop;
+	}
+}
