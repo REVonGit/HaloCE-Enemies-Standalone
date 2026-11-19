@@ -33,7 +33,7 @@ uzdoom -iwad doom2.wad -file HaloCE_Standalone_Covenant.pk3 HaloCE_Standalone_Fl
 
 The replacement table lives in the Covenant pack's core. Any pick whose faction pack isn't loaded is skipped, and the remaining picks share its weight; a Doom monster whose whole list is missing stays a Doom monster.
 
-* **Everything in one file:** `build.py` also writes `dist/HaloCE_Standalone_Merged.pk3` (`Build_Halo_NPCs.bat` or `build.py --combined` builds just that); load it instead of the separate packs, never with them.
+* **Everything in one file:** `build.py` also writes `dist/Halo NPCs Standalone.pk3` (`Build_Halo_NPCs.bat` or `build.py --combined` builds just that); load it instead of the separate packs, never with them.
 * **Merging your own set:** `tools/merge_hce_packs.py <packs...> -o <out.pk3>` merges any set of these packs.
 * **Don't mix versions:** never load these together with the HDE packs: they define the same enemies.
 

@@ -4,7 +4,7 @@
     python build.py                    # every pack -> dist/<folder>.pk3, plus the merged pack
     python build.py Covenant Flood     # only the packs whose folder name contains one of these words
     python build.py --no-merged        # skip the merged pack
-    python build.py --combined         # only the merged pack, HaloCE_Standalone_Merged.pk3 (every pack in one file)
+    python build.py --combined         # only the merged pack, Halo NPCs Standalone.pk3 (every pack in one file)
     python build.py --force            # rebuild even what hasn't changed
 
 Edit the files under packs/<Pack>/ directly: each folder is exactly the root of its pk3.
@@ -110,6 +110,8 @@ def main():
         if not want: sys.exit('no pack folder matches ' + ' '.join(a.only))
     merged_cfg = CFG['merged']
     build_merged = a.combined or (not a.no_merged and not a.only)
+    old = os.path.join(DIST, 'HaloCE_Standalone_Merged.pk3')   # (the merged pack's old name: gone, so it isn't loaded with the new one)
+    if build_merged and os.path.exists(old): os.remove(old); print('  removed the old HaloCE_Standalone_Merged.pk3')
     print(f'{CFG["title"]}: dist/')
     digests = {}
     for n in names:

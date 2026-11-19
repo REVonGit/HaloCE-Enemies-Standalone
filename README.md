@@ -55,7 +55,7 @@ HaloCE_Standalone_Covenant.pk3 -> HaloCE_Standalone_Flood / _Sentinels / _Marine
 ```
 
 * **Covenant first:** `HaloCE_Standalone_Covenant.pk3` carries the Core, so it's the one pk3 that's always needed; Flood, Sentinels and Marines load after it.
-* **Everything in one file:** `HaloCE_Standalone_Merged.pk3` (double-click `Build_Halo_NPCs.bat`, or `python build.py --combined`).
+* **Everything in one file:** `Halo NPCs Standalone.pk3` (double-click `Build_Halo_NPCs.bat`, or `python build.py --combined`).
 * **Don't mix:** don't load the merged pack together with the separate packs, and don't load old `HaloCE_Standalone_Core`, `HaloCE_Enemies_Voices` or `HDE_CE_Covenant_Standalone` pk3s from an earlier download: the Covenant pack contains them now. Delete them from your `dist/` folder.
 
 ## Editing notes

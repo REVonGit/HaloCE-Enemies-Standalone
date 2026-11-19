@@ -1,6 +1,6 @@
 @echo off
 setlocal
-rem Build HaloCE_Standalone_Merged.pk3: every pack (Covenant, Flood, Sentinels, Marines) combined into one file, in dist\.
+rem Build "Halo NPCs Standalone.pk3": every pack (Covenant, Flood, Sentinels, Marines) combined into one file, in dist\.
 rem Load it instead of the separate packs, never with them.
 title Halo NPCs builder
 cd /d "%~dp0"
@@ -13,7 +13,7 @@ if not defined PY (
   goto end
 )
 %PY% build.py --combined
-if errorlevel 1 (echo. & echo The build did not finish. The message above says why.) else (echo. & echo Done: HaloCE_Standalone_Merged.pk3 is in the dist folder.)
+if errorlevel 1 (echo. & echo The build did not finish. The message above says why.) else (echo. & echo Done: "Halo NPCs Standalone.pk3" is in the dist folder.)
 :end
 echo.
 pause

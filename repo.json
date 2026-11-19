@@ -1,7 +1,7 @@
 {
   "title": "Halo CE enemies (standalone version)",
   "merged": {
-    "output": "HaloCE_Standalone_Merged.pk3",
+    "output": "Halo NPCs Standalone.pk3",
     "packs": [
       "HaloCE_Standalone_Covenant",
       "HaloCE_Standalone_Flood",
@@ -9,5 +9,5 @@
       "HaloCE_Standalone_Marines"
     ]
   },
-  "load": "HaloCE_Standalone_Covenant.pk3 on its own, with any other mods (it carries Core, the Covenant and their dialogue); add HaloCE_Standalone_Flood / HaloCE_Standalone_Sentinels / HaloCE_Standalone_Marines.pk3 after it, or load HaloCE_Standalone_Merged.pk3 for everything."
+  "load": "HaloCE_Standalone_Covenant.pk3 on its own, with any other mods (it carries Core, the Covenant and their dialogue); add HaloCE_Standalone_Flood / HaloCE_Standalone_Sentinels / HaloCE_Standalone_Marines.pk3 after it, or load Halo NPCs Standalone.pk3 for everything."
 }
