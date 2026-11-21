@@ -6,6 +6,7 @@ version "4.15.1"
 // Needs no other pk3; the Flood, Sentinels and Marines packs go after it.
 
 #include "ZScript/HaloCE/hce_core.zsc"
+#include "ZScript/HaloCE/hce_grip.zsc"
 #include "ZScript/HaloCE/hces_api.zsc"
 #include "ZScript/HaloCE/hces_lib.zsc"
 #include "ZScript/HaloCE/hces_loot.zsc"
@@ -25,3 +26,4 @@ version "4.15.1"
 #include "ZScript/HaloCE/dig_boss.zsc"
 #include "ZScript/HaloCE/dig_handler.zsc"
 #include "ZScript/HaloCE/hce_flood_arsenal.zsc"
+#include "ZScript/HaloCE/hce_grips_covenant.zsc"
